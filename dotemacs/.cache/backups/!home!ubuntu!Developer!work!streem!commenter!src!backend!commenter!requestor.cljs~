@@ -1,7 +1,0 @@
-(ns commenter.http
-  (:require [commenter.utils :as utils]
-            [commenter.config :as config]))
-
-
-(def requestor (js/require "request"))
-

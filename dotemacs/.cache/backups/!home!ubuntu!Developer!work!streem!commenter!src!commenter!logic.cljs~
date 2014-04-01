@@ -1,5 +1,0 @@
-(ns commenter.logic)
-
-
-(defn data-payload []
-  "okay")

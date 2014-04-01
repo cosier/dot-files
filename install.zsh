@@ -15,19 +15,6 @@ if [[ -f "~/.vim" ]]; then
 fi
 
 # Install/overwrite new symlinks
-rm ~/.zshrc
-ln -sf ~/.dot/zshrc ~/.zshrc
-
-rm ~/.zprofile
-ln -sf ~/.dot/zprofile.zsh ~/.zprofile
-
-rm ~/.vimrc
-ln -sf ~/.dot/vimrc ~/.vimrc
-
-rm ~/.cmus
-ln -sf ~/.dot/cmus ~/.cmus
-
-rm ~/.tmux.conf
 ln -sf ~/.dot/tmux.conf ~/.tmux.conf
 
 ln -sf ~/.dot/netrc ~/.netrc
