@@ -1,0 +1,73 @@
+(ns commenter.logic
+  (:require-macros [cljs.core.async.macros :refer [go]])
+  (:require [commenter.article :as article]
+            [commenter.database :as db]
+            [commenter.logger :as logger]
+            [commenter.processor :as proc]
+            [commenter.utils :as utils]
+            [commenter.stats :as stats]
+            [cljs.nodejs :as node]
+            [cljs.core.async :as async
+             :refer [put! chan <! >! close! alts!]
+             ]))
+
+(println "logic >> hello")
+;; shim the console utility
+(enable-console-print!)
+
+;; make sure we can be pretty too
+(defn pretty [input]
+  (.stringify js/JSON input nil 2))
+
+
+;; Data statistics view
+(defn data-statistics [res]
+    (.end res (stats/json-payload)))
+
+
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Show the latest articles that have been processed already
+(defn data-latest-articles-marked [res]
+  (let [ch (chan)]
+    ;; plant the channel into the database functor
+    (db/latest-articles-with-comments ch 1)
+    (println "logic >> entering db results thread block")
+    ;; await results to render
+    (go (let [articles (<! ch)
+              swig (js/require "swig")
+              template (str utils/root-dir "/public/articles.html")
+              log-debugging-1 (println "logic >> attempting to render swig template")
+              html (.renderFile swig template (js-obj "articles" articles))
+              log-debugging-2 (println "logic >> let-scope complete")]
+          ;; go go
+          (.end res html)))))
+
+
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Kick off entire processing here
+(defn run-processing []
+  (println "logic >> run-processing")
+  (let [article-channel (chan)
+        proc-channel (chan)]
+    ;; setup channel loop for data digestion
+    (go (while true
+          (let [data (<! article-channel)
+                url (get data :url)]
+            (println "logic >> run-processing << " url)
+            (stats/tick-article-processed)
+            (>! proc-channel data))))
+
+    ;; initiate incoming data
+    (article/get-html-for-all-articles article-channel)
+    (proc/article-pipe proc-channel)))
+
+
+(js/setInterval (fn []
+                  (println "logic >> launching run-processing func-timer /10s")
+                  (run-processing))
+                (if (utils/is-production?) (* 60 1000 60) (* 10 1000)))
+
+(println "logic >> initiating 'run-processing'")
+;; Initial processing kick off
+(run-processing)
+(stats/start-statistics)

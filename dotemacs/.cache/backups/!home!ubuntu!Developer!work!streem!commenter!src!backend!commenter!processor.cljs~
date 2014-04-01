@@ -1,0 +1,131 @@
+(ns commenter.processor
+  (:require-macros [cljs.core.async.macros :refer [go]])
+  (:require [commenter.article :as article]
+            [commenter.database :as db]
+            [commenter.logger :as logger]
+            [commenter.utils :as utils]
+            [commenter.http :as http]
+            [cljs.core.async :as async
+             :refer [put! chan <! >! close! alts!]]))
+
+
+;; Utility url parser from nodejs
+(def url-parse (.-parse (js/require "url")))
+
+;; memoise the cheerio dom handler at the namespace level
+(def cheerio (js/require "cheerio"))
+
+;; Accepts incoming articles for processing
+;; Handed to it via the start-process hook
+(defn article-pipe [incoming-channel]
+  (go (while true
+        (let [article-data (<! incoming-channel)]
+          (process article-data)))))
+
+(defn article-test [url]
+  (process {:url url
+            :articles_id 0
+            :body "hello there"}
+           results-channel))
+
+;; Kicks off local dom processing of an article
+(defn process [article test-channel]
+  (let [url (get article :url)
+        id  (get article :articles_id)
+        body (get article :body)
+        host (.-host (url-parse url))
+        subproc (determine-processor-type host)
+        results-channel (chan)]
+
+    (go (let [ results (<! results-channel)]
+          (println "results" results)))
+    ;; send off the body and url to subprocess
+    (subproc url id body result-channel)
+    (println "processor >> process: " url)))
+
+
+(defn process-fairfax [url id body results-channel]
+  (println "processor >> processing FAIRFAX Model (" id ":" url ")")
+  (let [cursor (cheerio body)
+        comments-container (.find cursor "#comments")
+        comments-nodes (.find cursor "#comments li")
+        comments-closed? (utils/substring? "<b>Comments are now closed</b>" body)
+        comments-count (.-length comments-nodes)
+        comments-content (extract-comment-contents cursor)
+        ready-channel (chan)]
+
+    (if (not body) (println "processor >> body not available")
+        (println "processor >> body-length: " (.-length body)))
+
+    (println "processor >> comments-container: " (.-length comments-container))
+    (println "processor >> comments-nodes: " comments-count)
+    (println "processor >> comments closed? " comments-closed?)
+
+    (process-async-comments ready-channel url cursor comments-count)
+
+    ;; Apply Blockage actions based on our findings
+    (println "processor >> engaging local block for: " url)
+    (go (let [total-processed-comment-count (<! ready-channel)]
+          (println "processor >> ready-channel engaged for: " url)
+          (if comments-closed?
+            (db/mark-comment-closed id)
+            (db/mark-comment-open id))
+
+          (>! results-channel [article-id
+                               comments-closed?
+                               comments-count
+                               comments-content])
+          
+          ;; process comment content archival
+          (if comments-content
+            (db/insert-comment-content-for-article id total-processed-comment-count))
+
+          (println "processor >> db/update-article-comment-count for " url)
+          (db/update-article-comment-count id total-processed-comment-count)))))
+
+
+(defn process-async-comments [ch url cursor static-count]
+  (let [short-id (extract-short-id url)
+        protocol (utils/protocol-from-url url)
+        host (utils/host-from-url url)
+        ajax-url (str protocol "//" host "/ugc/moreComments.ajax?assetId=" short-id "&type=comments")
+        handler (fn [err res body]
+                  (println "processor >> sub-ajax results are in")
+                  (let [sub-cursor (cheerio body)
+                        sub-page-results (.-length (.find sub-cursor "li"))
+                        total-comments (if sub-page-results sub-page-results static-count)]
+                    (go
+                     (println "processor >> ajax results - " total-comments)
+                     (>! ch total-comments))))]
+    (http/request ajax-url handler)))
+
+
+(defn extract-short-id [url]
+  (let [target url
+        match (.exec (js/RegExp. "-([aA0-zZ9]+).html" "g") target)]
+    (println "processor >> extracting short-code-id from url: " (last match))))
+
+;; No op for undefined / lazy to implement sites
+(defn process-skip [url body]
+  (println "processor >> skipping processing for " url))
+
+;; Uses a cheerio dom cursor to extract comment data
+;; and return it as a vector
+(defn extract-comment-contents [cursor]
+  nil)
+
+;; Composite function for determining how to handle
+;; a given host.
+(defn determine-processor-type [host]
+  (let [cleaned-host (utils/clean-host host)]
+    (println "processor >> determining-processor-type: " cleaned-host)
+    (case cleaned-host
+      ;; Handle smh.com.au
+      "smh.com.au"           process-fairfax
+      "theage.com.au"        process-fairfax
+      "brisbanetimes.com.au" process-fairfax
+      "canberratimes.com.au" process-fairfax
+      "watoday.com.au"       process-fairfax
+
+      ;; Fallback to a no-op
+      process-skip)))

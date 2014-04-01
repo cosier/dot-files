@@ -1,0 +1,55 @@
+#!/bin/zsh
+
+# ################################
+# Filesystem "Places" Shortcut Directory
+# ################################
+
+alias lcl='cd /usr/local'
+alias lc='lcl'
+
+alias ig='cd ~/Developer/sdk/ignifuga'
+
+alias apps='cd /apps';
+alias sites='cd /apps/sites';
+
+alias dev='cd ~/Developer/'
+alias ext='cd ~/Developer/ext'
+alias pro='cd ~/Developer/projects'
+alias dojo='cd ~/Developer/work/dojo/app'
+alias tata='cd ~/Developer/work/dojo/app/src/tatami'
+alias scheme='cd /home/ubuntu/Developer/sdk/clojure-scheme'
+alias dc='cd ~/Developer/work/dinecart'
+alias music='cd ~/Music'
+
+# BidOnTask Development
+alias bid='cd $HOME_DIR/Developer/work/bidontask'
+
+#VIVO Masks Development
+alias vivo='cd ~/Developer/work/vivo'
+alias vbo='vivo'
+
+# Streem related stuff
+alias streem='cd ~/Developer/work/streem'
+alias scom='streem; cd commenter;'
+alias srank='streem; cd ranking;'
+# Prime zone
+alias prime='cd ~/Developer/work/prime/web'
+
+# General Work
+alias work='cd ~/Developer/work'
+
+alias bk='cd ~/Developer/work/balaklava'
+
+alias bot='cd ~/Developer/work/bidontask'
+#alias ww='www'
+#alias wwww='www'
+
+alias things='cd ~/Developer/things'
+
+alias stk='cd /usr/local/src/skia/trunk'
+
+alias playground='cd ~/Developer/playground'
+alias pg='playground'
+
+
+

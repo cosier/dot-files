@@ -1,0 +1,17 @@
+q
+add ~/Music
+clear 
+:clear
+remove all
+save ~/Music/playlists/chillin.pl
+add ~/Music/Hype Machine/
+load ~/Music/playlists/chillin.pl
+quit
+colorscheme themes/solarized
+colourscheme themes/solarized
+repeat
+showbind
+player-next 
+next
+add ~/Music/
+help

@@ -1,0 +1,403 @@
+{% extends 'BidOnTaskBundle::minimal.html.twig' %}
+
+{% block minimal_content_above %}
+
+  <div class='row-fluid page-wrapper' id="top-user-bar">
+      <div class='span12'>
+          {% include "BidOnTaskBundle:Profile:user_header.html.twig" %}
+          <div class='clear'></div>
+      </div>
+  </div>
+
+{% endblock %}
+
+{% block minimal_content %}
+  {% set back_bar_class = "" %}
+
+  {% if task.getChosenRunnerId %}
+    {% set has_chosen = true %}
+  {% else %}
+    {% set has_chosen = false %}
+  {% endif %}
+
+ {% if app.user %}
+  
+  {% if task.getCreatorId == app.user.getId %}
+    {% set is_creator = true %}
+  {% else %}
+    {% set is_creator = false %}
+  {% endif %}
+
+ {% else %}
+    {% set is_creator = false %}
+ {% endif %}
+
+ {% if app.user %}
+  {% if task.getChosenRunnerId == app.user.getId %}
+    {% set is_winner = true %}
+    {% set back_bar_class = "hide" %}
+  {% else %}
+    {% set is_winner = false %}
+  {% endif %}
+{% else %}
+    {% set is_winner = false %}
+{% endif %}
+
+{% if task.getIsRunning %}
+  {% set is_running = true %}
+{% else %}
+  {% set back_bar_class = "hide" %}
+  {% set is_running = false %}
+{% endif %}
+
+{% set creator = task.getCreator %}
+
+{% if creator.isSocial %}
+  {% set creator_display = creator.getDisplayName %}
+{% else %}
+  {% set creator_display = creator.getFullDisplayName %}
+{% endif %}
+
+{% set questions = task.questions %}
+
+
+{% set mybid = false %}
+{% if has_bid %}
+  {% if app.user %}
+    {% set mybid = app.user.getBidForTask(task.id) %}
+  {% endif %}
+{% endif %}
+  
+{% if task.getIsCancelled %}
+  {% set cancelled = true %}
+{% else %}
+  {% set cancelled = false %}
+{% endif %}
+
+
+  
+
+  <div id="runner-viewer"></div>
+
+  <div class='page-header row-fluid'>
+     
+     
+    <div class='span4 top expand  size-{{ task.getAmountSize }}'>
+       <div class='amount'>
+
+         <div class='payment-type type-{{ task.getPaymentType | lower }}'>
+            {{ task.getPaymentType }}
+         </div>
+
+         <div class='text size-money-{{ task.getAmountSize }}'>${{ task.getAmountFormatted }}</div>
+
+
+       </div>
+    </div>
+     
+    <div class='span8 top expand'>
+        <div class='task-block'>
+          <h1><span class='quote'>&ldquo;</span>{{ task.getTitle }}<span class='quote'>&rdquo;</span></h1>
+          <div class='info'>
+            <span class='muted'>&mdash;</span>
+            <span class='posted'>posted by </span>
+            <a href='/u/{{ creator.getUsernameCanonical }}'>{{ creator_display | raw }}</a>,
+            
+            <span class='date'>{{ task.getCreatedAt | nice_time }} ago...</span>
+          </div>
+        </div><!-- end .block -->
+    </div>
+  </div>
+
+
+
+  {% if is_creator %}
+      <style type="text/css">
+      .funding-status {
+        padding:20px 35px;
+        font-size:18px;
+        text-align: center;
+      }
+      .funding-status .small {
+        font-size:12px;
+        color:#888;
+        top:6px;
+      }
+      </style>
+      {% if not task.isFunded and task.paymentType == 'paypal' %}
+      <div class='funding-status'>
+      You have chosen PayPal as the payment type for this Task.
+
+      Please fund the Task before starting. 
+      <hr/>
+      <a href='/money/prefund/{{ task.id }}' class='btn btn-success btn-large' style="border-radius:6px !important;">Fund Task Now</a>
+      <br/>
+      <span class='small'>(BidOnTask will withhold the funds from the Task Runner until you have marked the Task as complete.)</span>
+      <br/>
+      <br/>
+      <br/>
+      </div>
+      {% endif %}
+
+    {% if has_chosen and not cancelled %}
+
+      <div class='action-control has-chosen'>
+
+        <a href='/task/complete/{{ task.id }}' class='complete btn' data-prompt="confirm" data-confirm-title="Confirm Marking this Task as Complete">
+          <i class='icon-check'></i>&nbsp; Mark Task Complete
+        </a>
+        
+        {% if has_chosen and is_creator %}
+          <div class='has_chosen'>You have chosen {{ task.chosen.getFullDisplayName | raw }} as your Tasker.</div>
+        {% endif %}
+
+
+        <div class='clear'></div>
+      </div>
+    
+    {% else %}
+
+      <div class='action-control'>
+        {% if task.getRunnerCount > 0 %}
+        <div class='item rc'><i class='icon-group'></i>&nbsp;Task Runners: <strong>{{ task.getRunnerCount }}</strong></div>
+        {% else %}
+
+          {% if cancelled %}
+            <div class='item rc'>...</div>
+          {% else %}
+            {% if task.isFunded or task.getPaymentType | lower == 'cash'  %}
+            <div class='item rc'><i class='icon icon-ok-circle'></i>&nbsp; Your Tasks is been posted <strong style="color:green;">successfully</strong> and is currently awaiting Task Runners...</div>
+            {% else %}
+            <div class='item rc' style="color:red;"><i class='icon icon-time'></i>&nbsp; Awaiting Task Funding by  {{ task.creator.displayName }}</div>
+            {% endif %}
+          {% endif %}
+        
+        {% endif %}
+
+        {% if cancelled %}
+        <a href='/task/restore/{{ task.id }}' data-prompt="confirm" data-confirm-title="Are you sure you want to open this Task back up?" class='restore btn'>
+          <i class='icon-plus'></i>&nbsp;Restore Task</a>
+        {% else %}
+        <a href='/task/cancel/{{ task.id }}' data-toggle="tooltip" title="Close This Task" data-prompt="confirm" data-confirm-title="Close this Task down?" class='cancel btn'>
+          <i class='icon-trash'></i></a>
+        <div class='subtitle'>Close Task</div>
+        {% endif %}
+
+        <div class='clear'></div>
+      </div>
+    {% endif %}
+      
+  {% endif %}
+
+  <style type="text/css">
+  
+  .action-control {
+    border-top:1px solid #e1e1e1;
+  }
+
+  div.item.rc{
+    min-height: 50px !important;
+    background:#f7f7f7;
+  }
+  @media(max-width:775px){
+    div.item.rc{
+      min-height: 60px !important;
+      text-align: center;
+      padding-bottom:30px;
+      height:75px !important;
+    }
+
+  }
+  </style>
+
+
+  <div class='row-fluid bar' style="top:0px;">
+  
+    <div class='span12 runner-list {% if has_bid %}has_bid{% endif %}'>
+
+    {% if cancelled %}
+        <!-- <h2 class='your-bid'></h2> -->
+        <div class='row-fluid your-bids cancelled'>
+          {% if is_creator %}
+          You have Cancelled this Task.
+          {% else %}
+          Sorry, this Task has been Cancelled
+          {% endif %}
+        </div>
+
+    {% elseif not is_running and not is_creator and task.chosen and task.chosen.id != app.user.id %}
+        <div class='row-fluid already-awarded'>
+          <br/>
+          <h1>This Task has already been awarded to <br/><a href="/u/{{ task.chosen.id }}" data-toggle="tooltip" title="View Profile">{{ task.chosen.getFullDisplayName | raw }}</a>.</h1>
+          <span class='little'>But don't worry, we have tons of other tasks for you to do!</span>
+          <a href='/browse' class='btn btn-orange'><i class='icon-'></i>&nbsp; Check out more Tasks</a>
+          <br/>
+          <br/>
+          <br/>
+        </div>
+
+    {% elseif has_bid and not has_chosen %}
+        <!-- <h2 class='your-bid'></h2> -->
+        <div class='row-fluid your-bids'>
+          You have placed a Bid for this Task: ${{ user_to_bids[app.user.id].amount }} 
+        </div>
+
+
+    {% elseif is_creator and has_chosen == false %}
+      <div class='manage-task'>
+        <div class='left task-action-title'>Manage your Task:</div>
+        <div class='right btn-group'>
+         
+            <a href='#/overview' data-toggle="section" class='btn btn-overview'>
+              <i class='icon-bullseye'></i>&nbsp; task runners</a>
+          
+            <a href='#/uploads' data-toggle="section" class='btn btn-uploads'>
+              <i class='icon-cloud-upload'></i>&nbsp; uploads</a>
+          
+            <a href='#/questions' data-toggle="section" class='btn btn-questions'>
+              <i class='icon-question-sign'></i>&nbsp; questions</a>
+          
+            <a href='#/winner' data-toggle="section" class='btn btn-winner'>
+              <i class='icon-trophy'></i>&nbsp; choose a winner</a>
+            
+            <a href='#/edit' data-toggle="section" class='btn btn-edit'>
+              <i class='icon-wrench'></i>&nbsp; update task</a>
+
+        </div>
+        <div class='clear'></div>
+      </div>
+
+    {% elseif has_chosen and is_creator %}
+      <div class='manage-task'>
+        <div class='left task-action-title'>Manage your Task:</div>
+        <div class='right btn-group'>
+          {# {% if has_chosen == true %} #}
+          
+          <a href='#/overview' data-toggle="section" class='btn btn-overview'>
+            <i class='icon-user'></i>&nbsp; overview</a>
+          
+          <a href='#/uploads' data-toggle="section" class='btn btn-uploads'>
+            <i class='icon-picture'></i>&nbsp; uploads</a>
+
+          <a href='#/runner/{{ task.chosen.id }}' data-toggle="section" class='btn btn-runners'>
+            <i class='icon-user'></i>&nbsp; runner messages</a>
+          
+          <a href='#/questions' data-toggle="section" class='btn btn-questions'>
+            <i class='icon-question-sign'></i>&nbsp; questions</a>
+          
+
+          {# 
+          {% else %}
+          
+            <a href='#/overview' data-toggle="section" class='btn btn-overview'>
+              <i class='icon-bullseye'></i>&nbsp; task bidders</a>
+          
+            <a href='#/questions' data-toggle="section" class='btn btn-questions'>
+              <i class='icon-question-sign'></i>&nbsp; questions</a>
+          
+            <a href='#/winner' data-toggle="section" class='btn btn-winner'>
+              <i class='icon-trophy'></i>&nbsp; choose a winner</a>
+            
+            <a href='#/edit' data-toggle="section" class='btn btn-edit'>
+              <i class='icon-wrench'></i>&nbsp; update task</a>
+           #}
+
+          {# {% endif %} #}
+        </div>
+        <div class='clear'></div>
+      </div>
+
+    {% elseif is_winner %}
+      <div class='manage-task is_winner'>
+        Congratulations! You have been chosen for this Task!
+      </div>
+    {% else %}
+    
+    {% endif %}
+
+      
+      <div class='back-to-bar no-select {{ back_bar_class }}'>
+        <div class='button'>
+          <i class='icon-chevron-left'></i>&nbsp;&nbsp;<span class='text'></span>
+        </div>
+      </div>
+
+      
+    </div>
+  </div>
+  <div id='dynamic-content'>
+    {% if cancelled %}<div id="task-cancelled"></div>{% endif %}
+    <div class='row-fluid section section-loading'></div>
+
+
+    
+    {% include "BidOnTaskBundle:Tasks:_view_overview.html.twig" %}
+    
+    {% if is_creator %}
+      {% include "BidOnTaskBundle:Tasks:_view_winner.html.twig" %}
+      {% include "BidOnTaskBundle:Tasks:_view_uploads.html.twig" %}
+      {% include "BidOnTaskBundle:Tasks:_view_runners.html.twig" %}
+      {% include "BidOnTaskBundle:Tasks:_view_edit.html.twig" %}
+      {% include "BidOnTaskBundle:Tasks:_view_questions.html.twig" %}
+      {% include "BidOnTaskBundle:Tasks:_view_user_messages.html.twig" %}
+    {% endif %}
+
+  </div>
+
+
+</div>
+
+
+{% endblock %}
+
+{% if app.user %}
+
+{% if task.getCreatorId == app.user.getId %}
+  {% set is_creator = true %}
+{% else %}
+  {% set is_creator = false %}
+{% endif %}
+
+{% else %}
+  {% set is_creator = false %}
+{% endif %}
+
+{% block body_class_tag %} {{ parent() }}  {% if is_creator %} is-creator {% endif %} {% endblock %}
+
+{% block head_include %}
+  <link href='/css/user/tasks.view.css?rev={{ rev }}' type="text/css" rel="stylesheet"/>
+  <link href='/css/user/bid.modal.css?rev={{ rev }}' type="text/css" rel="stylesheet"/>
+  <script type="text/javascript">
+  window['task'] = {{ task_json | raw }}
+  window['is_creator'] = {{ is_creator | json_encode | raw }};
+  </script>
+{% endblock %}
+
+{% block bottom_scripts %}
+
+  {% include "BidOnTaskBundle:Tasks:bid.modal.html.twig" %}
+
+  <script type="text/javascript">
+    window['runners_db'] = {{ task.getRunners() | json_encode | raw }};
+  </script>
+
+  <script type="text/javascript" src="/js/user/section.manager.js?rev={{ rev }}"></script>
+  <script type="text/javascript" src="/js/user/tasking.view.js?rev={{ rev }}"></script>
+  <script type="text/javascript" src="/js/user/tasking.messages.js?rev={{ rev }}"></script>
+  <script type="text/javascript" src="/js/user/tasking.uploads.js?rev={{ rev }}"></script>
+  <script type="text/javascript" src="/js/vza/bid.viewer.js?rev={{ rev }}"></script>
+  <script type="text/javascript" src="/js/vza/numeric.js?rev={{ rev }}"></script>
+  
+  <script type="text/javascript" src="/public/jquery-bbq-deparam/jquery-deparam.min.js?rev={{ rev }}"></script>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+

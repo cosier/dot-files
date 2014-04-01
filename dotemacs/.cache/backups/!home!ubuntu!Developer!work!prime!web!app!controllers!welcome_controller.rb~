@@ -1,0 +1,10 @@
+class WelcomeController < ApplicationController
+
+  # Temporary landing page
+  def index
+
+  end
+
+
+
+end

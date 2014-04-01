@@ -1,0 +1,17 @@
+<?php
+
+namespace VZA\BidOnTaskBundle;
+
+use Symfony\Component\HttpKernel\Bundle\Bundle;
+
+class BidOnTaskBundle extends Bundle
+{
+
+    public $name = "BidOnTaskBundle";
+
+    public function __construct()
+    {
+    ;
+    }
+
+}

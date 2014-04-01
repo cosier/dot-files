@@ -1,0 +1,13 @@
+;; Article Namespace
+(ns commenter.article)
+;; Load required namespaces
+;;(load-namespace commenter.database)
+
+
+(defn latest-articles [period]
+  (str "loading articles: " period))
+
+
+(defn comment-count [url callback]
+  (.log js/console (+ "Comment Count Processing:" url))
+  (callback 1000))

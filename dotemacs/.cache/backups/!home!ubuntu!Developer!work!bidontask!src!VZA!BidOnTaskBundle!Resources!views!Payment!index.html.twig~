@@ -1,0 +1,260 @@
+{% extends profile_base %}
+
+{% block root %}
+
+	{% include 'BidOnTaskBundle:Payment:modal_withdraw.html.twig' %}
+	{% include 'BidOnTaskBundle:Payment:modal_deposit.html.twig' %}
+
+{% endblock %}
+
+{% block profile_content %}
+
+	<script type="text/javascript">
+		profile_set_active_tab('view-payments', true);
+	</script>
+
+	<!-- --------------------------------------------------------------- -->
+
+	{% if not user.getPaypalConnected %}
+		<div class='verify-wrapper'>
+			<div class='get-verified'>
+				<h1><i class='icon icon-exclamation-sign'></i>&nbsp;You have not added any payment sources yet</h1>
+			</div>
+			<p class='note'>
+				Adding a Verified Payment source allows you to withdraw your <br/>Task earnings as well as gain <u>+25% Trust Level</u> for your BidOnTask Profile!
+			</p>
+			<div class='arrow'></div>
+			<div class='center'>
+			<a href="/money/connect" class='paypal-connect'></a>
+			
+			<a href="/money/connect">
+				<p class='instant'>Click here to instantly Connect your PayPal Account <i class='icon icon-ok-sign'></i></p>
+			</a>
+			</div>
+
+			<div class='clear'></div>
+		</div>
+		<hr/>
+	{% endif %}
+	
+	<!-- --------------------------------------------------------------- -->
+	<div class='page-header account-balance'>
+		<i class='icon icon-money'></i>&nbsp; Account Balance
+		<p class='sub-header'>
+			<div class='balance'>${{ balance | number_format(2) }}</div>
+			<script type="text/javascript">
+				window['account_balance'] = {
+					'balance' : {{ balance | number_format(2) }}
+				};
+			</script>
+			
+			<a href="#withdrawModal" role="button" data-toggle="modal" class='withdraw'>
+				<i class='icon icon-check-sign'></i>&nbsp; Withdraw
+			</a>
+			
+			<a href='#addfundsModal' role="button" data-toggle="modal"  class='add-funds'>
+				<i class='icon icon-plus-sign'></i>&nbsp; Add Funds
+			</a>
+		</p>
+		<p class='balance-text'>
+			<i class='icon icon-exclamation-sign'></i>&nbsp; Complete local & online tasks and earn money. <a href='/browse'>Browse Open Tasks</a>
+		</p>
+	</div>
+
+
+	<!-- --------------------------------------------------------------- -->
+	{% if transactions | length > 0 %}
+	<div class='page-header'>
+		<i class='icon icon-barcode'></i>&nbsp; Transaction History
+		<p class='sub-header'>
+			All recorded transactions for your BidOnTask account. <br/>
+			<small>Including Service Fees, Withdrawals, Deposits, and Payments</small>
+		</p>
+		<table class='table table-striped table-bordered tx'>
+			<thead>
+				<th>Transaction ID</th>
+				<th>Amount</th>
+				<th>Type</th>
+				<th>Date</th>
+				<!-- <th>Status</th> -->
+			</thead>
+			<tbody>
+			{% for tx in transactions if tx.isHappening %}
+				<tr class='top {{ cycle(['odd', 'even'], loop.index) }} tx-type-{{tx.txType}} tx-status-{{ tx.status }}'>
+					<td>{{tx.id}}</td>		    
+					<td>
+						{% if tx.direction == 'inbound' %}
+							<i class='icon icon-plus-sign orange'></i>&nbsp;
+						{% else %}
+							<i class='icon icon-minus-sign green'></i>&nbsp;
+						{% endif %}
+						${{tx.amount | number_format(2) }}
+					</td>		    
+
+					{# Withdraws #}
+					{% if tx.txType == 1 %}
+						<td>Withdraw</td>		    
+					{% endif %}
+					
+					{# Deposits #}
+					{% if tx.txType == 2 %}
+						<td>Deposit</td>		    
+					{% endif %}
+
+					{# Outgoing Payments #}
+					{% if tx.txType == 3 %}
+						<td>Payment to Runner</td>
+					{% endif %}
+				
+					{# Fees #}
+					{% if tx.txType == 5 %}
+						<td>Task Finish Fee (Cash Accepted)</td>		    
+					{% endif %}
+
+					{# Inbound Payments #}
+					{% if tx.txType == 4 %}
+						<td>Task Payment</td>		    
+					{% endif %}
+<!-- 
+					{# Inbound Payments #}
+					{% if tx.complete %}
+						<td>Complete</td>		    
+					{% elseif tx.pending %}
+						<td>Pending</td>		    
+					{% endif %} -->
+					<td>{{ tx.created | date('Y-m-d H:i') }}</td>
+				</tr>
+				<tr class='bottom {{ cycle(['odd', 'even'], loop.index) }}'>
+					<td colspan="100">
+						<div class='row-fluid tx-bottom'>
+							<div class='span9'>
+								<!-- Transaction Notes: -->
+								{% if tx.cancelled %}
+									<span class='label label-important'>Transaction cancelled</span>
+								{% endif %}
+
+								{% if tx.pending and tx.txType == 1 and not tx.cancelled %}
+									<span class='label label'>Processing withdrawal</span>
+								{% endif %}
+								
+								{% if tx.complete and not tx.cancelled %}
+									<span class='label label-success'>Complete</span>
+								{% endif %}
+
+							</div>
+							<div class='span3 muted'></div>
+						</div>
+						
+					</td>
+				</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+		<style type="text/css">
+		.label {
+			border-radius:4px !important;
+			/*font-variant: small-caps;*/
+			padding:4px 7px !important;
+		}
+		</style>
+	{% else %}
+		<div class='alert'>
+			No recent transaction activity has been recorded yet.
+		</div>
+	{% endif %}
+	</div>
+
+	<!-- --------------------------------------------------------------- -->
+	{% if user.getPaypalConnected %}
+		<div class='page-header'>
+			<img src="/img/paypal.png"/>&nbsp; PayPal Connection
+			<!-- <p class='sub-header'>One simple place to view all financial transactions for your account.</p> -->
+			<br/>
+			<p class='paypal-info'>
+			    <table class='table'>
+			    	<tr>
+				    	<td class='key'>Paypal Account Name</td>
+				    	<td class='val'>{{ user.paypalUserInfo('name') }}</td>
+			    	</tr>
+			    	<tr>
+				    	<td class='key'>Paypal Email</td>
+				    	<td class='val'>{{ user.paypalUserInfo('email') }}</td>
+			    	</tr>
+			    	<tr>
+				    	<td class='key'>Verified Paypal Account</td>
+				    	<td class='val'>
+				    		{% if user.paypalUserInfo('verified_account') == 'true' %}
+				    			<span class='colour-green'><i class='icon icon-check-sign colour-green'></i> Verified</span>
+				    		{% else %}
+				    			<span class='colour-red'><i class='icon icon-remove-sign colour-red'></i> Not Verified</span>
+				    		{% endif %}
+				    	</td>
+			    	</tr>
+			    </table>
+			</p>
+			<a href='/money/disconnect' class='btn btn-disconnect' data-prompt="confirm" data-confirm-title="Confirm: Remove your PayPal account?"><i class='icon icon-remove'></i>&nbsp; Disconnect PayPal</a>
+			<div class='clear'></div>
+		</div>
+	{% endif %}
+
+	<br/>
+
+	<p class='support'>
+		For quick assistance for any account related issues, please contact us at<br/> <a href="mailto:support@bidontask.com">support@bidontask.com</a> with your email/username and any additional information.
+	</p>
+
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<script type="text/javascript">
+	$(function(){
+
+		deposit_form  = $('form#deposit-form');
+		withdraw_form = $('form#withdraw-form');
+
+		$('input[type="number"]').numeric();
+
+		$('button.deposit.btn').click(function(evt){
+			console.log('Deposit Triggered');
+			evt.preventDefault();
+			var deposit_amount = $('input.deposit-input').val();
+
+			if(deposit_amount >= 10){
+				deposit_form.submit();	
+			} else {
+				console.log('Invalid Deposit Amount', deposit_amount);
+			}
+
+		});
+
+		$('button.withdraw.btn').click(function(evt){
+			console.log('Withdraw Triggered');
+			evt.preventDefault();
+			var withdraw_amount = $('input.withdraw-input').val();
+
+			if(withdraw_amount >= 10){
+				withdraw_form.submit();
+			} else {
+				console.log('Invalid Withdraw Amount', withdraw_amount);
+			}
+			
+		});
+	});
+	</script>
+{% endblock %}
+
+{% block head_include %}
+	{{ parent() }}
+    <meta http-equiv="X-UA-Compatible" content="IE=9, chrome" />
+    <title>BidOnTask - Welcome</title>
+    <meta name="description" content="">
+    <meta name="author" content="vza">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+	<link href='/css/user/payment.css?rev={{ rev }}' type="text/css" rel="stylesheet"/>
+
+	<script src="/js/libs/jquery.min-1.10.1.js"></script>
+	<script type="text/javascript" src="/js/jquery.numeric.js"></script>
+{% endblock %}

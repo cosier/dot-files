@@ -1,0 +1,76 @@
+(defproject commenter "0.1.0-SNAPSHOT"
+  :description "Streem Comment Scraper"
+  :url "http://streem.com.au"
+
+  :dependencies [[org.clojure/clojure "1.5.1"]
+                 ;;[org.clojure/clojurescript "0.0-2138"]
+                 [org.clojure/clojurescript "0.0-2194"]
+                 [org.clojure/core.async "0.1.278.0-76b25b-alpha"]
+                 [org.bodil/cljs-noderepl "0.1.11"]
+                 [om "0.2.3"]
+                 [com.facebook/react "0.8.0.1"]
+                 [org.clojars.franks42/cljs-uuid-utils "0.1.3"]
+                 [cljs-wsock "0.1.2"]]
+
+  ;; Leiningen plugins
+  :plugins [[lein-cljsbuild "1.0.2"]
+            [cider/cider-nrepl "0.1.0-SNAPSHOT"]
+            [lein-npm "0.3.2"]]
+
+
+  ;; Middleware
+  :repl-options {:nrepl-middleware [cemerick.piggieback/wrap-cljs-repl
+                                    cider.nrepl.middleware.complete/wrap-complete
+                                    cider.nrepl.middleware.info/wrap-info
+                                    cider.nrepl.middleware.inspect/wrap-inspect]}
+
+  ;; Nodejs NPM Deps
+  :node-dependencies [[mysql   "2.1.1"]
+                      [hiredis "0.1.16"]
+                      [redis   "0.10.1"]
+                      [connect "3.0.0-rc.1"]
+                      [ws      "0.4.31"]
+                      [connect-static "1.1.1"]
+                      [request "*"]
+                      [async   "*"]
+                      [cheerio "*"]
+                      [swig    "*"]]
+
+
+  :source-paths ["src"]
+
+  :cljsbuild {
+              :builds [
+
+                       {:id "frontend"
+                        :source-paths ["src/frontend"]
+                        :compiler {:output-to  "builds/commenter.frontend.js"
+                                   :output-dir "builds/frontend"
+                                   :source-map "builds/commenter.frontend.js.map"
+                                   :optimizations :whitespace }}
+
+                       {:id "vanilla"
+                        :source-paths ["src/backend"]
+                        :compiler {:output-to  "builds/commenter.vanilla.js"
+                                   :output-dir "builds/vanilla"
+                                   :source-map "builds/commenter.vanilla.js.map"
+                                   :optimizations :whitespace
+                                   :target :nodejs }}
+
+                       {:id "dev"
+                        :source-paths ["src/backend"]
+                        :compiler {:output-to  "builds/commenter.dev.js"
+                                   :output-dir "builds/development"
+                                   ;;:source-map "builds/commenter.dev.js.map"
+                                   ;;:target :nodejs
+                                   :optimizations :simple
+                                   }}
+
+                       {:id "production"
+                        :source-paths ["src/backend"]
+                        :compiler {:output-to  "builds/commenter.production.js"
+                                   :output-dir "builds/production"
+                                   :source-map "builds/commenter.production.js.map"
+                                   :optimizations :advanced
+                                   :target :nodejs }}
+                       ]})
