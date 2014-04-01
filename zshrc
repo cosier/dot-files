@@ -62,8 +62,8 @@ source ~/.dot/services.zsh
 source ~/.dot/projects.zsh
 source ~/.dot/colors
 
-if [[ -a ~/.rvm/scripts/rvm ]]; then
-    source ~/.rvm/scripts/rvm
+if [[ -a /usr/local/rvm/scripts/rvm ]]; then
+    source /usr/local/rvm/scripts/rvm
 fi
 
 if [[ -a ~/.Xmodmap ]]; then

@@ -51,7 +51,7 @@
 
 (global-set-key (kbd "C-c h") 'helm-mini)
 
-(setq default-directory "/home/ubuntu/Developer/work/" )
+(setq default-directory "~/Developer/work/" )
 
 ;;(setq projectile-require-project-root nil)
 (setq projectile-indexing-method 'native)

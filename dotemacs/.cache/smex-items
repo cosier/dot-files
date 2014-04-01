@@ -41,7 +41,7 @@
  (sr-speedbar-toggle . 1)
  (speedbar-toggle-etags . 1)
  (sr-speedbar-close . 1)
- (package-install . 9)
+ (package-install . 11)
  (dired-tree-up . 1)
  (customize-group . 1)
  (kill-buffer-and-window . 13)
