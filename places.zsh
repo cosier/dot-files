@@ -21,7 +21,7 @@ alias scheme='cd /home/ubuntu/Developer/sdk/clojure-scheme'
 alias dc='cd ~/Developer/work/dinecart'
 alias music='cd ~/Music'
 
-alias studybloc='cd ~/Developer/work/studybloc/demo'
+alias study='cd ~/Developer/work/studybloc/demo'
 
 # BidOnTask Development
 alias bid='cd $HOME_DIR/Developer/work/bidontask'
