@@ -1,0 +1,10 @@
+/home/ubuntu/Developer/work/prime/web/.gitignore
+~/.emacs.d/.cache/#!home!ubuntu!Developer!work!prime!web!.gitignore#
+/home/ubuntu/Developer/work/prime/web/Gemfile
+~/.emacs.d/.cache/#!home!ubuntu!Developer!work!prime!web!Gemfile#
+/home/ubuntu/Developer/work/prime/web/app/controllers/welcome_controller.rb
+~/.emacs.d/.cache/#!home!ubuntu!Developer!work!prime!web!app!controllers!welcome_controller.rb#
+/home/ubuntu/Developer/work/prime/web/app/assets/javascripts/application.js
+~/.emacs.d/.cache/#!home!ubuntu!Developer!work!prime!web!app!assets!javascripts!application.js#
+/home/ubuntu/Developer/work/prime/web/app/views/welcome/index.html.erb
+~/.emacs.d/.cache/#!home!ubuntu!Developer!work!prime!web!app!views!welcome!index.html.erb#

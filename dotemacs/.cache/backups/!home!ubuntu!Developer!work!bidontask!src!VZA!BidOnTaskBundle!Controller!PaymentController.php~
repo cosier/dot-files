@@ -1,0 +1,364 @@
+<?php
+
+namespace VZA\BidOnTaskBundle\Controller;
+
+use VZA\BidOnTaskBundle\Entity\Transaction;
+
+use VZA\BidOnTaskBundle\Entity\User;
+use VZA\BidOnTaskBundle\Entity\AdminNotification;
+use VZA\BidOnTaskBundle\Entity\UserNotification;
+
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+
+class PaymentController extends Controller
+{
+
+    public function __construct()
+    {
+        $this->profile_base_template = 'BidOnTaskBundle::User/profile.html.twig';
+    }
+
+    public function prefundAction(Request $req, $task_id)
+    {
+      $user = $this->container->get('vza.user')->getUser();
+
+      if(!$user->getPaypalConnected()){
+        $this->container->get('session')
+          ->getFlashBag()
+          ->add('notice',
+                'Before funding, you must connect a valid PayPal account to your account');
+
+        return new RedirectResponse('/money');
+      }
+
+      $task = $this->container->get('doctrine')
+        ->getRepository('BidOnTaskBundle:Task')
+        ->find($task_id);
+      $tx_fee_percent = $this->container->get('vza.settings')
+        ->get('paypal_fee_percent');
+
+      $amount = $task->getAmount();
+
+      // calculate transaction tax/fee
+      $full_amount = $amount + ($amount * ( floatval($tx_fee_percent) / 100 ));
+
+      $ps = $this->container->get('vza.payment');
+
+      $current_balance = $ps->getBalanceFor($user);
+
+      $env = $this->container->get('kernel')->getEnvironment();
+
+      if($current_balance >= $amount && $env == 'prod') {
+          return $ps->payForTaskFromBalance($user, $task);
+      } else {
+          return $ps->payForTaskFromPaypal($user, $task);
+      }
+    }
+
+    public function cancelAction(Request $req, $tx_id)
+    {
+
+      $tx = $this->container->get('doctrine')
+        ->getRepository('BidOnTaskBundle:Transaction')
+        ->findBy(['id' => $tx_id])[0];
+
+      $mgr = $this->container->get('doctrine')->getManager();
+
+      $mgr->persist($tx);
+      $mgr->flush();
+
+      $follow_through = '/money';
+      // $flash_message  = 'Transaction has been cancelled';
+      // $this->container->get('session')->getFlashBag()->add('notice', $flash_message);
+
+      return new RedirectResponse($follow_through);
+    }
+
+    public function successAction(Request $req, $tx_id)
+    {
+      $params = $req->request->all();
+
+      $tx = $this->container->get('doctrine')
+        ->getRepository('BidOnTaskBundle:Transaction')
+        ->findBy(['id' => $tx_id])[0];
+
+      $tx->setPaypalPayerId($_GET['PayerID']);
+      $tx->setPaypalToken($_GET['token']);
+
+      $mgr = $this->container->get('doctrine')->getManager();
+      $mgr->persist($tx);
+      $mgr->flush($tx);
+
+      $execution = $this->container->get('vza.payment')->executePayment($tx);
+
+      if(!$execution) {
+          $this->container->get('session')
+                          ->getFlashBag()
+                          ->add('error',
+                          'Oops there was a connection issue while trying to validate your payment. Please try again or contact support');
+
+        return new RedirectResponse('/money');
+      }
+
+      $follow_through = '/money';
+      $flash_message  = 'Transaction has been created successfully';
+      $tx_type        = $tx->getTxType();
+
+
+      if ($tx_type == Transaction::TX_TYPE_WITHDRAW) {
+          $flash_message = 'Withdraw initiated successfully';
+          $tx->setPending(true);
+      } else {
+          $tx->setComplete(true);
+      }
+
+
+      if ($tx->getTaskId()) {
+          $task = $this->container->get('doctrine')
+                                  ->getRepository('BidOnTaskBundle:Task')
+                                  ->find($tx->getTaskId());
+          $task->setIsFunded(true);
+          $mgr->persist($task);
+          
+          $flash_message  = 'Task has been successfully Funded';
+          $follow_through = '/task/view/' . $tx->getTaskId();
+      }
+
+      $mgr->persist($tx);
+      $mgr->flush();
+
+      $this->container->get('session')->getFlashBag()->add('notice', $flash_message);
+      return new RedirectResponse($follow_through);
+    }
+
+    /**
+     * Deposit monay!!!
+     * @param  Request $req [description]
+     * @return [type]       [description]
+     */
+    public function depositAction(Request $req)
+    {
+      $user   = $this->container->get('vza.user')->getUser();
+      $amount = floatval($req->request->get('amount'));
+
+      // create an empty  user with an id of 0 (symbolises nobody, or ourselves)
+      // as normal doctrine setters won't do the job for relationship linked fields
+
+      $empty_user = (new User())->inject_id(0);
+      $tx = new Transaction([
+          'debitee'     => $user,
+          'amount'      => $amount,
+          'description' => 'PayPal Deposit',
+          'tx_type'     => Transaction::TX_TYPE_DEPOSIT
+        ]);
+      $tx->generateId();
+
+      // initial save of the transaction happens right hurr
+      $mgr = $this->container->get('doctrine')->getManager();
+      $mgr->persist($tx);
+      $mgr->flush();
+
+      $pp_data = $this->container->get('vza.payment')->createPayment($tx, [
+            'title' => 'Funding your BidOnTask Account'
+          ]);
+
+      $tx->setPaypalTxId($pp_data['paypal_tx_id']);
+      $tx->setPaypalExecuteUrl($pp_data['paypal_execute_url']);
+      $tx->setPaypalApprovalUrl($pp_data['paypal_approval_url']);
+
+      $mgr->persist($tx);
+      $mgr->flush();
+
+
+      return new RedirectResponse($pp_data['paypal_approval_url']);
+    }
+
+    /**
+     * Withdraw monay!!!
+     * @param  Request $req [description]
+     * @return [type]       [description]
+     */
+    public function withdrawAction(Request $req)
+    {
+      $user = $this->container->get('vza.user')->getUser();
+      $amount = floatval($req->request->get('amount'));
+
+      if($amount < 10){
+        return new RedirectResponse('/money');
+      }
+
+      // create an empty  user with an id of 0 (symbolises nobody, or ourselves)
+      // as normal doctrine setters won't do the job for relationship linked fields
+      $empty_user = (new User())->inject_id(0);
+      $tx = new Transaction([
+          'debitee'     => $user,
+          'receiver'    => $empty_user,
+          'amount'      => $amount,
+          'description' => 'PayPal Withdrawal',
+          'tx_type'     => Transaction::TX_TYPE_WITHDRAW,
+          'pending'     => true,
+        ]);
+
+      $tx->generateId();
+
+      try {
+        $note_data = [
+            'type' => UserNotification::TYPE_WITHDRAWAL,
+            'link' => '/secure/r/transactions/withdrawals/pending',
+            'user' => $user,
+            'description' => "Withdraw Requested (${$amount})"
+          ];
+        // dump($note_data);
+        $this->container->get('vza.admin')->
+          addNotification($note_data);
+      } catch (Exception $e) {
+
+      }
+      // initial save of the transaction happens right hurr
+      $mgr = $this->container->get('doctrine')->getManager();
+      $mgr->persist($tx);
+      $mgr->flush();
+
+
+
+      $this->container->get('session')->getFlashBag()->add('success', 'Withdraw initiated successfully, awaiting review');
+      return new RedirectResponse('/money');
+    }
+
+
+    public function connectSuccessAction()
+    {
+        $user = $this->container->get('vza.user')->getUser();
+
+        $user_type = 'user';
+        $base_url = "/payments";
+        $sub_action = false;
+
+        $render = $this->render('BidOnTaskBundle:Payment:success.html.twig',
+                    [
+                        'profile_base' => $this->profile_base_template,
+                        'user' => $user,
+                        'user_type' => $user_type,
+                        'sub_action' => $sub_action,
+                        'base_url' => $base_url
+                    ]);
+
+        return $render;
+    }
+
+    public function connectAction()
+    {
+        $user = $this->container->get('vza.user')->getUser();
+        $payment = $this->container->get('vza.payment');
+        $url = $payment->connectURL();
+
+        return new RedirectResponse($url);
+    }
+
+    /**
+     * Removes the associated paypal
+     *
+     * @param  Request $req
+     */
+    public function disconnectAction(Request $req)
+    {
+        $user_service = $this->container->get('vza.user');
+        $user = $user_service->getUser();
+
+        $user->setPaypalConnected(false);
+        $user->setPaypalAccessToken(null);
+        $user->setPaypalRefreshToken(null);
+        $user->setPaypalVerifiedAccount(false);
+        $user->setVerificationPayment(false);
+
+        $user_service->save($user);
+
+        $this->container->get('session')->getFlashBag()->add('success', 'Payment source has been removed');
+        return new RedirectResponse('/money');
+
+    }
+
+    /**
+     * Receives the Paypal Consent authorization code
+     * and creates a Access/Refresh Token pair from that
+     *
+     * @param  Request $req
+     */
+    public function connectPayPalAction(Request $req)
+    {
+
+      $data             = $req->request->all();
+      $code             = $_GET['code'];
+      $payment_service  = $this->container->get('vza.payment');
+      $user_service     = $this->container->get('vza.user');
+      $user             = $user_service->getUser();
+
+      // fetch api token from PayPal Rest API
+      $token = $payment_service->getToken($code);
+
+      // if the token is null, that most likely means the session with paypal timed out,
+      // lets try again
+      if(!$token) return new RedirectResponse('/money/connect');
+      
+
+      // save the token to the user entity for the paypal `association` link
+      $user->setPaypalToken($token);
+
+      // Make HTTP request to PayPal api to retrieve user info 
+      // via the use of the obtained access_token
+      $data = $payment_service->getInfo($token['access_token']);
+
+      $verified_account = ($data['verified_account'] == "true") ? true : false;
+
+      $user->setPaypalUserInfo(json_encode($data));
+      $user->setPaypalEmail($data['email']);
+      $user->setPaypalVerifiedAccount($verified_account);
+      $user->setPaypalConnected(true);
+
+      // persist and flush
+      $user_service->save($user);
+
+      // let the user know the future
+      $this->container->get('session')->getFlashBag()->add(
+        'success', 'PayPal Account successfully connected'
+        );
+
+      // flow
+      return new RedirectResponse('/money');
+    }
+
+
+    public function indexAction()
+    {
+        $user = $this->container->get('vza.user')->getUser();
+
+        $user_type  = 'user';
+        $base_url   = "/money";
+        $sub_action = false;
+
+        $payment_service = $this->container->get('vza.payment');
+        // dump($payment_service->getConnectionInfo());
+
+        $user_transactions = $payment_service->getTransactionsFor($user);
+        $user_balance      = $payment_service->getBalanceFor($user);
+
+        $paypal_fee        = $this->container->get('vza.settings')->get('paypal_fee_percent', 'all');
+
+        $render = $this->render('BidOnTaskBundle:Payment:index.html.twig',
+                    [
+                        'profile_base' => $this->profile_base_template,
+                        'user'         => $user,
+                        'user_type'    => $user_type,
+                        'sub_action'   => $sub_action,
+                        'base_url'     => $base_url,
+                        'transactions' => $user_transactions,
+                        'balance'      => $user_balance,
+                        'paypal_fee'   => $paypal_fee
+                    ]);
+
+        return $render;
+    }
+
+}

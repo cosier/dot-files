@@ -1,0 +1,11 @@
+!remove mod4 = Super_L
+!add control = Super_L
+
+keycode 66 = Control_L
+clear Lock
+add Control = Control_L
+
+clear Lock
+keycode 0x7e = Control_R
+add Control = Control_R
+

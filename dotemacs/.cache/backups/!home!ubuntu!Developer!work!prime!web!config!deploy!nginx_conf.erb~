@@ -1,0 +1,37 @@
+upstream <%= application %> {
+  server unix:/tmp/<%= application %>.sock fail_timeout=0;
+}
+
+server {
+  <% if app_port %>
+  listen <%= app_port %> default deferred;
+  <% end %>
+
+  server_name <%= server_name %>;
+  client_max_body_size 4G;
+  keepalive_timeout 5;
+  root <%= "#{deploy_to}/current/public" %>;
+
+  #try_files $uri/index.html $uri.html $uri @<%= application %>;
+  passenger_enabled on;
+
+  location ^~ /assets/ {
+    gzip_static on;
+    expires max;
+    add_header Cache-Control public;
+  }
+
+  if (-f $document_root/system/maintenance.html) {
+    return 503;
+  }
+
+  error_page 500 502 504 /500.html;
+  location = /500.html {
+    root <%= "#{deploy_to}/current/public" %>;
+  }
+
+  error_page 503 @maintenance;
+  location @maintenance {
+    rewrite  ^(.*)$  /system/maintenance.html break;
+  }
+}

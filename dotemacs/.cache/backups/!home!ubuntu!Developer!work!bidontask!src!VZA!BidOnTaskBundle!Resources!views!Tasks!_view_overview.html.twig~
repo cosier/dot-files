@@ -1,0 +1,90 @@
+<div class='section section-overview'>
+{% include "BidOnTaskBundle:Tasks:_view_map.html.twig" %}
+<div class='row-fluid details'>
+
+  {% set is_winner_or_creator = false %}
+  {% if is_creator %}
+    {% set is_winner_or_creator = true %}
+  {% endif %}
+
+  {% if is_winner %}
+    {% set is_winner_or_creator = true %}
+  {% endif %}
+
+  {% if not has_chosen %}
+  <div class='span6 no-padding-top'>
+  <div class='runner-list {% if has_bid %}has_bid{% endif %}'>
+    <h2 class='runners'><i class='icon-flag'></i>&nbsp; Task Runners</h2>
+
+    {% if runners | length < 1 %}
+      {% if is_creator %}
+      <div class='first'>
+        Waiting for Runners to bid on your task...
+      </div>
+      
+      {% else %}
+
+      <div class='first'>
+        Be the first to bid on this Task!
+        <a href='/task/bid/{{ task.getId }}' class='bid-now'><i class='icon-legal'></i>&nbsp; Bid Now</a>
+      </div>
+      {% endif %}
+
+      <br/>
+      <br/>
+    {% else %}
+      <h3 class='sub'><i class='icon-lock'></i>&nbsp; Click on a Runner for Private Communication</h3>
+      
+      {% for runner in runners %}
+          {% set bid = runner.getBidForTask(task.id) %}
+          {% include "BidOnTaskBundle:Tasks:_view_runner.html.twig" %}
+      {% endfor %}
+
+    {% endif %}
+
+    <div class='clear'></div>
+    
+    {% if is_running and not is_creator and runners | length > 0  and not has_bid %}
+      <a class='btn-bid' href="/task/bid/{{ task.id }}"><i class='icon-legal'></i>&nbsp; Place Your Bid</a>
+    
+    {% elseif has_bid %}
+      <a class='btn-bid-remove' data-prompt="confirm" href="/task/bid/remove/{{ mybid.id }}">
+        <i class='icon-remove-sign'></i>&nbsp; Remove Your Bid &nbsp;(${{ mybid.amount }})
+      </a>
+    {% endif %}
+    
+    <div class='clear'></div>
+  </div><!-- END .runner-list-->
+
+  <div class='user-uploads-container'>
+        {% if uploads | length > 0 %}
+          {% include "BidOnTaskBundle:Tasks:_view_user_uploads.html.twig" %}
+        {% endif %}
+  </div>
+
+  </div><!-- END .span6-->
+
+  {# {% if not is_creator %} #}
+  <div class='span6 desc'>
+    <div class='row-fluid desc alert alert-clean'>
+      <h2>Task Outline:</h2>
+      {{ task.getDescription | raw }}
+      {% if task.getDescription | length < 3 %}
+        <span class='muted'>Please provide a detailed description for your Task.</span>
+      {% endif %}
+
+      {% include "BidOnTaskBundle:Tasks:_view_details.html.twig" %}
+    </div>
+  </div><!-- END .span6.desc -->
+  {# {% endif %} #}
+
+{% endif %} {# not has_chosen #}
+
+
+</div><!-- END .row-fluid.details -->
+
+{% if not is_creator %}
+  {% include "BidOnTaskBundle:Tasks:_view_communication.html.twig" %}
+{% endif %}
+
+</div><!-- END .section-overview -->

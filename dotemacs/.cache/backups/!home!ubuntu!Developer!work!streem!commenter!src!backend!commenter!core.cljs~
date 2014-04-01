@@ -1,0 +1,81 @@
+(ns commenter.core
+  (:require-macros [cljs.core.async.macros :refer [go]])
+  (:require
+   [commenter.logger :as logger]
+   [commenter.router :as router]
+   [cljs.core.async :as async
+    :refer [put! chan <! >! close! alts!]]))
+
+(enable-console-print!)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Define a testing url to hit
+(def test-url "www.smh.com.au/world/oscar-pistorius-murder-trial-iphone-messages-reveal-dark-side-of-blade-runners-relationship-with-reeva-steenkamp-20140325-35fs9.html")
+
+
+(def __dirname (js* "__dirname"))
+;;(println "Server directory: " __dirname)
+
+;; API Server Handler // Using Connect middleware
+;; Let's scope the the server initialisation process here
+(defn start-app []
+  (let [http (js/require "http")
+        connect (js/require "connect")
+        app (connect)
+        static (js/require "connect-static")
+        sopts-1 (js-obj "dir" (+ __dirname))
+        sopts-2 (js-obj "dir" (+ __dirname "/../public"))]
+
+    ;; Handle static file serving via middleware
+    (static sopts-1 (fn [e middleware]
+                      (.use app middleware)))
+    (static sopts-2 (fn [e middleware]
+                      (.use app middleware)))
+    ;; Hook up our app router entry point
+    (.use app "/commenter" router/engage)
+    (.use app "/" router/engage)
+    app))
+
+;; Start it up!
+(def http (js/require "http"))
+(.listen (.createServer http (start-app)) 3132)
+
+
+
+;; Atomic data channel for live publish/subscribe
+(def live-data-channel (chan))
+
+;; Live websocket handler
+;; Responsible for per connection data trafficking
+(defn live-data-handler [socket]
+  (println "User Connected to Socket")
+  (.send socket "Connected to Live Data")
+
+  (go (while true
+        (let [source-channel live-data-channel
+              incoming-data (<! source-channel)
+              outgoing-data (.stringify js/JSON incoming-data)]
+          (try
+           (.send socket outgoing-data)
+           (catch e
+               (println "Connection Closed Already" e))))))
+
+  ;; Send messages to the client for keepalive
+  (js/setInterval (fn []
+                    (go
+                     (>! live-data-channel
+                         "Hello from the inner channel")))
+                  1000))
+
+
+
+;; Websocket server configuration
+(def ws-server-options (js-obj "port" 3133))
+
+(comment
+;; Kick off the secondary websocket server
+(let [ws     (aget (js/require "ws") "Server")
+      server (ws. ws-server-options)
+      ch     live-data-channel]
+  (.on server "connection" live-data-handler)))
+

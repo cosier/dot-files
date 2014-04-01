@@ -1,0 +1,104 @@
+VZA\BidOnTaskBundle\Entity\Transaction:
+    type: entity
+    table: transactions
+    id:
+        id:
+            type: string
+            # generator: { strategy: AUTO }
+    fields:
+
+        debit_user_id:
+            type: integer
+            nullable: false
+
+        amount:
+            type: decimal
+            precision: 10
+            scale: 2
+            nullable: true
+
+        description:
+            type: text
+            nullable: false
+
+        tx_type:
+            type: integer
+            nullable: false
+
+        task_id:
+            type: integer
+            nullable: true
+            default: 0
+
+        approved:
+            type: boolean
+            nullable: false
+            default: false
+
+        complete:
+            type: boolean
+            nullable: false
+            default: false
+
+        pending:
+            type: boolean
+            nullable: false
+            default: false
+
+        cancelled:
+            type: boolean
+            nullable: false
+            default: false
+
+        created:
+            type: datetime
+            nullable: true
+            gedmo:
+                timestampable:
+                    on: create
+        updated:
+            type: datetime
+            nullable: true
+            gedmo:
+                timestampable:
+                    on: update
+
+############################################
+
+        paypal_tx_id:
+            type: text
+            nullable: true
+
+        paypal_token:
+            type: text
+            nullable: true
+
+        paypal_execute_url:
+            type: text
+            nullable: true
+
+        paypal_approval_url:
+            type: text
+            nullable: true
+
+        paypal_payer_id:
+            type: text
+            nullable: true
+
+
+############################################
+    manyToOne:
+
+        debitee:
+            targetEntity: User
+            inversedBy: transactions
+            joinColumn:
+                name: debit_user_id
+                referencedColumnName: id
+
+        receiver:
+            targetEntity: User
+            inversedBy: transactions_received
+            joinColumn:
+                name: receiver_user_id
+                referencedColumnName: id

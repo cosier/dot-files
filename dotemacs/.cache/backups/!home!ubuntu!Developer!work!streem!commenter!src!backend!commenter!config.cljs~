@@ -1,0 +1,15 @@
+(ns commenter.config
+  (:require [commenter.utils :as utils]))
+
+(def prod? (utils/is-production?))
+
+(def round-duration
+  (if prod?
+    (* 20 60 1000)
+    (* 1 60 1000)))
+
+(def round-limit
+  (if prod? 3000 100))
+
+(def period-limit
+  (if prod? 1 10))

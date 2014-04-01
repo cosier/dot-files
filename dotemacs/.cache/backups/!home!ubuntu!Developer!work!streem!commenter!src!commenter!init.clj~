@@ -1,0 +1,3 @@
+  (defn repl-setup
+    (require '[cljs.repl :as repl] '[cljs.repl.node :as node])
+    (repl/repl (node/run-node-nrepl)))

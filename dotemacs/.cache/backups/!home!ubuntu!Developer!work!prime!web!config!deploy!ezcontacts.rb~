@@ -1,0 +1,16 @@
+
+
+set :app_port,  80
+set :deploy_to, "/var/www/prime/staging"
+set :scm,       :git
+set :branch,    "staging"
+set :user,      "deploy"
+set :group,     "deploy"
+
+set :sudo_user, "deploy"
+set :use_sudo,   true
+
+set :rails_env, "production"
+set :deploy_via, :checkout
+set :ssh_options, { :forward_agent => true }
+set :keep_releases, 5

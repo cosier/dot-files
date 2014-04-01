@@ -1,0 +1,466 @@
+--- Log opened Tue Feb 18 20:19:23 2014
+20:19 -!- Irssi: #lua: Total of 280 nicks [0 ops, 0 halfops, 0 voices, 280 normal]
+20:19 -!- Irssi: Join to #lua was synced in 10 secs
+22:25 <       Strogg > hrmmm I need bit operations on 64bit numbers.  the interwebs seems to imply I'm in trouble.
+22:25 <       Strogg > has anything changed?  am I reading the wrong pages?
+22:26 <       cmtptr > where do you get your 64-bit numbers from?
+22:27 <       Strogg > I'm making them.  in my other libs, I'm representing my version string as a single 64bit int
+22:27 <       cmtptr > because lua <=5.2.x doesn't have 64-bit integers
+22:27 <       Strogg > hrm.
+22:27 <       Strogg > hrm..  crappy.
+22:28 <       Strogg > k.. I'll just make it a table then
+22:37 <        dmail > Strogg: Yes, it is crap.
+22:37 <        dmail > even 5.3 which has got 64 bit numbers on a 64 bit arch does not do 64 bit operations
+22:38 <         rjek > Two 32 bit numbers?
+22:39 <        dmail > rjek: sure it is possible to do, but I would not say it is user friendly
+22:40 <        dmail > there is always some hack involved
+22:40 <         rjek > A quick metatable should make it nice :)
+22:41 <        dmail > a metatable for all numbers or are the numbers for bit ops to be now stored in tables?
+22:41 <         rjek > Create a type for 64 bit numbers you want to bit-twiddle.
+22:42 <        dmail > yeah, that is just sugar coating a turd :)
+22:42 <       Strogg > hehe.. I'm just gonna avoid the issue
+22:45 <       xyzzy_ > or i guess if portability isn't a concern, luajit 2.1 supports 64-bit operations
+22:53 <        dmail > xyzzy_: I know the FFI does but does LuaJIT Lua ? If that makes sense
+22:56 <       xyzzy_ > yeah that capability is part of the ffi but then again so are 64-bit integers lol
+22:57 <        fdask > anyone here use lua-resty-mongol?  looking for some help, and couldnt find a specific channel for it
+23:04 <       Strogg > hrmmm.. I'm confused.  local doesn't seem to do what I thought it did.
+23:05 <        dmail > Strogg: what did you think it did?
+23:05 <       Strogg > if I'm at the lua interpreter prompt... and I do local a = 1..
+23:05 <       Strogg > should not typing =a give me a 1?
+23:06 <        dmail > each line is run in it's own scope
+23:06 <       Strogg > Ah
+23:06 <        dmail > wrap in a do end block
+23:06 <       Strogg > weird.  ok.. will do
+23:15 <    q66[work] > <dmail> each line is run in it's own scope
+23:15 <    q66[work] > it's not a design intention though, it's just that the lua REPL is very basic :/
+23:15 <    q66[work] > it just does loadstring() on every line you enter
+23:15 <    q66[work] > i actually wrote a lua REPL that keeps track of locals
+23:16 <    q66[work] > in lua
+23:17 <       Strogg > hehe
+23:17 <       Strogg > I still can't complain
+23:18 <       Strogg > everytime I think "erg.. lua is so basic", I think "it's still better than trying to get perl to compile". hehe
+23:18  *      Strogg breaks for lunch
+--- Day changed Wed Feb 19 2014
+00:24 <        sparr > I've got a lot of files that look like this: http://codepad.org/qmISJCaY
+00:24 <    Humbedooh > I've got a lot of cows and sheep
+00:25 <        sparr > My end goal is to get that object data into a tree format for display. I play to use some general purpose graph visualization software for that. Converting the data to a standard format is the step I'm on right now.
+00:26 <        sparr > I know very little lua. Would you recommend trying to accomplish this while learning Lua, or should I just textually transform those files into json and deal with them in a language I am already comfortable with?
+00:36 <        haole > hey there... I'm not getting the behavior of lua socket... I'm creating a TCP socket and setting a timeout, but it seems to only work on the first call! all the following calls return immediately with status == 'timeout'
+00:36 <        haole > what am I missing?
+00:54 < PCLoadLetter > Anyone here use LuaIRC? :3
+00:54 < PCLoadLetter > As in, the library. Not this very channel.
+00:58 <       Strogg > wtf.. hrmmm..
+01:04 <       Nezteb > Anyone ever used the LuaIRC library?
+01:09 <       Strogg > grr.. invalid order function for sorting.
+01:09 <       Strogg > hrm.
+01:17 <        sparr > I need to reproduce the functionality of a lua script that I don't have. Specifically, I need to be able to run this script and produce a "data" object containing the objects passed to the extend function: http://codepad.org/qmISJCaY
+01:19 <         bone > sparr: so, what's stopping you? what is a 'data object' ?
+01:19 <        sparr > data is the name of the object
+01:19 <        sparr > extend is the method being called
+01:20 <        sparr > not having touched lua in about 6 years is stopping me
+01:20 <        sparr > and even then I knew very little
+01:21 <         bone > presumably you've already created a data object, if you're calling a method on it, and give that the function named is extend, i'd presume you would be adding this data to a table some where...
+01:21 <         bone > given*
+01:22 <        sparr > I have not
+01:22 <        sparr > I have written no code yet
+01:22 <        sparr > what I pasted above is from the data for a game. the extend method is implemented in the game, inaccessible to me. I have to re-implement it.
+01:25 <         bone > so are you asking how to assign things to a table? what is your question?
+01:29  *      Strogg solves his bug, feels happy for a moment, and then moves on
+01:29 <       Strogg > empty matches produce empty strings in the capture... not nils
+01:29  *      Strogg should have figured that out sooner
+01:35 <        sparr > sorry, I'll start over, with the intent of accomplishing this in lua one step at a time
+01:36 <        sparr > first, how can I run the contents of one lua script from within another lua script?
+01:37 <         bone > you can load the file, and then call the function, or use something like dofile
+01:37 <         bone > (loading a lua file returns a chunk, which is considered an executable function)
+01:38 <        sparr > ah, dofile appears to be what I was looking for
+01:40 <        Neffi > Nezteb: The lua_bot author recommends LuaIRC. That's about as much as I can say, I've never used it
+01:41 <        Neffi > Nezteb: I know lua_bot itself is written with just LuaSocket, not using LuaIRC. You could try pinging the lua_bot author, but I don't know if he wants to answer questions about an unreloated library he didn't make, or maybe hasnt used
+01:41 <        Neffi > But it's written in Lua and appears documents, so if you're good with Lua you should be able to pick LuaIRC apart and answer your own questions
+01:45 <       Nezteb > Neffi: Yeah, I saw lua_bot, but since the IRC code wasn't released I wanted to make my own with LuaIRC (which I found through lua_bot). I'm new to Lua, but I've done similar things with C/C++. My issue is mostly with some of the .lua files in LuaIRC. A lot of the files say `module "irc"` (but none of the files are actually named irc.lua) and then the example code the creator has online says to first call `require "irc"` from your new script, but then it 
+01:45 <       Nezteb > complains it can't find that file. I just don't understand how module/require work together from separate .lua files.
+01:46 <        sparr > I have two lua tables with un-named entries (I think of them as arrays). I'd like to concatenate them. Is there a straightforward way to do that?
+01:47 <        Neffi > Nezteb: The `module` function is a helper for *defining* a module. It sets the global environment for you to facilitate creating a module. 
+01:48 <       LU324_ > Nezteb: the module function (which is now deprecated and considered bad practice) creates a global variable with the name given to it, puts a table in that variable, and makes that table the environment for the file
+01:48 <         bone > Nezteb: given that there is an init.lua which is a default search filename for require, i suspect that placing those lua files in a directory named 'irc' within the package path will do what you want
+01:48 <        Neffi > So LuaIRC is defining itself *as* the module "irc", in other words setting a common namespace for itself. You still need to call require on the actual library path. 
+01:50 <       Nezteb > I will play around with it. Why is the module function considered bad practice? Perhaps I could modify the LuaIRC files to not use it (the git repo hasn't been updated in 4 months).
+01:52 <       LU324_ > Nezteb: it's considered bad practice because it uses global varibles, and the way it works is tricky and has some pitfalls
+01:52 <         bone > creating a global named irc, rather than just returning a table 
+01:52 <         bone > sparr: generally you can just iterate and copy, lua doesn't provide a mechanism to deep copy tables
+01:53 <       LU324_ > the recommended way to make modules now is to just to fill a table with the functions you want to expose, and return it at the end of the file
+01:54 <       Nezteb > Interesting. I wasn't aware they were global variables at that point. Good to know. Thanks all. :)
+01:57 <        sparr > I have downloaded a lua library and am trying to figure out where to put it on my mac. I've checked my package.path and found: ./?.lua;/usr/local/share/lua/5.1/?.lua;/usr/local/share/lua/5.1/?/init.lua;/usr/local/lib/lua/5.1/?.lua;/usr/local/lib/lua/5.1/?/init.lua
+01:57 <        sparr > however, this package doesn't have an init.lua so I'm unclear where it belongs
+01:57 <        sparr > it does contain multiple .lua files, so I'd expect it to go in a subdirectory
+01:58 <    ToxicFrog > sparr: what library?
+01:58 <         bone > do any of those files return a table of functions? if not, you're probably just expected to dofile() them
+01:58 <        sparr > json4lua
+01:58 <        sparr > http://json.luaforge.net/
+01:59 <         bone > the file json.lua defines the 'json' module (as we were just talking about with LuaIRC)
+01:59 <         bone > so you can presumably just put json.lua, rpc.lua, and rpcserver.lua in one of those package.path directories
+02:00 <         bone > i don't know which is the most commonly used on OSX
+02:01 <        sparr > ok
+02:01 <        sparr > that's easy
+02:01 <        sparr > I was trying to figure out how to make it work by putting the json/ directory containing those lua files in one of the path directories that has a /?/ in it
+02:01 <        Neffi > Nezteb: Modifying it to not use module is the wrong decision. module isn't going to introduce anything bad into your program. It's a design decision by the author. It's considered bad practice, because there are much better ways to write a module, but if that's how they choose to write it, then so be it. 
+02:02 <         bone > ? is replaced by whatever you're requiring
+02:02 <         bone > for instance, 'json'
+02:07 <       Nezteb > Neffi: Yeah, I wasn't actually planning to modify it. It was just an idea.
+02:31 <      markand > I tried duktape 
+02:32 <      markand > I'm seriously about to leave Lua definitely
+02:33 <    ToxicFrog > Duktape?
+02:33 <         bone > http://duktape.org
+02:39  *       dmail looks at https://github.com/svaarala/duktape/tree/master/bugs and thinks WTF
+02:40 <         bone > looks like project management as opposed to real bugs
+02:49 <        dmail > http://glasgowguardian.co.uk/2014/02/18/edward-snowden-is-new-rector-of-glasgow-university/
+02:50 <      markand > suomalainen
+02:50 <    Humbedooh > suomeksi?
+02:59 <      markand > Humbedooh, ei
+02:59 <      markand > Humbedooh, but duktape author yes
+02:59 <      markand > :p
+02:59 <    Humbedooh > kk
+03:33 <         bone > markand: were you hoping for someone to convince you not to go? :P
+03:33 <        Nyoom > Hi guys, what would be the best way to short this function? http://codepad.org/KFHG0o3u
+03:37 <       xyzzy_ > well you don't really need the args or cmd variables since you're only using... well args once. you arent even using cmd
+03:37 <         bone > Nyoom: well, you could remove the code that has no side effects
+03:37 <         bone > which is most of it
+03:38 <       xyzzy_ > plus use method call syntax for the stirng functions
+03:38 <       xyzzy_ > also you aren't returning arg
+03:38 <        Nyoom > I won't
+03:39 <        Nyoom > I will add a if else statement in it
+03:39 <        Nyoom > look
+03:39 <        Nyoom > http://codepad.org/HgYLHp1p
+03:42 <       xyzzy_ > but i imagine that split, cmd, and args could be made into a single pattern
+03:45 <        Nyoom > Hm
+03:46 <        Nyoom > % var = "hi"
+03:46 <         yalb > Nyoom: 
+03:46 <        Nyoom > % var1, var2, var3 = "hi", "hi", "hi"; print(var3)
+03:46 <         yalb > Nyoom: hi
+03:47 <        Nyoom > oh
+03:47 <        Nyoom > I see
+03:47 <        Nyoom > wel that doesn't work ;;
+03:48 <        Nyoom > xyzzy_,     local split, cmd, args, arg = string.find(line," ") or #line+1, cmd=string.sub(line,1,split-1), args=string.sub(line,split+1), {}
+03:48 <        Nyoom >  ? :p
+03:48 <       xyzzy_ > no more like: local cmd, args = line:match("(%S+) (%S+)")
+03:49 <      markand > bone, no
+03:49 <      markand > I will not go if Lua authors add continue keyword 
+03:49 <      markand > but as they dont...
+03:50 <       xyzzy_ > is goto really that bad
+03:50 <         bone > i'm going to guess he doesn't want to add a label to resume a loop
+03:50 <       xyzzy_ > i mean that's one of the few cases you'd ever actually need it in lua
+03:50 <         bone > (which is a bit ugly, imo)
+03:51 <        Nyoom > that line doesn't work :(
+03:51 <      markand > it's completely ugly 
+03:51 <      markand > and goto is a terribly bad idea 
+03:52 <       xyzzy_ > "goto'
+03:52 <       xyzzy_ > s so bad it makes me long for js"
+03:53 <       xyzzy_ > Nyoom: try .+ instead of the second %S+
+03:53 <          cy1 > goto isn't that bad, as long as you only go to the start of other functions. Then it's equivalent to return function(...)
+03:54 <        Nyoom > yeah but "    for argument in args:gmatch("[^%s]+") do
+03:54 <        Nyoom > " will return into nil now :/
+03:56 <       xyzzy_ > Nyoom: well i guess the question is, what would a typical command/args string look like
+03:58 <       xyzzy_ > to me it seems like "cmd arg1 arg2 arg3"
+03:58 <        Nyoom > yes
+03:58 <        Nyoom > exactly
+04:01 <       LU324_ > @ str='a b c d'; local cmd,args=str:match('^%s*(%S+)%s*(.*)'); print('cmd:',cmd); for arg in args:gmatch('%S+') do print('arg:',arg) end
+04:01 <     lua-eval > LU324_: cmd: a arg: b arg: c arg: d
+04:01 <       LU324_ > Nyoom: ^
+04:06 <        Nyoom > That's it. Thanks!
+04:42 <          DBN > i just got a stack overflow without using any recursion. does anyone know exactly what contributes to stack size?
+04:43 <       cmtptr > are you sure you aren't inadvertently recursing?
+04:43 <       cmtptr > either through metamethods or just in a very roundabout way
+04:43 <          DBN > not using metatables at all
+04:44 <       cmtptr > do you have an C code?
+04:44 <          DBN > and i doubt its accidental recursion based on the line number it crashed at (which is all the debugging information available to me)
+04:44 <       cmtptr > any
+04:45 <          DBN > no it's not my host program
+04:45 <          DBN > are function calls the only thing that contribute to stack size? does numbner of arguments and local variables contribute?
+04:45 <       cmtptr > yes
+04:46 <          DBN > @ which
+04:46 <     lua-eval > DBN: error: syntax error near <eof>
+04:46 <       cmtptr > are you calling a function with table.unpack() for the args?
+04:47 <       cmtptr > yes, all of those things will push stuff onto the stack
+04:47 <       cmtptr > can you codepad the code and error?
+04:48 <          DBN > no its a really complicated script and i'm scared i might just have too many local variables
+04:48 <       cmtptr > how many are we talking?
+04:51 <          DBN > hard to say because i cant debug. 323 counts of "local" in the 3800 line script
+04:52 <          DBN > i think there was one place where i used unpack() for calling a function but the table only has 2 numbers in it
+04:54 <          DBN > been using do..end a lot for encapsulation thats probably part of the problem
+04:57 <       cmtptr > er
+04:57 <       cmtptr > this is just a straightline script?
+04:58 <          DBN > yep
+04:59 <          DBN > (not asking for you to help me fix it just looking for information)
+05:00 <       cmtptr > DBN, I just tried creating 300 local variables myself and got this error: lua: ./test.lua:203: too many local variables (limit is 200) in main function near '='
+05:01 <          DBN > its a straight line script but it does several different things in different blocks so that number isnt reliable
+05:02 <          DBN > guess its not a straight line script if you meant it in that way
+05:02 <       cmtptr > I'm not sure what I meant. that was a stupid question
+05:03 <       cmtptr > but anyway, if you have several locals wrapped in do-end then they wouldn't count
+05:04 <       cmtptr > oh, yes they do
+05:04 <       cmtptr > do-end doesn't protect you here apparently
+05:04 <       cmtptr > I guess that makes sense
+05:04 <          DBN > i remember reading lua is a "stack of stacks" where entering a block pushes the pointer to that block's stack onto the stack
+05:05 <          DBN > so i guess entering any block is like calling a function in terms of stack impact
+05:05 <       cmtptr > yeah but I tried wrapping half of mine in a function and then calling it, and this worked fine
+05:06 <          DBN > but yeah maybe i do have accidental recursion somehow
+05:06 <          DBN > so hard to debug with only a line number and error message
+05:07 <       cmtptr > can you wrap the whole thing in xpcall and then output it somewhere with debug.traceback()?
+05:08 <          DBN > oh i didnt know about that
+05:09 <          DBN > i'll try it
+05:23 <        dmail > OK who killed hackernews?
+05:23 <          DBN > yep it was accidental recursion, thanks!
+05:24 <        dmail > DBN: you killed YC with recursion ?
+05:24 <    Humbedooh > :O
+05:24 <    Humbedooh > DBN: how could you!
+05:24 <       xyzzy_ > it doesnt support tail recursion
+05:24 <          DBN > maybe
+06:06  *       dmail notices Kinnison as a keysigner for Debian
+06:21 <       xyzzy_ > http://stackoverflow.com/a/21864279
+06:22 <       xyzzy_ >  >there is no "coroutine.running"
+06:22 <       xyzzy_ > um yes there is
+06:25 <       cmtptr > reply with this http://www.lua.org/manual/5.2/manual.html#pdf-coroutine.running
+06:26 <       xyzzy_ > hello? is your coroutine running? well then you'd better go yield it!
+06:35 <       cmtptr > all of my coroutines are always running all of the time
+07:04 <         hdon > hi all :) i've opened a DSO with luajit's ffi.load() how do i dlsym() into this library?
+07:05 <      tiffany > hdon: ffi.cdef [[void my_func(int x); ]] local my_lib = ffi.load("path/to/lib"); my_lib.my_func(4)
+07:05 <      tiffany > symbol declarations are global
+07:06 <         hdon > oh... that seems odd. thanks
+07:17 <         hdon > does luajit make use of NaN? (are specially crafted NaNs from a C function unmolested by LuaJIT?)
+07:17 <         hdon > hmm... looks like it might...
+07:22 <       xyzzy_ > hdon: http://permalink.gmane.org/gmane.comp.lang.lua.luajit/419
+07:22  *        hdon clicks
+07:24 <       xyzzy_ > but yes, luajit uses nan-boxing so you can't just use any nan otherwise bad shit may happen (lua doesn't even guarantee you will actually have nans anyway)
+07:24 <         hdon > hmm
+07:25 <         hdon > xyzzy_, thanks
+10:52 <CorruptedHeli > Hiya. I'm interested in learning Lua, but I have a form of autism known as Aspergers. This can have the side effect of keeping someone from focusing on one thing or feeling the will to do so. I, however, want to learn Lua, but can't dedicate myself to it no matter how hard I try.
+10:52 <CorruptedHeli > What would be the best approach to this?
+10:54 <    ToxicFrog > Find a problem that you can dedicate yourself to solving, then use lua to solve it?
+10:55 <        Neffi > Ritalin? 
+10:56 <        Neffi > Or copious amounts of caffeine. My brain is fucking haywire and it's hard as hell for me to learn stuff for similar reasons, and stimulants like (*lots* of caffeine) help 
+11:19 <        sparr > what obvious syntax mistake am I making here? "var = true?1:0"
+11:19 <        Neffi > lua doesn't have ? and : 
+11:19 <        Neffi > var = true and 1 or 0
+11:26 <        sparr > oh
+11:26 <        sparr > the docs keep using C syntax to explain things
+11:26 <        sparr > my bad, thanks
+11:27 <    ToxicFrog > ...by C syntax, do you mean BNF?
+11:31 <        sparr > ToxicFrog: no, I meant the C examples on http://lua-users.org/wiki/TernaryOperator
+11:32 <        Neffi > " For example, in the C language, the ternary operator is written like"
+11:32 <        Neffi > read more
+11:46 <    ToxicFrog > Spark: by "the docs" I thought you meant the manual or PIL.
+--- Log closed Wed Feb 19 12:22:55 2014
+--- Log opened Wed Feb 19 12:23:16 2014
+12:23 -!- Irssi: #lua: Total of 283 nicks [0 ops, 0 halfops, 0 voices, 283 normal]
+12:23 -!- Irssi: Join to #lua was synced in 28 secs
+12:46 < Sleepy_Coder > I am so fucking happy.
+12:46 < Sleepy_Coder > I figured out how to make a portable sendfile() across Windows/Mac/Linux
+12:46 < Sleepy_Coder > on Windows it's TransmitFile
+12:47 < Sleepy_Coder > on Mac/Linux it is of course sendfile()
+12:47 < Sleepy_Coder > Linux has the most general sendfile -- you can send between sockets or files in either combination
+12:47 < Sleepy_Coder > but on Mac and Windows you can only send from a file to a socket
+12:47 < Sleepy_Coder > so that's a little sucky.
+12:47 < Sleepy_Coder > but the big thing is I can make a sendfile() binding that is portable :D
+12:48 <          cy1 > Could always default to the read/write loop for systems that don't have a sendfile.
+12:48 < Sleepy_Coder > well yes :-)
+12:48 < Sleepy_Coder > I was just trying to do static-file-out-da-socket in kernel space though :D
+13:03 <OmnipotentEnt > hey stupid question
+13:04 <OmnipotentEnt > I'm having a small issue where I'm passing a variant back and forth between lua and c++ and it's truncating any arrays that contain nils.  so if I have [ 1, 2, 3, nil, nil, 6, nil ] it's coming out as [ 1, 2, 3, nil, nil, 6 ] on lua's end, because of the semantic notion where setting a value to nil erases it.
+13:05 <OmnipotentEnt > unfortunately, I do need the ability to represent nil on both end, so I can't just rework that part, I was poking around in  the lua api and I found that the array size is stored in the Table struct, and I was wondering if there was a way to poke the correct array size into that value, and if so, would that fix my problem, and if so is that safe?
+13:07 <OmnipotentEnt > otherwise, I can just maintain a "__len" value in the table or something, but this solution just seems cleaner to me if it works, but it also seems a bit... private-ish
+13:13 <       xyzzy_ > yeah i wouldn't go prodding into the internals of lua objects. that length value isn't going to be helpful since lua implementations will overallocate so they don't have to resize the tables as often. so yes  you'll either have to store the length explicitly or return it as a second result or something
+13:14 <          cy1 > OmnipotentEntity: You could use a blank other object like {} and call it nil2?
+13:14 <          cy1 > or empty might be a better name.
+13:15 <OmnipotentEnt > cy1, unfortunately, I'm exposing this to the wide world, so doing something custom like that just looks and feels kinda ugly
+13:15 <OmnipotentEnt > but that's a good suggestion!
+13:15 <OmnipotentEnt > mostly I was just hoping for a shortcut
+13:15 <          cy1 > Sentinels are no untried concept in programming.
+13:15 <OmnipotentEnt > I already have a solution in place for tables with nils in keys
+13:16 <OmnipotentEnt > so I can just overload that
+13:16 <OmnipotentEnt > I was just hoping I wouldn't have to
+13:16 <OmnipotentEnt > haha
+13:16 <OmnipotentEnt > no shortcuts
+17:19 <        doub_ > hi
+17:20 <         rjek > Morning, doub_ 
+19:17 <         KAWY > Hello guys. I've got a program which can execute lua scripts to another program (can be called a hack, nevermind) but I am getting an error message from the console [Unknown command "lua_execute" path to script.lua]. The progarmmer said to me, he is powerless, can't help me. Do you have any ideas what can cause this problem?
+19:19 <       cmtptr > what does it mean to execute a lua script TO another program?
+19:20 <        mniip > piping?
+19:21 <         KAWY > I am not a programmer, hope the explanation won't be confusing. I've got a program to a game which uses a lua support. You can make your own scripts. But those scripts won't load. The console  returns that it doesn't know the command "lua_execute".
+19:21 <       cmtptr > oh
+19:22 <       cmtptr > well, then it sounds like that function doesn't exist
+19:22 <         KAWY > I've got two OS. Both Windows 7 64bit. On my secondary OS the lua scriptscan load with no problems. I have no diea what can cause this error.
+19:22 <         rjek > "[Unknown command "lua_execute" path to script.lua]" is not an error from Lua, but the program that embeds Lua.
+19:23 <     jpjacobs > sounds like some kind of incompatible path setting
+19:23 <         KAWY > I can tell you on my secondary OS the console returns the scripts load properly. There must be a problem between my software installed and the program
+19:24 <         KAWY > I have tried almost everything,from reinstalling Framework, visual studio 2012 or isntall a lua for Windows
+19:24 <         KAWY > None of it helped.
+19:25 <       cmtptr > KAWY, lua_execute isn't a standard lua function.  there must be some other script or piece that defines this function
+19:26 <         KAWY > What shall I say the programmer? This error appears on my pc and laptop as well. Only one system accept the scripts. Same versions of OS.
+19:28 <   ttmrichter > KAWY: Tell him he hasn't given you all the pieces.
+19:29 <         KAWY > The last hint to make his progarm work was to install NET 4.5.1 Framework and Visual studio 2012 C++ Red.
+19:29 <         KAWY > didnt help.
+19:30 <   ttmrichter > That was a dumb suggestion because none of those pieces provides lua_execute.
+19:30 <   ttmrichter > Whatever piece provides lua_execute is missing or misconfigured.
+19:31 <       cmtptr > tell him he's a bad programmer
+19:31 <         KAWY > I know this won't help you http://www.youtube.com/watch?v=nvTE7TBzMFE - the console has to return this message http://i.nahraj.to/f/BEb.png
+19:31 <         KAWY > That means the programmer forgot to tell me to install if I got it right?
+19:32 <         rjek > This looks like a DOTA2 cheat.
+19:32 <         rjek > May VAC ban you forever.
+19:32 <         KAWY > I agree. Don't worrz.
+19:33 <       cmtptr > why did you take a screenshot of a forum
+19:34 <       cmtptr > of text
+19:34 <         KAWY > I have tried it many times. I have my second account ready. The scripts were my hobby. Since VAC activated, all of known "hacks" shut down
+19:34  *        rjek politesly refuses to assist people who cheat.
+19:34 <         KAWY > because i dont have a creenshot of my console. thats not a screen of another forum - the point is what the console needed to show
+19:34 <       cmtptr > politesly hobbitses
+19:34 <         KAWY > not like as in my video
+19:36 <        dmail > rjek: just kick and ban him? You have the power
+19:36 <        dmail > no need to be polite about it :)
+19:36 <         KAWY > Ban me? Or what do you mean.
+19:36 <         KAWY > I asked for help. Doesn't matter which are my interests.
+19:36 <        dmail > KAWY: yep
+19:37 <        dmail > but it does matter to us
+19:37 <        dmail > -us +me
+19:37 <         KAWY > All right, I just wanted to know if you know something. I understand your hate agains people who cheat.
+19:37 <         rjek > If you're interests are dishonestly, then it's against my interest.
+19:38 <         KAWY > No need to ban someone for that on a forum.
+19:40 <         KAWY > Honestly, I have a real life. There are different opinions what a dishonest really is. I didn't want to talk about games but programming. I wanted you to understand. But thanks anyways.
+19:41 <       cmtptr > onr's welcome
+19:43 <        dmail > KAWY: the ban was my suggestion and I would do it at the drop of a hat. You are scum in my eyes, spoiling the fun of others and developers
+19:43 <        dmail > I just want YOU to understand that!
+19:45 <       cmtptr > geez, it's just a game
+19:45 <        doub_ > if a game is worth cheating, it's badly designed
+19:48 <      Myname_ > I can't write... I jsut wanted to thank you and say good bye
+19:49 <      Myname_ > I dont understand your anger
+19:50 <         rjek > Don't worry, it's not your fault you're a sociopath.
+19:52 <   ttmrichter > Isn't using another ID to get around a ban a site-ban level offence?
+19:53 <         Eyes > dmail, what
+19:53 <         Eyes > and this channel is funny
+19:54 <       cmtptr > he wasn't banned... and he hasn't done anything to #lua to warrant a ban, imo
+19:57 <      markand > unbelievable 
+19:57 <      markand > if 0 then print("ok") end 
+19:57 <      markand > it prints ok
+19:57 <      markand > Lua is probably one of the random languages that 0 evaluates to true
+19:57 <        dmail > hehe yep only nil and false are 'falsey'
+19:58 <      markand > ho god, I really think I leave Lua after the end of the week
+19:58 <        [arx] > and grammar
+19:59 <        dmail > markand: it is all documented "Both nil and false make a condition false; any other value makes it true." http://www.lua.org/manual/5.2/manual.html#2.1
+19:59 <      markand > dmail, yes but it sucks 
+19:59 <       cmtptr > it makes sense from the perspective of a high level language
+20:00 <        dmail > markand: well there is a little bit of history there as to the reason
+20:00 <       cmtptr > languages that don't do this and are higher-level than c (e.g. have a boolean type) are wrong
+20:00 <      markand > does python ruby and javascript also evaluates 0 to true ?
+20:00 <   ttmrichter > markand: Who gives a shit?
+20:00 <      markand > cmtptr, I don't agree
+20:00 <   ttmrichter > If you want Python, Ruby or Javascript surely you know where they are?
+20:01 <        dmail > markand: for your reading pleasure http://www.lua.org/doc/hopl.pdf
+20:01 <       cmtptr > python doesn't, but I can't speak to the others
+20:01 <   ttmrichter > I can.
+20:01 <   ttmrichter > They all make the mistake of using a number for false.
+20:02 <   ttmrichter > Actually having boolean values at all is a mistake, but it's a very common one.
+20:02 <       cmtptr > well, if you don't have boolean values then I'd have to side with markand
+20:03 <   ttmrichter > cmtptr: Why?  Why do you need boolean values?
+20:03 <       cmtptr > because nil and false are two different things
+20:03 <   ttmrichter > I mean in *any* language: why do you need *any* values that are interpreted in a boolean way?
+20:03 <       cmtptr > your boolean expressions shouldn't return a no-value
+20:04 <   ttmrichter > Boolean expressions shouldn't return anything.
+20:04 <   ttmrichter > They should be tested.
+20:04 <       cmtptr > that's bogus
+20:04 <   ttmrichter > Why?
+20:05 <   ttmrichter > At which point does having a value you can store that's "true" or "false" get useful?
+20:05 <       cmtptr > there are several scenarios where it's useful to evaluate and store the result of a boolean expression
+20:05 <   ttmrichter > Name one.
+20:05 <       cmtptr > or to return the result of a boolean expression
+20:05 <   ttmrichter > Sorry, let's make it broader.  Name three.
+20:05 <       cmtptr > LOL
+20:05 <   ttmrichter > Name three scenarios where storing a boolean value is useful.
+20:06 <       cmtptr > I'm not going to do that, because I recognize that whatever I come up with you'll have some contrived method for skirting around it
+20:06 <   ttmrichter > You're not going to do it because it's not useful.
+20:07 <       cmtptr > not a necessity and not useful are not the same thing
+20:08 <   ttmrichter > Which is why my challenge is "useful".
+20:12 <       cmtptr > so let me tell you what would happen if you did away with boolean values.  everyone would have to use some value, maybe "true" and "false", to represent boolean results in storage.  then, one of two things would happen: a. everybody is on the same page and uses the same value so all code tests for those strings appropriately, in which case you have defacto boolean values which renders your argument invalid (also this comes with the bug that yo
+20:13 <   ttmrichter > You're not meeting the challenge.
+20:13 <   ttmrichter > Name a time where storing a boolean result makes sense.
+20:13 <   ttmrichter > You're saying "we need boolean values because we might want to store boolean values">
+20:13 <   ttmrichter > This is begging the question.
+20:14 <       cmtptr > or b. more likely, some people will use "true", some people will use "TRUE", some people will use the more correct local true = {}, and code interoperability will be a disaster
+20:14 <      FireFly > (wow, the first time I've spotted a 'correct' use of 'to beg the question' in the wild)
+20:14  *       dmail can only guess doub_ or cmtptr is arguing with ttmrichter. This is what I hate about ignores
+20:15 <      markand > dmail, you are ignoring someone ?
+20:15 <       cmtptr > nice, I made the ignore list
+20:15 <        doub_ > dmail: you're ignoring me??
+20:15 <   ttmrichter > Yeah, he ignored me, markand, because I said that I didn't give a shit if Lua is popular or not.
+20:15 <      FireFly > I know someone who shaded ignored messages instead of outright removing them
+20:15 <      markand > ttmrichter, I personally don't give a shit if Lua is popular or not 
+20:15 <      markand > but I give because there is no continue 
+20:16  *  ttmrichter ← wilfully misunderstanding dmail
+20:16 <        dmail > ttmrichter: :) markand I would think the clue to how I am ignoring was in the message
+20:16 <   ttmrichter > Don't care about obfuscated goto statements either.
+20:16 <        dmail > -how +who
+20:17 <   ttmrichter > Which one was the militant vegetarian in here?  I can't ever remember.
+20:17 <       cmtptr > that's onr
+20:17 <   ttmrichter > Right.
+20:17 <       cmtptr > which I strongly suspect is entirely made up
+20:18 <        dmail > ttmrichter: done any development with your brother on Textadapt lately?
+20:18 <   ttmrichter > It's possible.  Although pretending to be a vegetarian is a weird one if it is made-up.
+20:18 <   ttmrichter > dmail: Brother?
+20:18  *  ttmrichter is confused.
+20:20 <   ttmrichter > I have added a few language lexers to it, and a system for uploading code to various paste sites.
+20:21 <        doub_ > ttmrichter: you don't think anyone should ever need to cache a boolean expression result in an imperative programming language? not even for performance reasons?
+20:22 <   ttmrichter > doub_: Yes, I do.  I can think of two imperative languages off the top of my head that don't have boolean values: SNOBOL4 and Icon.  (Probably also Unicon.)
+20:22 <        dmail > ttmrichter: grep tells me it was your evil clone http://pastebin.com/3B8kfyEM
+20:22 <        doub_ > you can emulate booleans with numbers, so the fact these languages don't have boolean values doesn't prove anything
+20:23 <   ttmrichter > doub_: And yet most people don't.
+20:23 <   ttmrichter > It would be considered poor style in them to emulate a boolean value, in fact.
+20:23 <        doub_ > is your point "all you need is a turing machine"?
+20:24 <   ttmrichter > My point is you don't need boolean values.
+20:24 <   ttmrichter > Boolean expressions that are tested is all you really need (and even that's dubious, given that SNOBOL4 and Icon don't even have those).
+20:25 <        doub_ > you pass a boolean value to the if construct, right?
+20:25 <   ttmrichter > No.
+20:25 <   ttmrichter > SNOBOL4 doesn't have an if construct and Icon uses a different model.
+20:26 <   ttmrichter > Statements "succeed" or "fail".  All statements.  And if goes by success/failure.  (This means literally every statement in the language can be tested.)
+20:26 <        doub_ > i can see how that's a valid approach, i can't see how that's the only valid approach
+20:27 <   ttmrichter > It's not the only valid approach.  The declarative approach is even better.  :)
+20:27 <   ttmrichter > But for "boolean values" discriminated unions are superior every time.
+20:28 <        doub_ > superior according to what metric?
+20:28 <   ttmrichter > :- type reactor_status ---> off ; on.
+20:28 <   ttmrichter > :- type led_colour ---> red ; green ; orange.
+20:28 <   ttmrichter > That kind of thing.
+20:29 <   ttmrichter > Superior in that what the code means is explicit.
+20:29 <   ttmrichter > Less interpretation needed.  No "what does 'true' mean here?".
+20:29 <   ttmrichter > Offers more than just two values if you need them.
+20:29 <   ttmrichter > Etc. etc. etc.
+20:29 <   ttmrichter > And the beauty is that if you actually come up with a REAL use case for boolean values in storage:
+20:30 <   ttmrichter > :- type boolean ---> true ; false.
+20:30 <   ttmrichter > You can do it.
+20:30 <   ttmrichter > But your source will read EXACTLY what you mean to communicate.
+20:31 <        doub_ > you seem to be assuming my mind hasn't been corrupted by years of bool-ridden languages, and that i don't want to communicate boolean values everywhere :D
+20:32 <   ttmrichter > doub_: Well, that's it exactly.  We've been programmed (see what I did there?!:D) to think that boolean values are needed because we're used to languages with boolean values.
+20:32 <   ttmrichter > Ironically it's the low-level languages that mostly have this ... but not too low.  Assemblers don't have boolean types.  :D
+20:33 <   ttmrichter > (The C thing of 0 being false, though, comes straight from assembler where "false" is generally identified by a "zero flag" in a register in most architectures.)
+20:34 <      Myname_ > I hope one day we'll meet @ hospital. And I will refuse to help you beacuse you refused to help me. Just by the way. You should get a life.
+20:34 <        doub_ > is that the cheater from before?
+20:34 <   ttmrichter > Yes.
+20:35 <        doub_ > if he's the kind of doctor to give me aspirin and cheat on my insurance to have them pay for cancer treatment, i'd rather not be treated by him
+20:38 <   ttmrichter > No, he's the kind of doctor that has his hospital charge $100 for two Tylenol pills.
+20:39 <   ttmrichter > That way his hands are personally clean.
+20:54 <        cebka > hm, are there any automatic (or semi-automatic) tools to generate LUA bindings from a public C API (e.g. obtained by some public header)
+20:54 <        cebka > I'm not talking about complex data structures, such as structures or unions, but some sort of easy bindings generation for primitive types
+20:57 <        dmail > cebka: there is SWIG and dub. SWIG can generate binding for many languages using it's own parser and dub uses the Doxygen parser
+20:58 <        dmail > cebka: then there are some tools (see luajit mailing list) which automate it for LuaJIT's FFI
+20:58 <        cebka > doxygen based generator seems to be perfect, thanks!
+20:59 <        cebka > does it work with pure C btw? (not C++)
+21:04 <   ttmrichter > cebka: https://github.com/lubyk/dub
+21:05 <   ttmrichter > What does it say?
+21:06 <       cmtptr > < ttmrichter> It's possible.  Although pretending to be a vegetarian is a weird one if it is made-up.  <-- he's a troll.  the point was to stir up argument, and it was entertaining
+21:08 <        cebka > ttmrichter: it says rather confusing things, to tell the truth. in description, there is a phrase that 'to parse C/C++ headers' but afterwards I can see C++ mentions only, that's why I'm asking
+21:09 <   ttmrichter > It parses C and C++ headers but it seems to generate C++ code only.
+21:11 <      tiffnya > SWIG isn't very good for generating lua bindings
+21:11 <      tiffnya > they're not safe, and they don't provide much sugar, it doesn't do much more than say luajit fi does
+21:11 <   ttmrichter > SWIG is terrible for it.
+21:11 <      tiffnya > ffi*
+21:11 <      tiffnya > you can pass '0' to a function which takes a pointer and get a segfault
+21:11 <   ttmrichter > It generates bloated code, is... and what else tiffnya said.
+21:12 <      tiffany > if you have getters and setters for something, for example, there's no way to annotate it - it shows up in the exposed interface
+21:12 <      tiffany > as far as I  know it can't strip name prefixes for C symbols off either
+21:12 <   ttmrichter > Personally, though, I would rather do manual wrapping than use any of the generators I've seen thus far.
+21:14 <        doub_ > wrapper generators work for languages that have a uniform library ecosystem, and C and C++ are not such languages
+--- Log closed Wed Feb 19 23:16:26 2014

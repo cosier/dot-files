@@ -1,0 +1,2102 @@
+--- Log opened Tue Feb 18 19:49:18 2014
+19:49 -!- Irssi: ##c: Total of 484 nicks [0 ops, 0 halfops, 0 voices, 484 normal]
+19:49 -!- Irssi: Join to ##c was synced in 10 secs
+19:51 <        tuxx_ > hey guys...
+19:51 <        tuxx_ > i have a pointer/array allocation question...
+19:51 <        tuxx_ > i know that I will be getting a variable number of strings each with a constant length of 40....
+19:52 <        tuxx_ > what is the correct way to dynamically allocate such an array of strings? should i define it like char *p[40]?
+19:52 <        tuxx_ > and then do p = malloc(count*sizeof(char*)); ?
+19:53 <        tuxx_ > that doesnt seem right somehow
+19:55 <  jupiterfunk > don't
+19:55 <        tuxx_ > jupiterfunk: don't what?
+19:55 <  jupiterfunk > do it
+19:56 <        tuxx_ > jupiterfunk: very constructive response...
+19:58 <        tuxx_ > aparently the correct way to do it is char (*p)[40]
+19:59 <        tuxx_ > that will result in sizeof(p[0]) == 40, rather than sizeof(p[0]) == sizeof(char *)
+20:03 <     cousteau > tuxx_, yeah, char *p[40] is an array of 40 pointers to char, not a pointer to an array of 40 chars
+20:03 <         Wulf > tuxx_: first question: Why do you need to remember more than one of these 40-char-strings at the same time?
+20:04 <     cousteau > and you'd do   char (*p)[40] = malloc(count * 40);
+20:04 <     cousteau > or malloc(count * sizeof *p);
+20:05 <     cousteau > notice however that that doesn't allow strings with length above 39, not 40
+20:05 <         Wulf > if it's a constant size, it's okay to not use strings :)
+20:06 <     cousteau > (and in C99, you could just do   char p[count][40];   )
+20:06 <         Wulf > cousteau: the other way round?
+20:06 <         Wulf > ,explain char p[123][40];
+20:06 <      candide > declare p as array 123 of array 40 of char
+20:06 <     cousteau > ...no, "count" strings of up to 40 chars
+20:06 <         Wulf > hmm
+20:07 <     cousteau > Wulf, and it wouldn't be ok to use the non-strings as strings anyway
+20:08 <         Wulf > cousteau: we don't know if he really wants strings
+20:08 <     cousteau > we should ask him what he really really wants
+20:08 <         Wulf > tuxx_: what do you want??
+20:08 <     cousteau > and if he really really wants what I really really want...
+20:20 <        tuxx_ > cousteau: i know that it doesnt allow 40 but only 39
+20:21 <        tuxx_ > yes they are null-terminated strings
+20:22 <        tuxx_ > and its rather irrelevant why i need to remember more than one at a time..
+20:22 <     cousteau > ok; it was just to clarify it
+20:23 <         zid` > cousteau: no more singing spice girls
+20:23 <     cousteau > zid`, what?  I was singing zebrahead!
+20:32 <         Wulf > tuxx_: okay, so you don't need more than one and you're just too embarrassed to admit it?
+20:33 <         Wulf > tuxx_: of course it might be possible that you really need to. But usually when someone thinks that he does, he actually does not need to.
+20:36 <        tuxx_ > Wulf: no, i just do not want to waste time by engaging into a discussion to the merit of the question
+20:36 <         Wulf > alright.
+20:36 <         Wulf > tuxx_: did you think about using a linked list?
+20:36 <         Wulf > tuxx_: struct foo { struct foo *next; char bar[40]; };
+20:37 <         Wulf > tuxx_: or maybe you need a double linked list? Or maybe you want random access on all your strings, so you might really need an array?
+20:38 <         zid` > array of array of arrays
+20:38 <         zid` > like a filesystem
+20:41 <        tuxx_ > Wulf: if i wanted to put it in a struct i wouldnt really need the linked lists
+20:42 <        tuxx_ > i could make an array of structs
+20:42 <        kate` > tuxx_, variable number between what upper and lower bounds, roughly?
+20:42 <         Wulf > tuxx_: huh?
+20:42 <        tuxx_ > 1-40 maybe?
+20:43 <        tuxx_ > Wulf: if i had more than just the string, i would certainly consider a linkedlist
+20:43 <        kate` > tuxx_, then i'd just make an array of the maximum amount, personally
+20:44 <         Wulf > tuxx_: do you know the maximum (or exact) number of strings before you're even allocating?
+20:44 <        tuxx_ > well i was also interested in the technical aspect
+20:44 <        tuxx_ > i was not aware that the parenthsis makes a difference when defining tha pointer.. i.e. char *p[40], sizeof(p[0]) = sizeof(char*) ... while char (*p)[40], sizeof(p[0]) = 40
+20:44 <        tuxx_ > i wasnt aware of that
+20:45 <        kate` > tuxx_, imo a large part of the technicalities in C depend very much on the context; general solutions don't seem to suit the language particularly well. things need to be decided case by case
+20:45 <          LRN > what do you gain by defining it as 40-char-long?
+20:45 <        kate` > he gains strings of 39 letters max :)
+20:45 <        tuxx_ > LRN: well its an established fact that its always exactly 39 letters
+20:45 <          LRN > you can just do char **p = malloc (sizeof (char) * count)
+20:46 <        tuxx_ > LRN: i am aware of that.
+20:46 <          LRN > s/count/count * 40/
+20:46 <        kate` > tuxx_, here though you are allocating a pointer to an array, which probably isn't what you want. where will the arrays live?
+20:46 <        tuxx_ > live?.. on the heap hopefully :D
+20:46 <        kate` > tuxx_, but you didn't allocate any memory for them
+20:47 <        tuxx_ > kate`: ofcourse i did?
+20:47 <          LRN > it's faster to do char **p than to go to ##c and ask about char *p[40].
+20:47 <        kate` > where?
+20:47 <        tuxx_ > using malloc(count * sizeof(p[0])
+20:48 <        tuxx_ > LRN: its not about being fast...
+20:48 <        kate` > and you do that once per string?
+20:48 <        tuxx_ > kate`: i dont need to.
+20:48 <        tuxx_ > kate`: that allocates the entire memory.. since sizeof(p[0]) = 40
+20:48 <          LRN > count == number of strings. sizeof (p[0]) == 40
+20:48 <        kate` > tuxx_, what type is p?
+20:49 <        tuxx_ > kate`: still "char (*p)[40]"
+20:49 <        kate` > tuxx_, and how are you using this in combinaton with your malloc?
+20:50 <        tuxx_ > kate`: i suggest u read the scrollback
+20:50 <        tuxx_ > char (*p)[40]; p = malloc(count * sizeof(p[0]));
+20:51 <        tuxx_ > char (*p)[40]; p = malloc(count * sizeof(*p)); actually
+20:51 <        kate` > the reason i asked, is because you have all sorts of gibberish in the scrollback
+20:52 <        tuxx_ > kate`: others seem to have had little difficulty comprehending it
+20:52 <        kate` > wow. excuse me for clarifying your babbling
+20:54 <        tuxx_ > i've decided on: typedef char my_fixed_string[40]; and then: my_fixed_string *array;
+20:54 <        tuxx_ > which is essentially the same as char (*p)[40]; p = malloc(count * sizeof(*p));
+20:54 <        tuxx_ > but more readable
+20:55 <        kate` > i hope you're not expecting any kind of feedback about that
+20:55 <         Wulf > tuxx_: sizeof is not a function but an operator: malloc(count * sizeof *p)   unless you find it unreadable :)
+20:55 <        tuxx_ > Wulf: i know that.....
+20:56 <         Wulf > tuxx_: the average person who comes here doesn't know. Sorry (:
+20:56 <        tuxx_ > i code according to the kernel coding style which uses sizeof()
+20:56  *       kate` winces
+21:13 <      Radditz > Hello everybody
+21:13 <      Radditz > Hello Mr. Zhivago
+21:23 -!- mode/##c [+o candide] by ChanServ
+21:23 -!- mode/##c [-b *!~m@*.t-ipconnect.de$##stop_join_flood] by candide
+21:28 -!- mode/##c [-o candide] by ChanServ
+21:31 <    Onionnion > I'm confused about using free() right now. In the program I am currently writing I have only 2 callocs and they have according reallocs as needed and the only time they'd need to be freed is at the program exit. Some people tell me I need to free it to prevent leaks, but according to my 'info free' page, it says I shouldn't free on program exit.
+21:32 <        kate` > Onionnion, your 'info free' page is incorrect; you may free before exit, and really you should if you are writing a portable program
+21:32 <        kate` > Onionnion, some (ancient) systems do not reclaim memory on exit. but i doubt you'll use one
+21:33 <        Farow > You should use free when you no longer need the variable.
+21:33 <        kate` > Onionnion, personally i free() whenever it makes sense in my program to free - so if all's gone well and your program has done its thing, then it's time to free what you don't need
+21:33 <        kate` > think of it as documenting the fact for the reader
+21:34 <    Onionnion > ah
+21:34 <    Onionnion > this is what it says, by the way: http://sprunge.us/LgBK
+21:37 <     nemesist > is that true? I thought it's good practice to free everything before program terminates?
+21:38 <       fizzie > To be fair, that's from the glibc manual, and could arguably be considered restricted to the platforms glibc supports.
+21:38 <     cousteau > nemesist, explicit > implicit
+21:38 <      Radditz > it's good practice, because you have no guarantee that the kernel does it for you
+21:38 <     cousteau > I thought all mallocs were freed and all files were closed on program exit
+21:42 <    Onionnion > cousteau, from running my program with valgrind without the frees it seems to do that, but at the same time it may be just best practice I guess to still free
+21:42 <  Maxdamantus > nemesist: it's probably best to avoid writing programs and instead write libraries that let you write programs.
+21:42 <     cousteau > I mean, I thought the standard said so
+21:43 <     cousteau > it does for the fclose() part, iirc
+21:43 <  Maxdamantus > nemesist: in which case ensuring allocated memory is freed should come naturally.
+21:47 <        miri_ > i have a project with several .h files, .c files, and a Makefile, and i want to wrap it up in a single C file (to give it as input to a program which takes as input a single .C file); i could also have several .c and .h files, but then i need to include them directly using #include file.c
+21:53 <     cousteau > miri_, well, #include is an ugly hack but it could work.  You could also just concatenate everything on a single file.
+21:54 <     cousteau > a single .c file
+21:54 <     cousteau > also, what program is this?
+21:55 <     cousteau > maybe it has an option for multiple C files or something
+21:55 <        miri_ > cousteau: some verification tool, but it takes a single input
+21:56 <     cousteau > well, #include could do the trick
+21:56 <     cousteau > but rather than breaking all your beautiful program, I'd make a single .c file which only contains all the #include
+21:59 <        miri_ > thank you i'll try that
+21:59 <     cousteau > functions.c: #include "functions.h"  #include <math.h>  double funct(double arg) { ... }    functions.h: double funct(double);    main.c: #include "functions.h"  #include <stdio.h>  static void foo() { ... }  int main() { ... }
+21:59 <     cousteau > and then    verification.c:  #include "functions.c"  #include "main.c"
+22:00 <        miri_ > hmm makes sense thanks
+22:00 <     cousteau > it could even be on a different directory so that you don't mess up when doing something like   gcc *.c
+22:01 <     cousteau > and then   #include "../src/functions.c"  #include "../src/main.c"   (not sure how this would be done, but I guess that's the way)
+22:01 <        miri_ > yes something like that
+22:01 <     cousteau > wait, then the #include "functions.h" wouldn't work right
+22:02 <     cousteau > so better forget the part of a different directory (or try to see if your program accepts a -I option for include paths)
+22:02 <        miri_ > hm right, i'll just put everything in the same folder
+22:03 <     cousteau > also, you might as well just do   cat *.c >EVERYTHING.c
+22:04 <        miri_ > also with the .h in case some things are defined there?
+22:05 <     cousteau > (...assuming you don't have stuff such as static file-scope variables with the same name in 2 files)
+22:05 <     cousteau > no, the .h are already included
+22:09 <        miri_ > right
+22:10 <     cousteau > or precompile it to a .i
+22:11 <     cousteau > which is basically a .c with all the # and macros expanded
+22:11 <        miri_ > hm yes i guess that would work too, thanks :)
+22:33 <       mar77i > hmm. this is the first time I came across this: #define bcopy(b1,b2,len) (memmove((b2), (b1), (len)), (void) 0) // how is this #defining strategy to be preferred over do { } while(0) ?
+22:36 <        rob`` > it's an expression
+23:02 <         joko > Hello, could anyone tell me the difference between a __thread variable and a pthread_key_t one?
+23:03 <        kate` > ##posix might be a better place to ask
+23:03 <         joko > kate`: many thanks
+23:44 <       flame_ > is it possible to do something like switch(i % 3) {..} in c?
+23:45 <        frag4 > why do you ask?
+23:45 <         zid` > flame_: is it possible to do switch(j){}
+23:45 <       flame_ > well i want to take a switch statement approach to determing if a number is divisible by 3
+23:45 <        frag4 > hrmpf?
+23:45 <         zid` > flame_: Why bother? i%3 *is* whether it's divisible by three
+23:45 <        frag4 > why would you need switch for that?
+23:46 <       flame_ > well i dont know another way
+23:46 <         zid` > another way of what
+23:46 <        frag4 > ????
+23:46 <        frag4 > what
+23:46 <       flame_ > im very limited in c
+23:46 <        frag4 > there is clearly something wrong in here
+23:46 <       flame_ > i dont know how i would determine if the number is divisible by 3
+23:46 <        frag4 > so let's  go step by step
+23:47 <         zid` > flame_: What does i%3 do?
+23:47 <       flame_ > cant you only determine a value within a switch once at runtime?
+23:47 <       flame_ > to put it into context
+23:47 <       flame_ > this is a variant of fizzbuzz
+23:47 <         zid` > flame_: What does i%3 do?
+23:47 <       flame_ > i is within a for loop
+23:47 <         zid` > flame_: What does i%3 do?
+23:47 <       flame_ > i just told you
+23:47 <         zid` > No,  you didn't, you said "i is within a for loop"
+23:47 <       flame_ > i is an integer in a for loop, going up to 100
+23:48 <       flame_ > i want to make it so every time i is divisible by 3, 5, or 15, it prints somethings
+23:48 <         zid` > I understand fizzbuzz
+23:48 <       flame_ > divisible by 3 = fizz
+23:48 <       flame_ > ok
+23:48 <         zid` > I want you to explain what i%3 does
+23:48 <         zid` > So I can see where you are wrong
+23:48 <         zid` > because that *is* the answer, you seem to think it isn't
+23:48 <       flame_ > well my logic is off i think
+23:49 <         zid` > flame_: What does i%3 do?
+23:49 <       flame_ > im not sure, if what i said is incorrect
+23:49 <         zid` > I will tell you then.
+23:49 <         zid` > i%3 evaluates to the remainder of i divided by 3.
+23:49 <       flame_ > thats what modulus does
+23:50 <       flame_ > i thought you were asking its purpose within the code
+23:50 <         zid` > flame_: So which three values is i%3 likely to evaluate to?
+23:50 <     sheilong > CaZe:  I didn't get yet how to solve these exercise
+23:50 <       flame_ > zid`: other than 0 i dont know
+23:51 <         zid` > flame_: How many different remainders can you get when you divide by 3
+23:51 <       flame_ > 3?
+23:51 <         zid` > Right, what are they?
+23:51 <       flame_ > 0, 1, 2?
+23:51 <         zid` > Correct
+23:52 <       flame_ > great
+23:52 <         zid` > Of 0, 1 and 2, which one of those means that i was a multiple of 3?
+23:52 <       flame_ > 0
+23:52 <         zid` > How would you test if an expression evaluated to 0?
+23:52 <       flame_ > if(i%3 == 0)
+23:52 <         zid` > that's a specific expression, but sure
+23:52 <         zid` > if(i%3 == 0) { /* i is divisible by 3 */
+23:52 <         zid` > tada?
+23:53 <       flame_ > that's helpful :)
+23:53 <       flame_ > now, my issue lies with incorporating that into a switch statement
+23:53 <         zid` > You don't need a switch
+23:53 <         zid` > flame_: What are the three things you need to test for?
+23:53 <       flame_ > 3, 5, and 15
+23:53 <         zid` > flame_: Which order should you do them in?
+23:54 <       flame_ > 15, 5, 3
+23:54 <         zid` > Good
+23:54 <       flame_ > :-)
+23:54 <         zid` > You just wrote the whole program for me then
+23:54 <       flame_ > this makes sense now
+23:54 <       flame_ > alright, thanks zid` :-)
+23:54 <         zid` > if(i%15) ... else if(i%5 ..) else if(i%3) ..
+23:54 <         zid` > add some == 0s and some printfs and you're done
+23:54 <       flame_ > now by default if it isnt equal to 0 in any of those
+23:55 <       flame_ > it should just print the number its at in the loop
+23:55 <         zid` > right, a final else
+23:55 <       flame_ > else
+23:55 <       flame_ > alright
+23:55 <       flame_ > thank you zid`, i appreciate it
+23:55 <         zid` > http://codepad.org/cKJqcM98 You could just plagariase my version I wrote a while back of course
+23:55 <         zid` > but it may or may not be the solution you wanted :)
+23:56 <       flame_ > i'll reference it, thanks zid` :)
+23:56 <         zid` > I'm sure you won't.
+23:56 <       flame_ > why not?
+23:58 <       flame_ > just clarification
+23:58 <   horny-sama > any tips for writing a 8088 assembler using C?
+23:59 <       flame_ > c allosw you to skip using brackets in an if statement if its only 1 line
+23:59 <       flame_ > correct?
+23:59 <         zid` > horny-sama: Any tips for writing dutch using C?
+23:59 <          Pip > what?
+23:59  *  horny-sama is afraid if he fails the course; he will be flipping burger and smelling secret sauces for the rest of his natural life
+23:59 <         zid` > horny-sama: Your C should be the same no matter which cpu you have, that's the point of it.
+--- Day changed Wed Feb 19 2014
+00:00 <   horny-sama > zid`: ok
+00:00 <     sheilong > Zhivago:  CaZe Is that okay ? http://bpaste.net/show/180490/
+00:01 <   horny-sama > zid`: so basically an assembler should be something like if (input == hlt) { write some binary code}?
+00:02 <         zid` > Oh, THAT's what you're doing, your question was *very* poorly phrased.
+00:02 <         zid` > horny-sama: I wrote an emulator for 6502 if you want to see it
+00:02 <       nitrix > 8088 is the Zilog ?
+00:02 <         zid` > no, intel
+00:02 <         zid` > it's the 8086 microprocessor
+00:03 <       nitrix > i8088
+00:03 <       nitrix > I see.
+00:03 <   horny-sama > zid`: is an emulator the same as assembler?
+00:03 <         zid` > Almost
+00:03 <         zid` > It's just what you do inside that if that differs :)
+00:03 <   horny-sama > zid`: what's the difference ?
+00:03 <         zid` > Well for an assembler you would printf some machine code
+00:03 <         zid` > for an emulator you would change some pretend registers
+00:03 <         zid` > but the structure is basically the same
+00:04 <   horny-sama > zid`: then I want to see it
+00:04 <         zid` > It's not hugely useful to see, but it may give you some inspiration, you're essentially doing the reverse
+00:04 <         zid` > https://github.com/zid/znes/blob/ppu/cpu.c
+00:04 <         zid` > I'm sure you could find the source to some actual assemblers somewhere
+00:05 <         zid` > instead of opcode = get_byte_at() you'd be doing getline(); get_opcode(line);
+00:05 <         zid` > You're essentially writing a program that can convert "mov" into 83
+00:06 <         zid` > then doing something based on seeing that 83 (printing 83, parsing its parameters, then printing those)
+00:07 <   horny-sama > zid`: convert "mov" into 83? I thought the point of an assembler is to convert instructions into binary
+00:08 <         zid` > horny-sama: 83 isn't binary? mov isn't an instruction?
+00:08 <   horny-sama > zid`: binary is 0 or 1?
+00:08 <         zid` > horny-sama: binary is a base
+00:08 <   horny-sama > zid`: is a base 2 number system
+00:09 <         zid` > 83 and 0x53 and 0123 and 1010011 are all the same number
+00:09 <         zid` > I just wrote it by four different methods
+00:09 <     sheilong > Zhivago:  CaZe Is that okay ? http://bpaste.net/show/180490/ ?
+00:10 <   horny-sama > zid`: hehe
+00:10 <     sheilong > fuck wrong paste zzzz
+00:10 <     sheilong > Guys is that exercise correct http://bpaste.net/show/180494/ ?
+00:53 <     sheilong > The K&R exercise about comments, only comments between /* */ is allowed or // too ?
+00:54 <     cousteau > sheilong, not when K&R was written, but in C99 they are
+00:54 <     sheilong > cousteau:  So I must to remove commnets after // ?
+00:55 <     cousteau > if you intend to write strictly compliant C89, yes; but that's rarely the case
+00:55 <     cousteau > every compiler nowadays that I've heard of allows // comments
+00:55 <     cousteau > ,cc -std=c89 puts("Hi"); // comment
+00:55 <     sheilong > cousteau:  All right
+00:55 <      candide > cousteau: error: expected expression before '/' token
+00:56 <     cousteau > hm, apparently not GCC with -std=c89
+00:56 <     cousteau > ,cc -std=gnu89 puts("Hi"); // comment
+00:56 <      candide > cousteau: Hi
+00:57 <     cousteau > ,cc -pedantic puts("Hi"); // comment
+00:57 <      candide > cousteau: [warning: C++ style comments are not allowed in ISO C90  warning: (this will be reported only once per input file)] Hi
+00:57 <       newbiz > -std=gnu**, welcome to wonder land
+00:57 <     cousteau > meh, every compiler has their own "extended standard"
+00:58 <       newbiz > no that using them is mandatory ^^"
+00:58 <     cousteau > -std=c99 would have worked as well
+00:58 <       newbiz > just a matter of taste I guess, but with -std=gnu** you always wonder what you can or cannot do
+00:58 <     cousteau > ,cc -pedantic -std=c99 puts("Hi"); // comment
+00:58 <      candide > cousteau: Hi
+00:59 <     cousteau > newbiz, if you want portability you can always use -pedantic, or even -std=c89 or -ansi
+00:59 <       newbiz > of course
+00:59 <       newbiz > but portability appart
+00:59 <       newbiz > people often think of what they can do in terms of standards
+01:00 <     cousteau > -std=c89 means "let's remove all the harmless C99 extras this compiler uses"
+01:00 <       newbiz > not in terms of compiler support
+01:00 <      cyber37 > hi boy's i need some help with mysql, i have a program who do 'insert' in a table of a mysql database
+01:00 <     cousteau > newbiz, nobody respects the standards; they just code stuff and say "This works in my computer"
+01:00 <       newbiz > so sticking to standards is some way to be fixed on what you are certain to be able to do
+01:00 <     cousteau > cyber37, try with a mysql channel
+01:00 <      cyber37 > the problem is "the mysql database open files" and i arrive to the limit of open files
+01:00 <       nitrix > cousteau: No. It meants to comply to the C89 standard. It doesn't remove any extensions.
+01:00 <       newbiz > haha yeah there's some truth there
+01:00 <       newbiz > but still
+01:00 <       newbiz > :)
+01:01 <     cousteau > nitrix, it does remove some extensions, such as //-comments
+01:01 <       nitrix > /comments arn't extensions.
+01:01 <       nitrix > They are a language feature inherited from C99.
+01:02 <     cousteau > ...for example, it does not remove compound literals
+01:02 <     cousteau > nitrix, so it's not c89
+01:02 <       nitrix > I just said that.
+01:02 <     cousteau > so it's a gnu extension to c89
+01:03 <       nitrix > You're confused.
+01:03 <       nitrix > Or maybe it's the way you express yourself that confuses others.
+01:03 <          edk > nitrix, //comments in c89 are an extension
+01:04 <        kate` > i think nitrix is saying that C89 inherited // comments (as an extension) from C99
+01:04 <        kate` > by some sort of time warp mechanism
+01:04 <     cousteau > well, C89 didn't
+01:04 <       nitrix > Yes. What is bugging me is cousteau's wording:  cousteau | -std=c89 means "let's remove all the harmless C99 extras this compiler uses"
+01:04 <          edk > kate: i want whatever he's smoking
+01:04 <       nitrix > That's not what -std=c89 suggests it's doing.
+01:05 <       nitrix > So assuming it'll do that is plain ridiculous, yet tell someone.
+01:05 <       nitrix > -std=c89 might as well keep the // comments.
+01:05 <     cousteau > ok then, it actually means "let's remove all the hypothetically harmful C99 extras this compiler uses"
+01:05 <          edk > and gnu89 extras, sometimes
+01:05 <       nitrix > You cannot predict that, because it's not the purpose of -std=c89.
+01:05 <        kate` > well GNU's idea of C89 doesn't quite match what the rest of the world call C89, mind
+01:06 <          edk > that's true; you could predict that it would remove // comments if gcc weren't so unpredictable
+01:06 <       nitrix > Even then. Using -std=c89 isn't guaranteed to remove anything.
+01:06 <        kate` > the "let's remove all these extras" option is -pedantic
+01:06 <       nitrix > It guarantees it'll provide c89.
+01:06 <       nitrix > kate`: exactly.
+01:06 <          edk > or -pedantic-errors
+01:06 <       nitrix > Glad kate and I are on the same page.
+01:06 <     cousteau > // can mean different things in C89, e.g. //*
+01:07 <        kate` > nitrix, right, but in some cases "provide C89" is mutually exclusive with those extras
+01:07 <     cousteau > ,cc -std=c89   puts("Hello") //* */ 1, puts("world");
+01:07 <       nitrix > Mhm, I agree. It doesn't sound like cousteau's explanation though: "let's remove all the harmless C99 extras this compiler uses"
+01:07 <      candide > cousteau: Hello world
+01:08 <     cousteau > ,cc -std=gnu89   puts("Hello") //* */ 1, puts("world");
+01:08 <      candide > cousteau: error: expected ';' before 'return'
+01:08 <     cousteau > ...
+01:08 <     cousteau > candide, wtf.
+01:08 <      candide > What is the acronym you'd like to know about?
+01:08 <        kate` > nitrix, eg. http://codepad.org/HCHuIzj7
+01:08 <     cousteau > ,cc paste
+01:08 <      candide > cousteau: http://sprunge.us/XgQJ?c
+01:08 <     cousteau > oh, I thought candide added the ; in a new line
+01:08 <          edk > use \n
+01:08 <        kate` > also: http://codepad.org/oqKgDjPO
+01:09 <     cousteau > for // comments?
+01:09 <          edk > ,cc -std=c89 int a = 10 //**/5 \n ;
+01:09 <      candide > edk:  <no output: a = 2>
+01:09 <     cousteau > confirmed, \n works
+01:09 <          edk > ,cc -std=gnu89 int a = 10 //**/5 \n ;
+01:09 <      candide > edk:  <no output: a = 10>
+01:09 <      terabit > ,cc void main(){}
+01:09 <      candide > terabit: [warning: return type of 'main' is not 'int' [-Wmain]] <Exit 0350>
+01:09 <        kate` > i suppose that last paste of mine would also behave different for GCC's C89 with and without -pedantic
+01:10 <      terabit > why does that code take up 1.x KB?
+01:10 <     cousteau > kate`, I thought -pedantic was just a warning thing
+01:10 <     cousteau > terabit, because it's not stripped
+01:10 <      pragma- > why are you adding a \n?
+01:11 <          edk > I think it'll conform to C89 rather than gnu89 where it has to choose in advance to know how to parse
+01:11 <      pragma- > oh.
+01:11 <      terabit > cousteau: 6.2K stripped
+01:11 <     cousteau > try   gcc -s program.c -o program
+01:11 <        kate` > cousteau, by default, yes
+01:11 <     cousteau > and maybe add -Os too
+01:11 <      terabit > haha,same thing
+01:12 <      terabit > let me try -Os
+01:12 <      pragma- > gnu89 allows // comments
+01:13 <      terabit > damn,same thing :P . just curious why .
+01:13 <     cousteau > pragma-, yeah, that's what the conversation was about; then we started describing what gnu89 was
+01:13 <      pragma- > very well. carry on.
+01:16 <     cousteau > terabit, something from libc may be getting linked
+01:20 <      terabit > cousteau: -nostdlib got it down to 992bytes but segfaults
+01:20 <      terabit > I was jusr curious what the simplest C code gets compiled to
+01:20 <     cousteau > terabit, yeah, was trying that.  -lgcc doesn't help
+01:21 <     cousteau > terabit, I read about an ultra-simplified ELF file that ended up as 45 bytes
+01:21 <     cousteau > http://www.muppetlabs.com/~breadbox/software/tiny/teensy.html
+01:21 <      candide > Title of cousteau's link: A Whirlwind Tutorial on Creating Really Teensy ELF Executables for Linux
+01:22 <      terabit > yeah, I did infinite loop in 552byte the other day ,that sounds cool
+01:23 <     cousteau > pro tip:  `#!/bin/sh \n exit 0` uses only 17 bytes
+01:35 <     michelem > hello folks
+01:36 <     michelem > I have a simple logmsg() procedure that vfprintf()s to stderr. This gives me the following symptom: all logging goes through fine, until I fork() and exec(). The child calls a dup2(1, 2);. The parent does not. After that point, all logging is silent.
+01:38 <     michelem > any clue where I can look into?
+02:46 <      cyber37 > Hey boy's i have a problem .. I have a program who make request to a mysql server... And always at the 1018 request i have the same error (error 24) who say's that i have too many files open ... I don't understand because my program doesn't open files ... when i type ulimit -a to my console the max files allowed opened is 1024 with lsof it say's that my app have just 5 files >?<
+02:46 <       orbitz > kate`: you can't answer this question
+02:46 <      cyber37 > Can't read dir of '/etc/mysql/conf.d/' (Errcode: 24)
+02:46 <      cyber37 > Fatal error in defaults handling. Program aborted
+02:46 <      cyber37 > It sucks too much, some one can help ?
+02:46 <       orbitz > cyber37: you're proabbly opening sockets
+02:46 <       orbitz > whichare files
+02:46 <       orbitz > and not closing them
+02:47 <       orbitz > or maybe your mysql has this issue
+02:47 <       orbitz > is it client or server side?
+02:51 <      cyber37 > omg
+02:51 <      cyber37 > possible !!!
+02:51 <      cyber37 > look that : !!!
+02:51 <      cyber37 > TS-Interf 17727       root  460u     IPv4    1103046       0t0        TCP localhost:15020->localhost:40335 (CLOSE_WAIT)
+02:51 <      cyber37 > i have more than 500 lines of that
+02:51 <      cyber37 > Dafuk ?
+02:52 <      cyber37 > when i do lsof | grep "myapp"
+02:52 <      cyber37 > what are that files ? socket ?
+02:53 <       orbitz > anything with a file descriptor
+02:55 <      cyber37 > why i have that files ?
+02:55 <       orbitz > what files?
+02:55 <      cyber37 > or that lines
+02:55 <       orbitz > how should i know? you haven't shown any code
+02:56 <      cyber37 > now i have change my app
+02:57 <      cyber37 > ok
+02:57 <      cyber37 > !pastbin
+02:58 <       orbitz > read the topic
+03:00 <      cyber37 > http://pastebin.com/nXe5bjBu
+03:00 <      cyber37 > look that
+03:02 <       orbitz > you never close the socket
+03:04 <      cyber37 > LOL
+03:04 <      fossjon > dont lol, this is serious
+03:04 <      fossjon > sockets are precious
+03:04 <      cyber37 > i wanted to get him open
+03:04 <      cyber37 > because
+03:04 <      cyber37 > in the infinite loop
+03:04 <      cyber37 > i have "wait for client" "read client"
+03:05 <       orbitz > no you don't
+03:05 <      cyber37 > i want to do it, and keep the socket open,
+03:05 <       orbitz > you have wait for client
+03:05 <       orbitz > read once
+03:05 <       orbitz > wait for new client
+03:05 -!- mode/##c [+o candide] by ChanServ
+03:05 <      cyber37 > YES
+03:05 -!- mode/##c [+b *!~orbitz@li574-142.members.linode.com] by candide
+03:05 <      cyber37 > so i don't need to close
+03:05 <      cyber37 > ?!
+03:05 -!- mode/##c [-b *!~orbitz@li574-142.members.linode.com] by candide
+03:05 <       orbitz > yes you do
+03:06 <      cyber37 > if i close, i have to do again creat socket and bind to port XXXXx
+03:06 <       orbitz > no, i'm talking about the other scoket
+03:06 <       orbitz > the one accept returns
+03:07 <      cyber37 > omg yes
+03:07 <      cyber37 > omg
+03:07 <      cyber37 > newsockfd
+03:07 <      cyber37 > Dafuk thanks
+03:07 <      cyber37 > my god
+03:10 -!- mode/##c [-o candide] by ChanServ
+03:13 <      cyber37 > my god no xD
+03:25 <      cyber37 > ok maybe my problem is here but he is not resolved !
+03:26 <      cyber37 > wait for pastbin
+03:27 <      cyber37 > http://pastebin.com/A6qxKCy9 but i have alway's CLOSE_WAIT
+03:36 <      cyber37 > why it is alway's in close_wait ?
+03:36 <      cyber37 > the socket is closed
+03:40 <      cyber37 > why doing close(socket); put him in "CLOSE_WAIT" ?
+03:41 <      cyber37 > The only concern is that a lot of CLOSE_WAIT entries consumes kernel memory and file descriptor table entries, which can be a problem if there's great piles of them
+03:41 <      cyber37 > Ok but how to remove that without exit the program
+03:44 <      cyber37 > i try to put shutdown(ad, SHUT_RDWR); before close
+03:46 <      cyber37 > damn it
+03:49 <      cyber37 > i fond a topic with people with the same problem they doesn't say how to solve it, but i find another topic of a man who say to use the socket option "REUSEADDR"
+03:49 <      cyber37 > i will find for it : because it will be ok for me
+04:11 -!- mode/##c [+o candide] by ChanServ
+04:11 -!- mode/##c [+b *!~rudi@*.mediaWays.net$##stop_join_flood] by candide
+04:16 -!- mode/##c [-o candide] by ChanServ
+04:22 <        adnap > I'm doing Exercise 5-7 in K&R. This program (from the book) works on a 100000-line file: http://bpaste.net/show/180584/ A version I modified for the exercise sefaults: http://bpaste.net/show/180585/ Can anyone tell me why?
+04:23 <        adnap > My modified version works if I make ALLOCSIZE and MAXLINES smaller and use a smaller file
+04:25 <    flounders > adnap: You are at a point where you are running into the limits of automatic memory. The system will only allocate so much of it. What you need to do is use dynamic memory which you can allocate using malloc() and its ilk.
+04:26 <        adnap > flounders: Why would the first version work with the same-sized static array?
+04:28 <    flounders > adnap: I forget how much memory you are allowed to use that is automatic, but it isn't much. In the first code listing it is only 200k bytes that are being allocated. With your second paste it is 200 million bytes.
+04:29 <    flounders > If you increase the MAXLINES value, you will eventually find that it will have problems too.
+04:29 <    flounders > You simply need to be using dymanic memory for anything big.
+04:30 <       mordy_ > holy GCC
+04:30 <       mordy_ > i just happened to run into the wonderful gcc 'strict-aliasing' behavior
+04:30 <       mordy_ > someone posted a link to linus' rant about that just yesterday
+04:31 <    flounders > adnap: Nevermind both are using the same amount of memory.
+04:31 <     aberrant > mordy_: do you have the link?
+04:32 <       mordy_ > aberrant: http://www.mail-archive.com/linux-btrfs@vger.kernel.org/msg01647.html
+04:32 <      candide > Title of mordy_'s link: Re: gcc inlining heuristics was Re: [PATCH -v7][RFC]: mutex: implement adaptive spinning
+04:32 <     aberrant > thanks
+04:33 <        adnap > flounders: Is there a way to find the maximum amount of allowed automatic memory? It seems unsafe to just put numbers in with no message from the compiler
+04:33 <      cyber37 > http://fr.openclassrooms.com/forum/sujet/serveur-socket-en-c-sous-linux-close-wait?page=1#message-85339701
+04:33 <       mordy_ > i'm not sure my issue was as obvious, but my code suddenly broke with -O2 . still checking to see exactly why it exploded
+04:33 <        adnap > Or is this an OS thing that the compiler can't know about?
+04:34 <      cyber37 > i explain my problem here http://fr.openclassrooms.com/forum/sujet/serveur-socket-en-c-sous-linux-close-wait?page=1#message-85339701
+04:34 <      cyber37 > test
+04:34 <      addatoo > adnap: the stack size? That's limited by the OS, and is system-specific
+04:35 <    flounders > adnap: I'm looking for it, but you really don't want to push to the limits on automatic memory. Using malloc is the way to go.
+04:35 <        adnap > How can I know what is a safe value to put in my program for *any*-sized static array?
+04:35 <      addatoo > er, getting the size of the stack is system-specific *
+04:35 <       mordy_ > addatoo: that really depends on the platforms you want to target
+04:35 <        adnap > The limits could be orders of magnitude smaller if the computer was really old
+04:35 <       mordy_ > some embedded platforms have a limit of several K. on my linux box it's 10M
+04:35 <        adnap > It seems unreasonable to have no formal way of checking the limits of automatic memory
+04:36 <      addatoo > mordy_: exactly
+04:36 <    flounders > Not really, you just use as little of it as you can.
+04:36 <       mordy_ > addatoo: usually what i do is define some macro which sets a predefined limit for automatic memory and then create something like:
+04:36 <  jack_rabbit > adnap, why? It's an implementation detail.
+04:37 <        adnap > So, anybody using the program gets at best a segfault if there is not enough automatic memory?
+04:37 <  jack_rabbit > they get whatever the implementation decides to do.
+04:37 <       mordy_ > struct { union { t stacked[LIMIT]; t*alloced; } u; t *ptr; int is_allocated },
+04:37 <    flounders > adnap: replace line 17 with this "char *allocbuf = malloc(sizeof(char) * ALLOCSIZE);" and see what that does.
+04:37 <       mordy_ > adnap: look at 'small string optimization' or whatever
+04:38 <       mordy_ > you _really_ shouldn't be allocating a whole huge amount of automatic storage anyway
+04:38 <        adnap > i know
+04:38 <       mordy_ > the performance gain becomes lost after a certain threshold anyway
+04:38 <        adnap > The K&R exercise asks to compare the speed of my modified version to the one in the book. I can't see any difference without making the input larger
+04:39 <        adnap > (Exercise 5-7)
+04:39 <      addatoo > yeah, the os has to page in new memory every time you cross a page boundary
+04:39 <      addatoo > which isn't a big deal when you're only using a page or two
+04:39 <    flounders > Unfortunately my copy of K&R is out of state with a friend at the moment.
+04:39 <        adnap > flounders: Well, I posted the version from the book unmodified
+04:39 <       mordy_ > adnap: consider that at the time K&R was written, stack sizes of several K was the norm :)
+04:40 <       mordy_ > (was the original pdp11 unix 32 bit?)
+04:40 <        adnap > Also, nobody has explained why the first version works and the second doesn't with the same amount of memory
+04:40 <       mordy_ > can i see the paste?
+04:41 <        adnap > Despite this, you're suggesting I use malloc
+04:41 <        adnap > I don't want to use malloc because it hasn't been introduced in the book yet
+04:41 <        adnap > I'm doing Exercise 5-7 in K&R. This program (from the book) works on a 100000-line file: http://bpaste.net/show/180584/ A version I modified for the exercise sefaults: http://bpaste.net/show/180585/ Can anyone tell me why?
+04:41 <       mordy_ > so use a static stack size buffer
+04:41 <       mordy_ > i bet K&R also didn't really expect yu to deal with 100k line files
+04:42 <        adnap > Of course not
+04:42 <        adnap > I still don't want to skip the exercise
+04:43 <        adnap > I want to know which is faster
+04:43 <       mordy_ > in what sense? what are you comparing against?
+04:43 <        adnap > mordy_: Please look at the code. It will take me longer to explain
+04:43 <       mordy_ > adnap: normally, different things will have different speeds for different inputs
+04:44 <        adnap > mordy_: The input should be the same for both programs to fairly compare them!
+04:45 <    flounders > Unfortunately the way it is written you are limited to a small input.
+04:45 <        adnap > flounders: Are you ignoring the fact that the unmodified version works on a 100000-line file again?
+04:45 <    flounders > I am simply saying static memory can only do so much.
+04:46 <        adnap > I am trying the same size input on both programs with the same size array!
+04:46 <        adnap > One works; one doesn't
+04:46 <        adnap > So I think it is not a memory limit issue
+04:46 <        adnap > If you disagree, please explain why
+04:48 <    flounders > What file are you using for your input?
+04:49 <        adnap > flounders: find ~/ | head -n 100000
+04:50 <       mordy_ > you are using 200MB of automatic storage
+04:50 <    flounders > I can't even get the code to compile.
+04:50 <       mordy_ > err.. i think
+04:50 <      pragma- > what kind of whack system are you on that you can read the home directories of other users?
+04:51 <        adnap > flounders: gcc -ansi [file]
+04:51 <        adnap > pragma-: Uh, that would be my own home directory
+04:52 <      pragma- > what kind of whack home directory has 10000 files in it?
+04:52 <        adnap > Mine
+04:52 <        adnap > It has over 100000
+04:52 <        adnap > I have wine installed for one
+04:52 <      pragma- > what kind of whack person still uses the -ansi flag for gcc?
+04:53 <        adnap > pragma-: One who is reading K&R and writing in C90
+04:53 <  jack_rabbit > adnap, the first program's 200MB array is static. Your modification's is automatic.
+04:53 <      pragma- > C90 is not ansi.
+04:54 <        adnap > pragma-: Check the -ansi flag in the gcc manpage. It's for C90
+04:54  *     pragma- shrugs indifferently.
+04:54 <        adnap > jack_rabbit: O.O
+04:54 <      pragma- > C90 is ISO
+04:54 <  jack_rabbit > adnap, so the first program's giant array isn't on the stack.
+04:55 <      pragma- > the current ANSI C standard is C99.
+04:55 <  jack_rabbit > the second one's is.
+04:55 <       mordy_ > yep, you're using 200M of memory
+04:55 <      pragma- > and gcc is deprecating the -ansi flag.
+04:55 <        adnap > jack_rabbit: Huzzah!
+04:55 <        adnap > jack_rabbit: You're right. It works now
+04:55 <  jack_rabbit > good news.
+04:55 <        adnap > jack_rabbit: ty
+04:55 <  jack_rabbit > :)
+04:55 <      pragma- > a non-whack person would use -std=c90 if they wanted C90
+04:56 <        adnap > pragma-: It means the same thing according to the gcc manpage
+04:56  *     pragma- shrugs indifferently.
+04:56 <        adnap > pragma-: "In C mode, this is equivalent to -std=c90. In C++ mode, it is equivalent to -std=c++98."
+04:56 <      pragma- > irrelevant.
+04:56 <        adnap > I don't know what your point is
+04:56 <    flounders > adnap: Both programs work on my system.
+04:57 <      pragma- > perhaps you should improve your reading comprehension, then.
+04:57 <        adnap > flounders: That's good. I wish they had on mine, but at least I learned a lesson
+04:57 <       mordy_ > anyway your code doesn't compile because you've redefined some functions present in POSIX for stdio
+04:57 <        adnap > mordy_: I'm not writing in POSIX C
+04:58 <        adnap > Okay, done defending myself. This is a waste of time
+04:58 <    flounders > Is there supposed to be output though?
+04:58 <       mordy_ > adnap: getline() exists in posix. gcc complains because it thinks you've redefined it
+04:58 <        adnap > mordy_: Not if you use -ansi!
+04:58 <       mordy_ > i know
+04:58 <      pragma- > better yet, don't use -ansi.
+04:58 <       mordy_ > i'm just explaining why it complained
+04:58 <        adnap > I don't care. I know that alraedy
+04:58 <       mordy_ > it works the same with -std=c11 as well
+04:59 <       mordy_ > (with a small warning because main doesn't have a return type)
+04:59 <        adnap > It's assumed to be int in C90
+04:59 <        adnap > K&R does this all the time
+04:59 <      pragma- > k&r needs a 3rd edition.
+05:00 <        adnap > I'm just writing in C90 until I finish the book
+05:00 <        adnap > It makes more sense to me to follow the standard the book is talking about
+05:00 <      pragma- > make sure you read the errata, then.
+05:00 <        adnap > Otherwise, the book would contain many contradictions
+05:00 <      pragma- > it does.
+05:00 <    flounders > adnap: Nevermind my earlier comment on your first program, I got my IO redirection mixed up.
+05:01 <    flounders > Your first program segfaults.
+05:01 <        adnap > flounders: I wonder why. It's from the book
+05:02 <    flounders > adnap: Sorry your first paste, not K&R's version.
+05:02 <    flounders > It won't run any code past line 17.
+05:03 <    flounders > I have a printf() sitting two lines down from it before your loop and it segfaults before that.
+05:03 <      pragma- > try using a debugger instead.
+05:04 <        adnap > flounders: The first paste (http://bpaste.net/show/180584/) is K&R's
+05:05 <        adnap > flounders: The second one (http://bpaste.net/show/180585/) is mine. It segfaulted for me until I changed "char allocbuf[ALLOCSIZE];" to "static char allocbuf[ALLOCSIZE];"
+05:05 <    flounders > adnap: That is the one I am referring to.
+05:05 <         zid` > probably missing a null terminator somewhere
+05:05 <        adnap > This is what jack_rabbit pointed out
+05:05 <        adnap > zid`: Nope
+05:05 <        adnap > The second one exceeds the limits of automatic memory.
+05:06 <    flounders > Sorry I have been distracted with a few other people asking me questions in person.
+05:06 <         zid` > ah, okay
+05:06 <         zid` > ah yes, it's a rather large number
+05:06 <        adnap > The first one uses the stack. Declare the array static and it will be put on the stack
+05:06 <         zid` > It *may* use a stack
+05:06 <    flounders > fg
+05:06 <       mordy_ > also unless the data is actually on a specific function's "Stack", it's not actually in the "Stack"; it may be embedded into one of the program sections
+05:06 <        adnap > Okay. I'm just taking what I heard in here
+05:06 <         zid` > nobody talks about stacks in here
+05:07 <        adnap > < jack_rabbit> adnap, so the first program's giant array isn't on the stack.
+05:07 <         zid` > nobody who isn't an idiot
+05:07 <        adnap > In any case, the memory is reserved before the program is run when the array is declared static I think
+05:08 <       mordy_ > well if the array isn't static it has external linkage. i'm not entirely sure where the storage for that is allocated. however as an implication of external linkage means the compiler can't do any tricks and pretend to only allocate the part of the array that you actually use
+05:10 <         twkm > things with linkage always have static duration storage.
+05:12 <        adnap > So K&R's version takes 0m6.951s of real time, and mine, which moves the static array into main and passes a pointer to readlines, takes 0m6.332s. I guess it is because of the overhead of calling alloc, but K&R doesn't explain in detail
+05:13 <        adnap > I think it just avoids 100000 function calls
+05:13 <         twkm > time is not of much concern to them.  they are trying to teach you the language.
+05:14 <        adnap > twkm: The point of the exercise is to compare the speed of two programs
+05:14 <       mordy_ > can i see K&R's version? don't have a copy handy
+05:14 <        adnap > mordy_: http://bpaste.net/show/180584/
+05:14 <       mordy_ > hrm, then i guess i want to see the _other_ version :)
+05:14 <        adnap > "Exercise 5-7. Rewrite 'readlines' to store lines in an array supplied by 'main', rather than calling 'alloc' to maintain storage. How much faster is the program?"
+05:15 <        adnap > mordy_: Here's mine: http://bpaste.net/show/180585/
+05:15 <         twkm > they only ask.  and the answer can easily be "it isn't", or "it is slower".
+05:15 <       mordy_ > ah your first one crashes?
+05:15 <        adnap > mordy_: Note that I have changed "char allocbuf[ALLOCSIZE];" to "static char allocbuf[ALLOCSIZE];" on line 17
+05:15 <       mordy_ > i..e 85 crashes?
+05:15 <        adnap > mordy_: Yes
+05:16 <        adnap > mordy_: Because the array was not declared static, and it is too big for automatic memory
+05:16 <       mordy_ > indeed
+05:16 <       mordy_ > ok, now i have a clearer picture
+05:17 <        adnap > Before, I thought that space for automatic variables was reserved at compile time
+05:18 <       mordy_ > adnap: it depends where the space is
+05:18 <        adnap > And perhaps it is for some, but evidently not for large arrays
+05:18 <       mordy_ > they're always "Reserved" at compile time. but where this memory comes from is a different story. for example the "asm needed to push the stack for your array" is generated at compile time :)
+05:19 <       mordy_ > also.. think about the cntext of multiple threads
+05:19 <        adnap > I thought that space would be added to the actual executable
+05:20 <       mordy_ > adnap: that usually only happens with actual arrays that have their contents fixed and constant
+05:20 <       mordy_ > btw i'm not sure how much of this (if any) is covered by the standard. much of this may be very much linux and x86 specific
+05:20 <  jack_rabbit > indeed.
+05:20 <        Chris > What is?
+05:20 <         zid` > C doesn't say a thing about executables
+05:21 <        Chris > Oh, that
+05:21 <        adnap > I wonder if I could legally write "char allocbuf[100000] = { 0, 0, ..., 0};" :P
+05:21 <  jack_rabbit > sure.
+05:21 <        adnap > And get the space in the executable
+05:21 <       mordy_ > adnap: it'd need to be const
+05:21 <        adnap > mordy_: Why?
+05:21 <        Chris > s/const/static
+05:21 <       mordy_ > Chris: static and const?
+05:21 <        Chris > but implementation dependent
+05:22 <       mordy_ > given
+05:22 <        Chris > no, just static
+05:22 <        adnap > const just means you can't modify the array
+05:22 <        Chris > but i suppose it depends what "get the space in the executable" means.
+05:22 <        Chris > I just joined so don't have the context.
+05:22 <        Chris > rude Chris
+05:22 <       mordy_ > adnap: http://wiki.osdev.org/ELF fwiw
+05:22 <        adnap > I think it's called the "text segment" of the program
+05:22 <  jack_rabbit > Chris, he's talking about storage with static duration.
+05:23 <        Chris > Then I was right \o/
+05:23 <  jack_rabbit > adnap, no data but the odd constant is stored in the text segment.
+05:23 <        adnap > Oh, is it called the "data segment"?
+05:23 <  jack_rabbit > sometimes.
+05:23 <        Chris > anyway, enough compiler/platform specific heresy
+05:23  *       Chris heads to work
+05:24 <        adnap > There's like some assembly you can write that makes a line in the assebly reserve memory at that location when the program is loaded in memory
+05:24 <       mordy_ > if i read this right; static stuff goes in .data, const static goes inside .rodata.. or maybe that's _only_ for literals?
+05:24 <         twkm > bleh.
+05:24 <         boru > It depends.
+05:24 <       mordy_ > adnap: disassemble your code! see what it does
+05:25 <        adnap > I am curious about what Chris said about the array needed to be static.
+05:25 <       mordy_ > write a simple program that uses an array on the stack; gcc -g -O0 && objdump -Sd a.out
+05:25 <       mordy_ > adnap: there's a difference between the stack and your "Program Data"
+05:25 <        adnap > If I write a small array "char a[5] = {0, 0, 0, 0, 0};", does it also need to be static to have space reserved in the program at compile time?
+05:26 <       mordy_ > first of all, you need to understand why a stack is called a staxk
+05:26 <       mordy_ > stack
+05:26 <       mordy_ > adnap: really implementation specific
+05:26 <  jack_rabbit > adnap, yes.
+05:26 <  jack_rabbit > adnap (for your implementation)
+05:26 <        adnap > Stack memory is used during function calls for automatic variables
+05:26 <         CaZe > o_O
+05:26 <       mordy_ > eh, it's more than that
+05:26 <        adnap > The functions decrement and increment the stack pointer as space is allocated for them
+05:27 <         CaZe > Why are you guys talking about this?
+05:27 <  jack_rabbit > CaZe, adnap ran into a problem allocating an automatic 200MB char array, so now he's wondering about stack stuff.
+05:28 <       mordy_ > next up: virtual memory and your dog
+05:28 <         twkm > sadly it is the same answer, provided sie got the right info the first time.
+05:28 <        adnap > Well, the executable is only 12K
+05:29 <         twkm > immaterial.
+05:29 <        adnap > Maybe it expands when the OS loads it
+05:29 <        adnap > Okay, I'll drop this off-topic convo now :P
+05:33 <         CaZe > Well, now you can freak out about how there's no way to completely error check every program you've ever written.
+05:44 <   freestyl3r > can someone tell me the downsides of declaring a variable in a header file? (assuming all source files need access to this variable). i know about tentative definitions and extern keyword
+05:45 <   freestyl3r > but what are the downsides to just defining it in a header (with proper if guards of course)
+05:45 <   freestyl3r > how is simply declaring the variable, define it in a source file and the put "extern" on that header a better solution?
+05:46 <         CaZe > Did you try defining it in the header?
+05:46 <         CaZe > Becuase it shouldn't even link.
+05:50 <   freestyl3r > but it does. and it works correctly
+05:50 <         twkm > you want the (shared) header file to provide only a reference, for which some specific source provides the object.
+05:50 <   freestyl3r > example with code: https://github.com/foss-teiwest/irc-bot/blob/master/include/common.h#L32
+05:50 <         twkm > CaZe: sadly many compilers are happy to use fortran common semantics.
+05:50 <   freestyl3r > i'm declaring struct config_options
+05:50 <   freestyl3r > https://github.com/foss-teiwest/irc-bot/blob/master/src/common.c#L20
+05:51 <   freestyl3r > here i'm defining
+05:51 <         twkm > e.g., one must use -fno-common with gcc to avoid it.
+05:51 <   freestyl3r > aand back to the header file i have extern struct config_options cfg;
+05:51 <   freestyl3r > if i delete both the extern line and the one in common.c
+05:51 <         twkm > extern in the header file provides only a reference, not an object.
+05:51 <         twkm > common.c is providing the object.
+05:51 <     sheilong > CaZe:  http://bpaste.net/show/180494/
+05:51 <         CaZe > freestyl3r: Ah, you're confusing declaration and definition.
+05:52 <   freestyl3r > and put "} cfg;" at the end of the header declaration. it works fine
+05:52 <   freestyl3r > CaZe: how so?
+05:54 <         twkm > come to think of it, you don't seem to grok declarations at all.
+05:55 <   freestyl3r > twkm: can you point where i have them mixed up then?
+05:55 <   freestyl3r > btw the linker complained indeed with -fno-common
+05:57 <         CaZe > Here you provide the struct definition :https://github.com/foss-teiwest/irc-bot/blob/master/include/common.h#L32
+05:58 <         CaZe > Here you define the definition for cfg: https://github.com/foss-teiwest/irc-bot/blob/master/src/common.c#L20
+05:58 <         twkm > you are producing multiple objects when you fail to use extern in the header.  in every source that #include's it.  that is supposed to produce an error, but in the interest of allowing idiots to write less portable code gcc throws away the restriction.
+05:59 <         CaZe > freestyl3r: { int a = 1; int a = 2; }
+05:59 <      candide > freestyl3r: error: redefinition of 'a'
+05:59 <         CaZe > freestyl3r: You're suggesting doing the same thing as that, except at the file level, instead of the block level.
+05:59 <   freestyl3r > well that's what struck me as well. i knew it shouldn't play but the compiler didn't complain. if you see, i used the correct way with "extern"
+05:59 <   freestyl3r > that's why i came here to ask about it
+06:00 <         CaZe > I don't even know how gcc does it.
+06:00 <   freestyl3r > so CaZe , you agree that the current solution is the proper one? (if i want to have a global variable that is...)
+06:01 <         CaZe > Yes, it's the only real way to do it.
+06:01 <   freestyl3r > thanks all for the help then :)
+06:01 <       kessel > you might get several instances of that in each translation unit, and if you fill one, the others are not updated the same
+06:01 <     jamesaxl > hi
+06:01 <         CaZe > So they basically become static?
+06:02 <         CaZe > a.c has int a = 1;
+06:02 <         CaZe > b.c has int a = 2;
+06:02 <         twkm > CaZe: it uses fortran common handling, i.e., it merges objects which have the same name and size.
+06:02 <         twkm > (the linker, specifically)
+06:02 <         CaZe > c.c has extern int a; Then in a function it has printf("%d", a);
+06:02 <       kessel > we have this here sometimes on our embedded compilers, and it happens to be all static variables per TU
+06:03 <         CaZe > Which a does the linker pick?
+06:04 <         twkm > well, that's the thing.  it doesn't know types, just sizes and names.  so for it there is no choice, it merges them.  you problem if one is a long and the other is a double...
+06:06 <         twkm > iirc, gcc allows it because people often enough forget to do it properly.  i cannot guess why they cared less that it opens them to undefined behavior that would otherwise have been impossible -- perhaps it is buried in their ml archives somewhere.
+06:06 <         CaZe > Well then which value ends up getting printed?
+06:08 <         twkm > it should be stated in the linker docs.  i expect an error since both have initialization, but it might allow it and use one of them (whether the first or the last or related to the symbol table hashing i cannot guess).
+06:12 <         CaZe > Sounds insane.
+06:14 <    bigbadben > int flag; if(!flag){doSomething();} how can I reset flag to null without getting a warning?
+06:14 <         zid` > stop trying to assign NULL to integers
+06:14 <         zid` > You want 0
+06:14 <         CaZe > Change the declaration to be a pinter type.
+06:14 <         CaZe > pointer
+06:14 <         CaZe > Assuming you mean NULL.
+06:15 <    bigbadben > I guess I am asking does !flag imply flag is equal to zero?
+06:16 <  Maxdamantus > `!flag` means `flag == 0`
+06:16 <  Maxdamantus > but that does not necessarily mean "zero".
+06:17 <    bigbadben > so then if I said `flag = 127;` if(flag) would be true?
+06:18 <         zid` > anything that isn't 0 is true
+06:18 <    bigbadben > cool thanks
+06:18 <         zid` > <Maxdamantus> `!flag` means `flag == 0`
+06:18 <         zid` > That's the opposite of what that means
+06:18 <         zid` > wait, I am retarded wow
+06:18 <         zid` > I blame bnetsplits
+06:22 <        thims > Why doesn't line 2 in http://pastebin.com/y2qUnggN throw an error on compilation?
+06:23 <     gjulianm > You're defining a label
+06:24 <     gjulianm > this: http://msdn.microsoft.com/en-us/library/2c002fdz.aspx
+06:24 <      candide > Title of gjulianm's link: goto and Labeled Statements (C)
+06:24 <         twkm > CaZe: heh, well, some do indeed feel that way about fortran ...
+06:26 <     sheilong > Exercise 1-23. Write a program to remove all comments from a C program. Don't forget to handle quoted strings
+06:26 <     sheilong > and character constants properly. C comments don't nest.
+06:26 <     sheilong > What about character constant menas in that context ?
+06:26 <         CaZe > 'c'
+06:27 <        thims > gjulianm: candide, Thank you bot.
+06:27 <         CaZe > sheilong: Page 19
+06:27 <         twkm > sheilong: you should probably go back and re-read the chapter, as it is explanined.
+06:28 <         twkm > err, explained.
+06:28 <     sheilong > ok Thanks guys
+06:28 <         CaZe > sheilong: It also mentions the difference between '\n' and "\n".
+06:30 <     sheilong > CaZe:  '\n' is a characther constant "\n"here is inside in a string
+06:36 <         twkm > so \n inside of '' makes a single character.  but inside of "" makes one of several charactesr ... even just "\n" has 2 characters, one of which you can see easily.
+06:37 <     sheilong > twkm: In that exercise if the coments is inside quotes they must be printed otherwise ignored
+06:38 <         twkm > right, since inside of quotes they don't introduce a comment.
+06:38 <         twkm > they can even be " un-/*balanced ".
+06:42 <         CaZe > sheilong: puts("/*This is not a comment.*/");
+06:42 <         CaZe > sheilong: { puts("/*This is not a comment.*/"); }
+06:42 <      candide > sheilong: /*This is not a comment.*/
+06:43 <     sheilong > CaZe:  :)
+06:43 <         CaZe > sheilong: Think very carefully about this exercise before you start writing any code. It's one of the harder ones.
+06:43 <       mordy_ > back in the day the way i solved this was to write my own lightweigt lexer of the C language
+06:44 <     sheilong > CaZe:  I think the next one is the most hardest of all book
+06:44 <         CaZe > mordy_: Only necessary if you deal with trigraphs.
+06:44 <     sheilong > unless the bitwise section I've never be able to understand it
+06:45 <         CaZe > sheilong: It's very easy to waste a lot of time on this exercise pursuing dead-end paths.
+06:45 <       mordy_ > CaZe: it might've not been necessary -- but it was fun
+06:45 <       mordy_ > one of the reasons i enjoyed K&R so much
+06:45 <       mordy_ > most learning is primarily a result of figuring out why something is a dead end for me :)
+06:46 <         CaZe > mordy_: A lexer by itself isn't enough to solve this problem anyway.
+06:47 <       mordy_ > no, it isn't. but it gives you a starting point
+06:47 <       mordy_ > once you have your lexer stuff implemented you can then safely relax and not worry about the other corner cases as mentioned above
+06:49 <       mordy_ > oh. mine also handled C++-style comments. sweet
+06:50 <       mordy_ > also. only 80 lines
+06:53 <       mordy_ > i have this all in my history.. i made three fairly elaborate attempts at this one, too
+06:54 <         CaZe > I think my first attempt used function pointers.
+06:55 <         CaZe > sheilong: How much computer science have you studied?
+06:57 <         CaZe > Heh, I still have the partial state diagram I drew for someone here.
+06:57 <         CaZe > He spent like three weeks trying to do this problem.
+06:57 <       mordy_ > holy crap there's some horrible code i wrote
+06:58 <    flounders > At what point does the horrible part phase out?
+06:58 <     sheilong > CaZe:  no much
+06:58 <     sheilong > I always gave uo of something
+06:58 <       mordy_ > i guess it's kinda clever... http://paste.scsys.co.uk/308327
+06:59 <         CaZe > sheilong: Do you know what a finite state machine is?
+06:59 <       mordy_ > i'm not sure how old that is
+06:59 <     sheilong > I did the ast two exercices of chapter one long time ago
+06:59 <     sheilong > CaZe:  Not realy
+06:59 <         CaZe > sheilong: Want to see mine?
+06:59 <     sheilong > CaZe:  sure
+07:00 <       mordy_ > oh right
+07:00 <       mordy_ > i was supposed to be debugging strict aliasing
+07:00 <         CaZe > sheilong: http://i.imgur.com/YprsF0w.png
+07:02 <     sheilong > CaZe:  hmmm.
+07:02 <       mordy_ > i think _this_ is making it barf with strict aliasing; but i'm not sure about what particularly
+07:03 <       mordy_ > http://pastie.org/8747018#41
+07:04 <       mordy_ > let me see the generated asm.. actually
+07:05 <     sheilong > CaZe:  Tha character \ is read as '\\' ?
+07:06 <         CaZe > sheilong: It's written as '\\'
+07:08 <         CaZe > sheilong: Well, what do you think of my state machine?
+07:09 <         CaZe > It's incomplete for this exercise, because it doesn't deal with strings or character constants.
+07:09 <         CaZe > But it does the hardest part, which is comments.
+07:10 <     sheilong > CaZe:  Good, and not so easy to get it
+07:10 <     sheilong > at least to me
+07:11 <         CaZe > sheilong: The black circles with numbes inside of them are states.
+07:11 <         CaZe > sheilong: The colored arrows are transitions.
+07:11 <         CaZe > sheilong: The start state is 1.
+07:12 <         CaZe > sheilong: When you read a symbol, you folow the arrow that matches that symbol, and that leads you to the next state.
+07:13 <         CaZe > sheilong: Each transition is labelled with its symbol, and then a side effect as a result of following that transition.
+07:14 <         CaZe > sheilong: For the string of symbols "///", what state do you end up in?
+07:15 <         CaZe > sheilong: And what color arrows do you take?
+07:17 <     sheilong > CaZe:  In that exercise is // alowed as comment ?
+07:17 <         CaZe > sheilong: No.
+07:17 <     sheilong > ok
+07:18 <     sheilong > CaZe:  1 and 2 orangge and purple
+07:18 <         CaZe > sheilong: Wrong.
+07:19 <     sheilong > ok let me think better
+07:20 <         CaZe > sheilong: What happens if you read just "/"?
+07:21 <     sheilong > output nothing
+07:21 <         CaZe > sheilong: From state 1, the arrow labelled with '/' is the orange arrow. That takes you to state 2.
+07:21 <     sheilong > goes to state 2 to check if the next char is a * if isn't a * then print then the /
+07:22 <     sheilong > CaZe:  right
+07:22 <         CaZe > sheilong: Now, we are in state 2. What happens in state 2 if '/' is read?
+07:22 <     sheilong > ouput /
+07:22 <         CaZe > What arrow is taken?
+07:22 <     sheilong > purple
+07:23 <         CaZe > And what state does that lead you to?
+07:23 <     sheilong > 1
+07:23 <         CaZe > No.
+07:23 <         CaZe > Where does the purple arrow point to?
+07:24 <     sheilong > that doesn't taken red arrow ?
+07:24 <     sheilong > CaZe:  2
+07:24 <     sheilong > point to 2
+07:24 <         CaZe > You said purple, not read.
+07:24 <         CaZe > red
+07:24 <         CaZe > Okay, so we go from state 2 to state 2.
+07:24 <         CaZe > Now, a third '/' is read.
+07:24 <         CaZe > Purple arrow again?
+07:25 <     sheilong > CaZe:  red arrow
+07:25 <         CaZe > sheilong: Why?
+07:26 <         CaZe > sheilong: The red arrow is labelled with "Any symbol that isn't '*' or '/'"
+07:27 <         CaZe > sheilong: And we just read the symbol '/'
+07:28 <     sheilong > CaZe:  It continue onstate two untill that read a symbol different of the '/"
+07:29 <         CaZe > Yes.
+07:29 <     sheilong > if cha is '/" it taken purple again
+07:29 <     sheilong > char*
+07:29 <         CaZe > Yes.
+07:30 <         CaZe > 19:14:12 <CaZe> sheilong: For the string of symbols "///", what state do you end up in?
+07:30 <         CaZe > 19:15:38 <CaZe> sheilong: And what color arrows do you take?
+07:30 <         CaZe > So what's the answer?
+07:30 <     sheilong > CaZe:  Orange and purple and end up on state 2
+07:31 <         CaZe > sheilong: orange, purple, purple
+07:31 <         CaZe > sheilong: /f//*123**/
+07:32 <         CaZe > sheilong: orange, red, orange, purple, blue, yellow, yellow, yellow, purple, maroon, grey
+07:32 <         CaZe > End up in state 1
+07:33 <         CaZe > Output is "f/"
+07:33 <         CaZe > Err, "/f/"
+07:33 <     sheilong > haha
+07:33 <     sheilong > I alreasy was asking my self why not printed the / before f
+07:33 <     sheilong > already*
+07:36 <         CaZe > sheilong: Well anyway, that is a finite state machine.
+07:37 <      Zhivago > Hurrah for FSM.
+07:38 <     sheilong > CaZe:  Thanks so much you are the best
+07:38 <         CaZe > sheilong: How old are you?
+07:39 <     sheilong > CaZe:  24
+07:39 <     sheilong > CaZe:  you ?
+07:39 <         CaZe > sheilong: Did you study computer science in college?
+07:39 <     sheilong > CaZe:  you mean university ?
+07:39 <         CaZe > Yes.
+07:39 <     sheilong > CaZe:  no
+07:40 <     sheilong > CaZe:  I study by my self
+07:40 <         CaZe > Oh, well this is what you would have learned.
+07:40 <     sheilong > I have to read more about it to understands the concept
+07:40 <         CaZe > sheilong: If you can make that diagram, you can solve this problem using any programming language.
+07:41 <     sheilong > CaZe:  you made it to teach the people how to solve that exercise ?
+07:41 <         CaZe > sheilong: Most of the work is in drawing that diagram. Once it is drawn correctly, writing the code is easy.
+07:41 <      Zhivago > Well, except for SIMPLE.
+07:42 <         CaZe > ,google SIMPLE
+07:42 <      candide > CaZe: Simple | Worry-free Alternative to Traditional Banking: https://www.simple.com/ -- Simple Skincare: http://www.simpleskincare.com/ -- Simple - Merriam-Webster Online: http://www.merriam-webster.com/dictionary/simple
+07:42 <      Zhivago > http://www.cvaieee.org/html/humor/computer_languages.html
+07:42 <     sheilong > candide:  Had been you study computer science ?
+07:43 <     sheilong > CaZe: *
+07:44 <         CaZe > Yes.
+07:45 <     sheilong > Cool
+07:48 <         CaZe > sheilong: Anyway, I think this exercise was meant for people who already know about state machines.
+07:49 <         CaZe > sheilong: It's a very hard exercise if you don't how to use one.
+08:10 <       vatzec > I'm reading a file in C, and the lines in the file can be in either of two formats: a number or three numbers. I want my program to distinguish those formats and act accordingly. How should I do it?
+08:11 <         CaZe > Think about what each format looks like.
+08:11 <       vatzec > Well, I know they are either %d or %lf %lf %d, but I'm wondering how I can support that in my program.
+08:12 <     lh_mouse > vatzec, if(fscanf(fp, "%lf%lf%lf", &fpp, &bar, &baz) == 3)
+08:12 <     lh_mouse > fpp -> foo.
+08:12 <       vatzec > lh_mouse: Shouldn't it also have spaces?
+08:12 <     lh_mouse > vatzec, the spaces are not required.
+08:13 <       vatzec > Oh. Also, shouldn't there be a \n at the end?
+08:13 <     lh_mouse > But if you specify at least one space then there must be at least one space.
+08:13 <     lh_mouse > scanf() will discard leading space characters so it is okay.
+08:14 <       vatzec > Awesome. Thanks!
+08:14 <       vatzec > So, I should do if (the thing with floats == 3) {} else if (the thing with the integer == 1) {} else {error} ?
+08:15 <     lh_mouse > If you are not sure about the data types, you should use double in all cases.
+08:29 <     sheilong > CaZe:  Then I should read some tutorial/documentation about it ?
+08:32 <     nemesist > could someone take a look at this http://ideone.com/u6Egya? I'm trying to generate a list of primes from 2 to a big number, but keep getting segmentation faults
+08:42 <   hyphenated > nemesist: um.. you malloc 8GB of RAM
+08:43 <   hyphenated > you should consider a smaller MAXSIZE like 10, then make it bigger once the rest is working properly
+08:43 <     nemesist > yea, I checked for 100 at least
+08:44 <     nemesist > do you think the segmentation fault is from the malloc?
+08:44 <        adnap > Is it possible for an uninitialized char to have the value '\n'?
+08:45 <  Maxdamantus > adnap: the value of an uninitialised char is indeterminate, so yes.
+08:45 <   hyphenated > adnap: could be any value that fits a char, including that one
+08:45 <        adnap > More generally, are there any restrictions placed on the values that uninitialized chars can have?
+08:45 <        adnap > Okay
+08:46 <   hyphenated > nemesist: you discover that using a debugger
+08:46 <         CaZe > Or checking the return value of malloc.
+08:46 <        adnap > I noticed a bug in a K&R rogram that would occur if an uninitialized char had the value '\n'
+08:46 <  Maxdamantus > and the input value.
+08:46 <   hyphenated > nemesist: I was pointing out something that was to me, obviously a bad thing
+08:48 <         CaZe > adnap: I'm betting it's a file scope variable.
+08:50 <         CaZe > adnap: What program?
+08:54 <        adnap > CaZe: On page 69, if MAXLINE were 1 and the uninitialized char c has the value '\n', getline would assign '\0' to an index outside the array
+08:54 <        adnap > *had
+08:59 <  jack_rabbit > adnap, Holy cow, are you still after this exercise?
+09:00 <        adnap > jack_rabbit: No, I was referring back to it. Chapter 5 mentions it
+09:00 <  jack_rabbit > ahh.
+09:05 <       kessel > .oO( *sigh* damn floats ... )
+09:06 <         CaZe > adnap: Yeah, c should be initialized to 0 or something.
+09:17 <       mordy_ > hrm; practical advice though regarding strict-aliasing; am i wrong, or is the standard/gcc kinda messed up? what's a practical thing to do in such a situation -- use -fno-strict-aliasing or "Fix" the code
+09:19 <        kate` > structs are compatible for their "initial common prefix", which is the run of members from the start which are of the same types
+09:19 <        kate` > so you may point one to another, if they have those in common
+09:23 <    lemonade` > mordy_: in *what* situation?
+09:27 <    lemonade` > mordy_: I think that's one area where the standard isn't terribly clear as to what the rules are. so -fno-strict-aliasing would be a good choice just for that case alone. but I also think that there is a valid and more intuitive programming model to be used when one disregards aliasing rules, one that doesn't get in your way as much. so I think that's another good reason to use it.
+09:28 <       mordy_ > to be honest i'm still trying to figure out _what_ went wrong here. http://pastie.org/8747260; specifically note line 53
+09:30 <       mordy_ > and then line 81. note these functions are inline. which makes my head spin even more -- gcc is first inlining the code and then reordering ops. line 81 originally read if (!list->first) { ..
+09:31 <       mordy_ > dammit wrong macro for msvc
+09:32 <    lemonade` > what makes you think something went wrong?
+09:34 <       mordy_ > lemonade`: my code blew up. after examining things in a debugger, i saw that after removing an item, list->first was NULL, but list->last was not NULL. applying -fno-strict-aliasing made it work again. changing it to the version i have it there (and using the normal -O2) it works again
+09:35 <       mordy_ > clearly gcc was applying iter->prev->next = iter->next _after_ performing the if statement
+09:35 <       mordy_ > because i guess it made the assumption that list->first was never going to alias iter->prev
+09:36 <       mordy_ > well, &list->first, more precisely
+09:36 <       mordy_ > know what. let me see what happens if i make those two functions non-inline
+09:37 <       mordy_ > though technically, the compiler is still allowed to inline them. maybe there's a special attribute i could use
+09:37 <    lemonade` > list->first and iter->prev are the same types, correct?
+09:37 <       mordy_ > yeah
+09:38 <       vatzec > Can I somehow prevent fscanf from reading stuff from newlines? Like, when I do fscanf(fp, "%d %d %d", &v1, &v2, &v3), can I somehow make it so that it only reads until the end of the line and no further?
+09:38 <    lemonade` > the aliasing rules don't give you trouble when the alias is through the same type... it's when they're two different types that it get complicated
+09:38 <    lemonade` > vatzec: no, but you can use fgets and then sscanf instead
+09:38 <          edk > I ended up writing that insane thing. now i'm stuck for what to call it
+09:39 <       mordy_ > edk: for python?
+09:39 <          edk > yeah
+09:39 <    lemonade` > *gets
+09:39 <       vatzec > lemonade`: Neat, thanks!
+09:39 <       mordy_ > how did you do it?
+09:40 <          edk > i ended up doing something like this: on exception, get python to advance the frame to the next line using trickery, then make a copy of its code object with all the instructions leading up to the current one NOP'd out
+09:40 <          edk > it's not perfect
+09:40 <       mordy_ > lemonade`: i _originally_ assign iter->prev as &list->first, casting it -- but it's technically an slist_root*, not an slist_node*
+09:40 <       mordy_ > though the layout is compatible still
+09:42  *       kate` squints at edk
+09:42 <        kate` > why are you awake?
+09:42 <       Thermi > Good day. Can anyone point me to a good how to for the expat XML parser API? I just found an incomplete documentation on vivtek.com about it.
+09:43 <        kate` > Thermi, must you use it? there are slightly less horrible libraries around
+09:43 <          edk > kate`: i've accidentally become nocturnal
+09:43 <        kate` > i like when that happens
+09:44 <       Thermi > kate`: I'm currently programming a small program to download a file and need to parse an HTML file to do so. Using expat is good, because its file is in the core repo of my distribution, but using libxml2 would be fine too, I guess.
+09:44 <       Thermi > Any recommendations on other XML parsers?
+09:44 <       Thermi > So, no I don't need to use it.
+09:44 <       mordy_ > bah.. __attribute__((noinline)) has no effect
+09:45 <          edk > i'm not sure how to fake returning values using this method
+09:45 <        kate` > Thermi, daniel veillard's libxml2 from xmlsoft.org at least gets most things right
+09:45 <       Thermi > kate`: Well, thanks. :/
+09:45 <    lemonade` > mordy_: can you paste slist.h?
+09:45 <        kate` > it's complex internally, but then so is XML
+09:45 <       mordy_ > sec
+09:46 <       mordy_ > http://pastie.org/8747286
+09:46 <       Thermi > Well, I don't have to really deal with the internals. I only need to get the content of an xpath and then sort the content of it using a radix function
+09:46 <       Thermi > the criteria for sorting it is the date in this format year.month.day
+09:46 <        kate` > Thermi, this'll do you fine, then. you can register xpath functions if you need to do that
+09:47 <       Thermi > Wow, you got me there. Why would I register a xpath function?
+09:47 <        kate` > (but it also provides exslt, so maybe you can use the date processing there)
+09:47 <        kate` > so you can sort by your screwy date format...
+09:47 <       Thermi > Okay.
+09:48 <       Thermi > I can't help the date format, so please don't blame that on me. :D
+09:48 <          edk > mordy_: what are you doing that means you need a root node?
+09:49 <          edk > root nodes are evil
+09:49 <       Thermi > Thank you for the information, kate`.
+09:49 <       mordy_ > edk: hrm, sort of. i don't have any root node normally; it's only for deletion during iteration that i kinda need to 'simulate' a root node
+09:50 <       mordy_ > or more specifically an ephemeral 'prev'
+09:50 <       mordy_ > i'm open to better ideas of how to do this :)
+09:50 <      speckle > what's wrong with root nodes?
+09:50 <       mordy_ > you run into problems like mine. but ffs i'm not even sure what the _problem_ is :/
+09:51 <         twkm > speckle: they rot.
+09:51 <      speckle > rot nodes?
+09:52 <    lemonade` > mordy_: why are they compatible?
+09:52 <          edk > they're also unnecessary for most purposes, and unnecessary complexity is a Bad Thing.
+09:52 <         twkm > gardening "humor".
+09:52 <      speckle > wow that pun actually made someone quit.
+09:52 <      speckle > Speaking of unnecessary complexity, one of my hobbies is coming up with clever ways to call malloc fewer times.
+09:53 <      speckle > It's supposed to be faster, right?
+09:53 <       mordy_ > lemonade`: slist_node sould be compatible with slist_root, i believe; unless i misunderstand something
+09:54 <        kate` > why do you need a seperate type for a root node?
+09:55 <       mordy_ > it's not a root node though; but it's convenient because i have a quick way to append/prepend stuff without going dizzy
+09:55 <        kate` > ah. you want to pass a pointer to your pointer to a node
+09:55 <    lemonade` > mordy_: I don't think they are
+09:56 <      pragma- > I'd love to pass my pointer to a node, baby.
+09:56 <       mordy_ > i wanna dereference you
+09:57 <      pragma- > boy, that flips my bits
+09:57 <       mordy_ > i feel so aligned with you
+09:57 <      speckle > is there a non-UB way of causing segfaults?  I used to dereference 0 if I wanted to force a core dump, but now I feel dirty for using UB
+09:58 <       mordy_ > speckle: signal(SIGABRT)?
+09:58 <        kate` > speckle, abort()
+09:58 <      speckle > thanks! I'll use that from now on :D
+09:58 <       mordy_ > d'oh
+09:58 <       mordy_ > yes, use abort
+09:58 <       Thermi > int *a = NULL;
+09:58 <       Thermi > int b = *a;
+09:59 <       Thermi > damnit.
+09:59 <       Thermi > That's exactly what you are doing.
+09:59 <       mordy_ > technically speaking, does the standard say anything about segfaults?
+09:59 <        kate` > mordy_, nope
+09:59 <       Thermi > write outside the bounds of your array.
+10:00 <      pragma- > ,cc int *p = 0; *p = 0;
+10:00 <      candide > pragma-: Program received signal SIGSEGV, Segmentation fault at statement: *p = 0; <local variables: p = 0x0>
+10:00 <       mordy_ > Thermi: you can't guarantee a segfault
+10:00 <       Thermi > mordy_: Well, at least I can try.
+10:00 <       Thermi > Try to read ALL the memory. \o/
+10:00 <    lemonade` > mordy_: or maybe I'm wrong. who knows :)
+10:00 <       mordy_ > ,cc #include <unistd.h>\n#include<singal.h>\n signal(SIGQUIT);
+10:00 <      candide > mordy_:  fatal error: singal.h: No such file or directory
+10:00 <      pragma- > Thermi: we already have a solution.
+10:00 <      speckle > Even if the standard doesn't say anything about segfaults, POSIX might
+10:00 <       mordy_ > ,cc #include <unistd.h>\n#include<signal.h>\n signal(SIGQUIT);
+10:00 <      candide > mordy_: error: too few arguments to function 'signal'
+10:01 <       mordy_ > blah. i'm not on my game today
+10:01 <      pragma- > candide's #includes do not need \n after them
+10:01 <       Thermi > You actually have a bot in this room that compiles and runs your code? o.O
+10:01 <          edk > well done
+10:01 <      pragma- > Thermi: it also spies on you.
+10:01 <      speckle > A lot of coding rooms have one...
+10:01 <       Thermi > Well, I'm used to THAT.
+10:01 <        kate` > "room"...
+10:01 <      Boohbah > welcome to America Online
+10:01 <       Thermi > I'm just trying to diversify your use of language.
+10:02 <      pragma- > candide: recall Thermi exactly
+10:02 <      candide > [2 minutes and 51 seconds ago] <thermi> That's exactly what you are doing.
+10:02 <          edk > ,cc #include <sys/types.h> #include <signal.h> kill(0, SIGKILL);
+10:02 <      candide > edk: [warning: implicit declaration of function 'kill' [-Wimplicit-function-declaration]] [Killed]
+10:02 <          edk > er
+10:02 <       mordy_ > edk: i don't think SIGKILL does core though
+10:03 <          edk > ,cc #define _POSIX_SOURCE \n #include <sys/types.h> #include <signal.h> kill(0, SIGSEGV);
+10:03 <      candide > edk: [Timed-out]
+10:03  *         edk raises an eyebrow.
+10:03 <       mordy_ > we can actually do this..
+10:04 <       mordy_ > ,cc -include '<signal.h>' -include '<sys/types.h>' -include '<unistd.h>' kill(0, SIGQUIT);
+10:04 <      candide > mordy_: gcc: error: prog: No such file or directory
+10:04 <       mordy_ > did we crash it?
+10:04 <      Boohbah > now we're getting somewhere
+10:04 <      pragma- > no.
+10:04 <      pragma- > I don't know what you think -include is, though.
+10:05 <      pragma- > Oh, it indeed is a gcc flag to include a file.
+10:06 <      pragma- > how peculiar.
+10:06 <       mordy_ > but apparently the <> aren't needed
+10:06 <      pragma- > ,cc paste
+10:06 <      candide > pragma-: http://sprunge.us/VfPa?c
+10:06 <      pragma- > ,cc undo
+10:06 <      candide > pragma-: '<signal.h>' -include '<sys/types.h>' -include '<unistd.h>' kill(0, SIGQUIT);
+10:06 <      pragma- > ,cc show
+10:06 <      candide > pragma-: -include '<signal.h>' -include '<sys/types.h>' -include '<unistd.h>' kill(0, SIGQUIT);
+10:06 <      pragma- > peculiar.
+10:07 <      pragma- > ,cc run
+10:07 <      candide > pragma-: cc1: fatal error: -o: No such file or directory
+10:07 <        Chris > ,cc #pragma pragma-
+10:07 <      candide > Chris: [warning: preprocessor directive not terminated by \n, the remainder of the line will be part of this directive warning: ignoring #pragma pragma  [-Wunknown-pragmas]] Success (no output).
+10:07 <        Chris > nice.
+10:07 <      pragma- > it doesn't seem to like those -include flags for some reason
+10:08 <        kate` > sys/types.h probably ought to come first
+10:10 <    lemonade` > life choices question for yall
+10:10 <    lemonade` > is it a bad thing that I'm taking an intro to C programming class?
+10:11 <        Chris > if you don't mind wasting your time, no
+10:11 <         twkm > gives you something to do for a few hours.
+10:11 <      Boohbah > although your time would be more productively spent on IRC
+10:11 <      speckle > Why do you consider it a waste of time, Chris?
+10:12 <    lemonade` > Chris, I too am curious
+10:13 <        Chris > speckle: because lemonade` alreadys know C beyond an intro to C class.
+10:13 <        Chris > s/ys/y/
+10:13 <      speckle > Oh. I expected a criticism of the quality of C education in academia. :P
+10:13 <    lemonade` > yeah I agree... it's more of a prerequisite thing really
+10:13 <        Chris > speckle: there's that, too.
+10:14 <        Chris > speckle: but that wouldn't matter for lemonade`. which is why i said it was harmless aside from being a waste of time.
+10:14 <        Chris > if a newbie had asked I'd have said it would be harmful
+10:15 <      Boohbah > lemonade`: you should be able to pass with flying colors :)
+10:16 <    lemonade` > I better. if I don't... oh man.
+10:16 <        Chris > just make sure you replicate the errors of the course with the errors in the assignment/exam answers.
+10:16 <        Chris > that will be the hard part
+10:16 <    lemonade` > I find the professor to be just about exactly... adequate
+10:17 <       mordy_ > i thought they didn't really teach C in schools anymore
+10:17 <       mordy_ > now folks can learn how a computer really works by studying java or python, for example
+10:17 <    lemonade` > one thing that was a bit odd was he thought that the ints were 16 bits on the unix server we were using..
+10:17 <        Chris > they don't, but they try
+10:17 <        Chris > lemonade`: that's not at all odd.
+10:17 <       mordy_ > what kind of unix
+10:18 <    lemonade` > Chris: 30 years ago it wouldn't've been odd
+10:18 <       mordy_ > er.r. what kind of platform?
+10:18 <    lemonade` > mordy_: red hat
+10:18 <        kate` > arity
+10:18 <        kate` > that's a nice word
+10:18 <        Chris > lemonade`: it's not odd today
+10:18 <    lemonade` > Chris: eh? how so?
+10:18 <        Chris > lemonade`: I imagine most professors teaching C to first year undergrads to be senile and incompetent
+10:18 <        Chris > so it's not odd.
+10:19 <      speckle > I would think that the distro of linux should not matter for int size, should it?  I could only guess that it's using a different CPU architecture than x86.  PowerPC or ARM, perhaps?
+10:19 <        Chris > they might as well have said the ints had 13 bits.
+10:20 <    lemonade` > speckle: okay, but it's probably a regular computer w/x86.
+10:20 <      speckle > 16-bit ints make no sense.
+10:20 <        Chris > operating systems don't have int sizes, compilers do.
+10:21 <      speckle > Ah, I see.  So it could be a compiler with 16-bit ints.
+10:21 <        Chris > SUSv1 requires 32 bits.
+10:21 <        Chris > er.. SUSv2 sorry.
+10:21 <    lemonade` > I'm just hoping I don't make too much of a jackass of myself in the class
+10:21 <        Chris > (and later editions, presumably)
+10:21 <        Chris > and I mean at least 32 bits.
+10:22 <    lemonade` > correcting him to the t for standard conformance
+10:22 <        Chris > So yes, since 1997 "unix" has required an int size of at least 32 bits.
+10:22 <      speckle > Oh, so a non-standard compiler at that, when it comes to Unix standardization.
+10:22 <       mordy_ > Chris: what's the rationale?
+10:22 <        Chris > mordy_: probably making bad code full of assumptions more likely to work on more systems by accident.
+10:22 <        Chris > but just guessing.
+10:23 <     lh_mouse > Use int32_t please.
+10:23 <      Boohbah > hey,,we should keep the epoch time in a 32 bit int
+10:23 <       mordy_ > if it was introduced in 1997, i believe stdint.h is only specified by C99/POSIX.2001
+10:23 <    lemonade` > speckle: it's i686
+10:23 <   hyphenated > lemonade`: I expect you'll have to bite your tongue a fair bit
+10:24 <    lemonade` > hyphenated: yeah.. I'm not used to that. I'm not sure it's going to go very well heh..
+10:24 <        Chris > I recommend against int32_t
+10:24 <        Chris > Unless you need exactly 32 bits.
+10:25 <        Chris > why are you doing this class, lemonade`?
+10:25 <       mordy_ > well, you need to make some kind of assumptiob about how big the type will be when you use it
+10:25 <     lh_mouse > Then comes int_least32_t and int_fast32_t.
+10:25 <        Chris > normally you just care about its range
+10:25 <       mordy_ > lolportable
+10:25 <       mordy_ > hrm true
+10:25 <     lh_mouse > I hate them. They are too looooong.
+10:26 <   hyphenated > lemonade`: you can sometimes ask for a pass on prerequisites and substitute a different class for credits or whatever scoring system they use
+10:26 <    lemonade` > Chris: I'm trying to do electrical engineering, and this class is a prerequisite. I tried to get out of it, but apparently the folks there don't care that much about people skipping those classes (I got the runaround and then my messages stopped being replied to) to I was just like whatever, I need the prereqs, I'll just take the calss
+10:26 <    lemonade` > *class
+10:27 <        Chris > ah, okay.
+10:27 <        Chris > I did elec. eng.
+10:27 <   hyphenated > lemonade`: otherwise, cruise the class but spend the time learning something else.
+10:28 <   hyphenated > lemonade`: I used my first year classes to learn the 2nd year content. then in second year, following 3rd year content. so basically cruised through most of uni :-)
+10:28 <    lemonade` > hyphenated: yeah I've been doing other stuff during the class... I'm trying to see how far I can get with this X11 program I'm writing during class time just for the heck of it :)
+10:29 <       mordy_ > X11 as in xlib?
+10:29 <    lemonade` > hyphenated: yeah, I'm trying to do that with some classes. makes it a lot easier.
+10:29 <    lemonade` > yeah
+10:29 <    lemonade` > xlib
+10:29 <       mordy_ > i once wrote a somewhat working mouse driver, but that's about it
+10:29 <       mordy_ > was kinda fun. i stopped when i had to restart X every friggin time though :/
+10:30 <    lemonade` > Chris: oh yeah? any advice? I'm trying to learn enough to make a computer, if that's relevant
+10:32 <        Chris > lemonade`: then do computer engineering instead? :)
+10:32 <    lemonade` > Chris: nah.. that's too much software stuff that I already know
+10:32 <      Boohbah > you can do lots of non-computer stuff with electricity too
+10:32 <          edk > oh dear god, this is the most horrible thing i've ever written
+10:32 <        Chris > edk: no it isn't.
+10:32 <          edk > Chris: wanna bet?
+10:33 <    lemonade` > I'm really weak on the lower level stuff like the electrics and lower. not so much with the ISA and higher
+10:33 <        Chris > "oh dear god, this is the most horrible thing i've ever written" is not a particularly horrible statement
+10:33 <          edk > I didn't mean that statement. I meant the code I was looking at.
+10:33 <        Chris > ah
+10:33  *         edk glares at Chris.
+10:33 <        Chris > lemonade`: okay.
+10:33 <        Chris > lemonade`: well, I've forgotten all of it, and I dropped out after second year.
+10:33 <   hyphenated > edk: pastebin it for our amusement?
+10:33 <    lemonade` > heh ok
+10:34 <    lemonade` > Chris: did you go into the field anyway?
+10:34 <        Chris > lemonade`: hope you like calculus
+10:34 <        Chris > lemonade`: nah
+10:34 <        Chris > fell into software only
+10:34 <          edk > hyphenated: unfortunately it's not C
+10:34 <        Chris > what is it?
+10:34 <       nurupo > why does `strtok` function, which has no initializer or cleanup, stores the pointer to passed string, so that you can call it with null arguments and it still will process the string you previously called it with?
+10:34 <          edk > Chris: python
+10:34 <   hyphenated > edk: that's ok. as long as it's not whitespace or something else
+10:34 <   hyphenated > something else like that
+10:35 <        Chris > edk: well, I just joined #python :)
+10:35 <    lemonade` > Chris: I'm through a year of calc... I think that's the hard part. it's not so bad once you get used to just solving problem forms and not trying to actually understand what it is you're doing too much
+10:35 <        Chris > nurupo: because it's evil
+10:35 <         CaZe > lemonade`: You could go into power systems, too.
+10:35 <    lemonade` > Chris: but I'm over that hill. there's lots more math still, but I know how to tackle it now... study habits and all
+10:36 <        Chris > lemonade`: cool
+10:36 <       mordy_ > hrm, icc doesn't complain about my code either.
+10:36 <          edk > Chris: oh okay, one moment :p
+10:36 <        Chris > (I write a approximately 1000 times more python than C)
+10:36 <        Chris > s/a //
+10:36 <    lemonade` > CaZe: I never really understood what "power systems" was... is that like power stations sending electricity to homes, or like a transformer block for your laptop?
+10:36 <     lh_mouse > nurupo, strtok() uses a static variable to store where it stops the last time.
+10:37 <        Chris > lh_mouse: I think he asked why not how
+10:37 <          edk > oops, apparently I pasted it there. http://glin.es/sWjH.py
+10:37 <       nurupo > lh_mouse: what if i use it concurrently?
+10:38 <   hyphenated > lemonade`: I'd expect the former
+10:38 <     lh_mouse > nurupo, your hard disk would probably get formatted. Period.
+10:38 <        Chris > edk: doesn't seem too horrible
+10:38 <          edk > have you worked out what it does? :)
+10:38 <        Chris > oh, i hadn't gotten to the eval part yet
+10:38 <       nurupo > lh_mouse: huh?
+10:38 <    lemonade` > ah. well power systems is possible, but not one of my goals atm
+10:38 <     lh_mouse > Do not use strtok(), even in a single threaded program.
+10:39 <       nurupo > how bad can it be
+10:39 <        Chris > edk: no
+10:39 <     lh_mouse > nurupo, it leads to undefined behavior.
+10:39 <        Chris > nurupo: strtok is nonreentrant
+10:39 <          edk > Chris: http://glin.es/chob.png
+10:40 <     lh_mouse > You are giving the compiler and runtime the right to do anything they want.
+10:40 <       nurupo > well, i will write my special-case strtok then
+10:40 <          edk > 'reckless' being a reasonable working title for 'something completely insane you decide to do anyway' imo
+10:40 <        Chris > edk: nice :)
+10:41 <       nurupo > i just got scared that it knew how to continue tokenizing without having init and cleanup functions
+10:41 <     lh_mouse > nurupo, strspn + strcspn will be enough.
+10:41 <     lh_mouse > strtok() is horrible for three reasons:
+10:41 <          edk > Chris: :D   mordy_: if you're still around, you should have a look at that code too :)
+10:42 <       mordy_ > edk: i'm here -- where is the link?
+10:42 <     lh_mouse > 1. it takes a char * instead of const char * and breaks that string;
+10:42 <       mordy_ > oic
+10:42 <     lh_mouse > 2. it is neither thread safe nor re-entrant.
+10:42 <          edk > i don't want to click on it to copy because urxvt is silly and will open it again
+10:43 <          edk > http://glin.es/sWjH.py
+10:43 <     lh_mouse > 3. its second parameter is a const char * rather than int/char. It may be useful, but in most cases, useless.
+10:43 <          edk > that isn't a complete working program, i might package it and upload it somewhere if i feel that way inclined later
+10:43 <       mordy_ > let me look up the 'dis' module
+10:45 <        Chris > edk: please do
+10:45 <        Chris > edk: I'll show my colleagues so that I may inflict horror on them
+10:45 <       mordy_ > edk: if __name__ == "__main__" should be nice :)
+10:45 <         CaZe > lemonade`: Well, both. Power stations use transformers, too.
+10:46 <       nurupo > lh_mouse: thanks, strcspn is useful :)
+10:46 <      speckle > Sometimes I feel like someone should just rewrite the whole standard C library, and make bulletproof versions of every function in it.  I bet people have done that numerous times, though.
+10:46 <          edk > mordy_: that's just the utility functions for hacking with frames. (there was a ctypes-based one before it)
+10:46 <         CaZe > lemonade`: Then there's also radio.
+10:46 <       mordy_ > it's called C11?
+10:46 <      speckle > Ah, good point there.
+10:46 <    lemonade` > CaZe: I can't imagine power transformers would be terribly complicated... why would that be a different "area"?
+10:47 <         CaZe > lemonade`: More math.
+10:47 <          edk > mordy_: the rest of the program installs a sys.excepthook. it's not very pretty
+10:47 <    lemonade` > CaZe: EE is already alot of math :)
+10:47 <       mordy_ > i'm trying to think of my own python exploits
+10:47 <        Chris > speckle: impossible.
+10:47 <        Chris > speckle: how do you make a bulletproof strlen()?
+10:48 <         CaZe > lemonade`: Yeah, but the closer you get to software, the less calculus type math you need.
+10:48 <    lemonade` > CaZe: in case you think I'm trying to get away from math, I'm not
+10:48 <       mordy_ > edk: can you segfault the interpreter if you do something silly?
+10:49 <         CaZe > Differential equations, and such.
+10:49 <          edk > mordy_: certainly
+10:49 <       mordy_ > i've seen python segfault here and there
+10:49 <    lemonade` > CaZe: anything in power systems that isn't in regular analog?
+10:49 <      speckle > Chris: don't use pure char*s for strings.  Instead, use a struct that holds a char* and the length of the string.  I did say rewrite all the functions.
+10:50 <          edk > mordy_: if you want a bulletproof interpreter, PyPy is a much better bet than CPython
+10:50 <         CaZe > lemonade`: Analog?
+10:50 <        Chris > speckle: so it's not rewriting the functions, it's changing the specification of C.
+10:50 <    lemonade` > CaZe: yeah. analog circuits. because power circuits are analog, not digital
+10:50 <       mordy_ > edk: my problem wiht pypy is that it has poort support for extensions
+10:50 <       mordy_ > (which is what i do)
+10:50 <    lemonade` > CaZe: (usually)
+10:51 <          edk > mordy_: you can use ctypes to load external things
+10:51 <       mordy_ > edk: there's also cffi and whatever. you still don't get the speed necessary
+10:51 <      speckle > Chris: I guess, to be precise, you can't call your string-like datastructure a string.  You have to call it something else, to avoid colliding with the C specification.  But it still has that purpose.
+10:51 <    lemonade` > speckle: if you did that, you'd lose the point of using C.
+10:51 <       mordy_ > nothing beats fine tuned C code (except maybe fine-tuned assembly code)
+10:52 <          edk > well, cffi is mostly an easier-to-use ctypes
+10:52 <     lh_mouse > Most of C functions just make no sense and should be removed long long ago.
+10:52 <      speckle > really, lemonade`?
+10:52 <         CaZe > lemonade`: You deal with reactance more.
+10:52 <     lh_mouse > E.g. locale.
+10:52 <          edk > sure, so you write your expensive stuff in a C function, and call it with ctypes or some other libffi-based module
+10:52 <    lemonade` > speckle: yeah. C is for when you know what you're doing.
+10:52 <    lemonade` > CaZe: ah
+10:53 <        kate` > nobody knows what they're doing
+10:53 <      speckle > What's wrong with wrapping everything to make C as safe as possible?
+10:53 <          edk > if that's still too slow, use pypy's C api (i can't remember what state it's in)
+10:53 <       mordy_ > edk: hehe pypy doesn't have a C API
+10:53 <         twkm > /me chortles
+10:53 <        kate` > if we did, we'd all be in a permanent state of horror
+10:53 <    lemonade` > kate`: probably why C get a bad rap
+10:53 <          edk > mordy_: sure it does. it's got some sort of python compatability thing
+10:53 <    lemonade` > *gets
+10:53 <          edk > mordy_: it's limited, obviously, because pypy has a copying collector
+10:53 <     lh_mouse > gets() has already been removed.
+10:54 <        Chris > 9tXbxZm(
+10:54 <      terabit > lol,why?
+10:54 <      terabit > buffer overflow?
+10:54 <         CaZe > lemonade`: Also, reactance plays a biger role in RF.
+10:54 <          edk > i wonder if that was a password...
+10:54 <       mordy_ > edk: very very thin layer. the compatibility wears thin. yes, the whole refcount stuff is gone with pypy and its C compat layer is slower. for each of the python API calls which in CPython would return a PyObject, pypy proxies this into basically a pointer containing a PyObject and something else
+10:54 <     lh_mouse > terabit, yes.
+10:54 <         CaZe > lemonade`: afaict, reactance is largely ignored in circuits.
+10:55 <          edk > mordy_: right, it pretty much has to
+10:55 <  jack_rabbit > edk, me too. :)
+10:55 <       mordy_ > so the pypy "cpyext" module is really slow
+10:55 <    lemonade` > CaZe: I see. I don't know what reactance is, so I'll leave it at that :)
+10:55 <         CaZe > You just throw in a capacitor when you need to buffer the voltage.
+10:55 <  jack_rabbit > Chris, time to change your password?
+10:55 <        Chris > jack_rabbit: nah
+10:55 <         CaZe > lemonade`: http://en.wikipedia.org/wiki/Electrical_reactance
+10:55 <      terabit > bad idea,breaks legacy code.maybe you can turn it on in c89 mode
+10:55 <       mordy_ > edk: what i ended up doing was making an entirely different but compatible version of my module against pypy via cffi
+10:56 <        Chris > jack_rabbit: I have about 300 passwords
+10:56 <       mordy_ > still ran about 50% slower (arguably, it might not matter that much)
+10:56 <       mordy_ > how does pypy handle threads these days?
+10:56 <          edk > i can't remember
+10:56 <    lemonade` > CaZe: technical wikipedia articles and me don't mix, but thanks
+10:56 <      pragma- > I have three passwords.
+10:57 <    lemonade` > CaZe: I can just leave it until it comes up in some class or book though
+10:57 <        Chris > i generally create one password per account
+10:57 <         CaZe > lemonade`: Well, have you heard of doing things like "impedance matching an antenna"
+10:57 <  jack_rabbit > Chris, and that wasn't one of them?
+10:57 <      pragma- > I generally just remember three passwords and let my password-store generate and store other passwords that I don't need to remember.
+10:57 <    lemonade` > CaZe: yeah, I've heard of it. but I'm not sure what impedance is either :)
+10:57 <         CaZe > lemonade`: It's a component of reactance.
+10:58 <        Chris > jack_rabbit: it was, but I doubt anyone here would work out what it was for
+10:58 <  jack_rabbit > private key password?
+10:58 <         CaZe > lemonade`: Anyway, different problems arise when you use electricity to transmit power, as opposed to transmitting signals.
+10:58 <        Chris > jack_rabbit: no, and I have just changed it.
+10:59  *      centrx uses the power of his mind
+10:59 <        Chris > can't be too paranoid
+10:59 <  jack_rabbit > :)
+10:59 <    lemonade` > CaZe: ok
+11:03 <        Chris > actually, in hindsight, there was no point in changing it
+11:03 <        Chris > oh well
+11:05 <  jack_rabbit > It's not exposed to the internet?
+11:06 <        Chris > it is, but it requires at least one additional auth token, and usually two
+11:06 <         twkm > Chris: hell, i've taking to using my generator to produce user names and "security" responses.
+11:06 <        Chris > not a bad idea
+11:06 <         twkm > and i've been using it for email addresses as well.
+11:07 <        Chris > I use chris-something-randomshit@
+11:07 <        Chris > where "something" is a mnemonic on which site it's associated with
+11:07 <         twkm > i used to do that.  it seems to confuse some support people.
+11:07 <        Chris > excellent
+11:07 <         twkm > alas, several major companies seem to think that when i report them leaking the address they believe i mean i don't want email from them.  bleh.
+11:07 <       centrx > Are there other options I should use with gcc to get profiling to show me more symbol names?
+11:08 <       centrx > I am using -ggdb -fno-omit-frame-pointer -pg
+11:08 <         twkm > the -f should be unnecessary, unless morons patched your gcc.
+11:09 <         twkm > if you supply both, read the man page to find out which one won.
+11:09 <         twkm > (or experiment, of course, if you prefer)
+11:10 <         twkm > -g3 (aka -ggdb) retains all the symbols possible, from your code.  what is provided by libraries was probably someone else's decision.
+11:10 <          edk > Chris: just for you - https://pypi.python.org/pypi/reckless
+11:10 <      candide > Title of edk's link: reckless 0.1 : Python Package Index
+11:10 <        Chris > \o/
+11:11 <          edk > you can pip install it and it'll work fine - it does install a 'sitecustomize' module though, so if you like whatever sitecustomize you already have, might be worth doing it manually
+11:11 <         twkm > cool.  an installer that destroys previous rules.
+11:11 <          edk > twkm: there was not an overabundance of other options
+11:12 <       centrx > twkm, Most of my the cpu time is still spent in a place that shows no symbol names: +  59.20%  ruby2.1  libruby-2.1.so.2.1.0  [.] 0x000000000008a220
+11:12 <         twkm > ahh, ruby.  *snore*
+11:12 <         twkm > recompile libruby with -g3 and probably without -O.
+11:13 <          edk > I also only uploaded it because Chris wanted to see it, so I'm not particularly bothered about it being production-quality
+11:13 <         twkm > or if your system provides them, load the -profile version of it.
+11:13 <        Chris > I will look later, have to depart for a few hours.
+11:14 <       centrx > twkm, I am trying to profile parts of Ruby itself, is a -profile version for that?
+11:15 <         twkm > in general a library with profile or pg as a terminal word (usually with some delimiter) indicates it is intended to be profiled.
+11:15 <         twkm > sometimes packages might be named with "debug" or similar.
+11:16 <         twkm > it isn't so much that you want to debug them, but that to debug them nicely symbols are needed so they provide them.
+11:16 <         twkm > or perhaps devel.
+11:16 <         twkm > (a thousand and one possibilities)
+11:17 <         twkm > e.g.,   | libruby2_1-debuginfo | Debug information for package libruby2_1 | package
+11:17 <       centrx > Yeah that's why I am compiling it manually
+11:17 <       centrx > Debian doesn't have those packages
+11:18 <         twkm > be sure that you used -g3 *and* -pg everywhere you want to be able to do detailed profiling.
+11:19 <         twkm > i'm surprised.  but i don't use debian, so perhaps i'm just ... innocent.
+11:20 <       centrx > twkm, It has them for older versions of Ruby that are in the stable release. Maybe they will make the debug packages for the newer versions before the next release.
+11:21 <         twkm > even odder.  i would expect bleeding releases would *need* debugging helpers.
+11:23 <         twkm > well anyway, if you've used -ggdb and -pg to produce libruby... then you have as much as possible.  look into the analysis options if perhaps you aren't asking for the data you actually want.
+11:24 <       centrx > gcc analysis options?
+11:26 <         twkm > the program that you used to analyze the post-execution data.  gprof.
+11:27 <       centrx > I have been using "perf". Is this a mistake? I thought gprof was outdated?
+11:30 <         twkm > if you are using perf then i don't think -pg is useful.  dunno though, i suppose i might be behind the times on linuxen.
+11:30 <       centrx > What do you use
+11:30 <         twkm > heh, well, gprof.
+11:32 <         twkm > but providing you have symbols it looks like perf-report -g -i ... should produce function level info.
+11:33 <       centrx > Yeah, my symbols seem to be missing on the job
+11:52 <         twkm > something in the make file lost it.  perhaps you used -g3 with CFLAGS but not LDFLAGS.
+11:53 <       centrx > twkm, Should I use -pg with LDFLAGS as well?
+11:55 <         twkm > only if you intend to use gprof.  the gmon.out file is not used by perf.
+11:56 <       centrx > I have a good feeling about this LDFLAGS idea!
+11:56 <        adnap > I don't understand what a "list of tab stops" is in "Exercise 5-11. Modify the programs entab and detab (written as exercises in Chapter 1) to accept a list of tab stops as arguments." in K&R.
+11:56 <         twkm > adnap: instead of a fixed multiple, allow for a specification of the precise positions.
+11:57 <         CaZe > adnap: Did you do the exercises in Chapter 1?
+11:59 <         twkm > centrx: make sure -s is not present in either.
+12:01 <       centrx > The resulting file is "not stripped" so I think that is okay
+12:01 <       centrx > I have -fstack-protector --param=ssp-buffer-size=4
+12:01 <       centrx > though so that might be screwing around with it
+12:03 <         twkm > i wouldn't expect so, iirc it just puts canaries around local buffers.
+12:03 <        adnap > twkm: Oh. CaZe: Yes
+12:03 <         twkm > hmm, that's stack-protection.  dunno about stack-protector.
+12:04 <         twkm > adnap: probably you've never met a teletype machine, or even typewriter, from whence that notion originates.
+12:05 <         CaZe > adnap: Well, are you sure you did it right?
+12:06 <        adnap > twkm: Well, I understood the idea of tabs ever n columns in Chater 1.
+12:08 <         CaZe > adnap: If tabstops are 4, and you have "ab\tc" as input, what should detab output?
+12:08 <         twkm > then you shouldn't be too put out at replacing a simple, linear multiplier with a description of the "stops" as discrete values.
+12:09 <        adnap > CaZe: entab: http://bpaste.net/show/180663/ detab: http://bpaste.net/show/180664/
+12:10 <         twkm > if you rewrite the chapter 1 exercises so that the multiplier populates an array instead of being used with % and a counter you should be most of the way done with the chapter 5 exercise.
+12:11 -!- mode/##c [+o candide] by ChanServ
+12:11 -!- mode/##c [-b *!~rudi@*.mediaWays.net$##stop_join_flood] by candide
+12:14 <         CaZe > adnap: entab is not correct.
+12:15 <         CaZe > adnap: And I'll just assume that detab is incorrect as well.
+12:16 -!- mode/##c [-o candide] by ChanServ
+--- Log closed Wed Feb 19 12:22:55 2014
+--- Log opened Wed Feb 19 12:23:16 2014
+12:23 -!- Irssi: ##c: Total of 481 nicks [0 ops, 0 halfops, 0 voices, 481 normal]
+12:23 -!- Irssi: Join to ##c was synced in 26 secs
+12:23 <         twkm > vatzec: repeat level increase request denied.
+12:25 <         CaZe > adnap: Actually, I don't see how the detab you've written does anything sensible if there are no tabs encountered before the Nth character is read.
+12:28 <         CaZe > adnap: "abcd\te" for example, will just cause it to output "abcde".
+12:28 <       centrx > twkm, It was loading the shared library installed on my system instead of from the current build directory
+12:29 <       centrx > Hooray!
+12:29 <         twkm > very common.  LD_* is often needed.
+12:30 <         CaZe > adnap: http://ideone.com/FYfQoK
+12:30 <         CaZe > adnap: Anyway, you haven't understood what the programs entab and detab are supposed to do.
+12:31 <         CaZe > adnap: Which is why you didn't understand what the Chapter 5 exercise is asking you to do.
+12:32 <        adnap > CaZe: I guess I misinterpreted the instructions: "Exercise 1-20. Write a program 'detab' that replaces tabs in the input with the proper number of blanks to space to the next tab stop. Assume a fixed set of tab stops, say every 'n' columns..." I thought this means "when a tab occurs, replace it with blanks until the number of characters on the current line is the next multiple of N"
+12:32 <         CaZe > Well actually, it looks like you might sort of understand what detab is supposed to do.
+12:33 <        Wally > vatzec pls
+12:33 <         CaZe > adnap: Okay, fine.
+12:33 <         CaZe > adnap: What about entab?
+12:34 <        adnap > CaZe: Fine? Is it correct? I posted the code for both exercises
+12:34 <         CaZe > adnap: entab is completely wrong. detab has a flaw that I demonstrated.
+12:39 <         CaZe > adnap: With tabstops at multiples of 4, and an input of "ab  cde", what should entab output?
+12:39 <       retran > ##programming_1
+12:41 <        adnap > CaZe: I am too busy right now, but I will go through what you said in an hour. Sorry
+12:41 <        adnap > CaZe: I appreciate your help
+13:47 <        adnap > CaZe: I think detab should output "ab  c" for input "ab\tc" and entab should output "ab  cde" for "ab  cde" with tabstops at multiples of 4 (N = 4). My interpretation of the entab exercise is that every string of N blanks (' ') should be replaced by a tab character ('\t'), and strings of less than N blanks should not be modified. I think I fixed detab: http://bpaste.net/show/180684/
+13:48 <        adnap > CaZe: I didn't modify entab, so perhaps my interpretation of the exercise is wrong. It seems correct to me
+13:49 <      Zhivago > entabl doesn't seem to be entabbing, then ...
+13:49 <      Zhivago > er, entab.
+13:49 <      Zhivago > I would have expected that "ab  cde" entabs to "ab\tcde".
+13:50 <      Zhivago > I think that you do not understand tabstops.
+13:50 <      Zhivago > A tab advances to the next tabstop -- not by the distance between tabstops.
+13:50 <      Zhivago > This is essential for the construction of tables (which is why tab is called "tab" -- it's the tabulation key.
+13:51 <        adnap > Zhivago: The way I see it, I break the input into N-character columns (except for the last one, which can be less than N): "ab  "|"cde" If any column consists of entirely blanks, replace it with a tab character
+13:51 <         CaZe > adnap: Do you think that the phrase "tab stop" is used differently in the wording of each exercise?
+13:51 <        adnap > *into N-character chunks *any chunk
+13:51 <      Zhivago > adnap: What you see is wrong.
+13:51 <      Zhivago > adnap: Tab is very simple -- it advances to the next tabstop.
+13:52 <      Zhivago > adnap: If the tabstops are at 4, 8, 12, and you are at 7, then tab advances to 8.
+13:52 <      Zhivago > It's as simple as that.
+13:55 <        adnap > Zhivago: Okay, I think I get it now
+13:55 <      Zhivago > Cool. :)
+13:56 <        adnap > It seems like my interpretation of the detab exercise was correct, but not entab.
+13:56 <        adnap > I will try to fix entab now.
+13:57 <        adnap > I just had a bug in detab, but not a misunderstanding
+14:14 <         CaZe > There's a paywalled article on lwn.net: "C11 atomic variables and the kernel"
+14:16 <        adnap > I think I fixed entab: http://bpaste.net/show/180688/
+14:19 <         CaZe > adnap: Well anyway, the meaning of that Chapter 5 exercise should be perfetly obvious to you now.
+14:21 <        adnap > CaZe: Yes, I think it is
+14:21 <        adnap > CaZe: Will you check my entab?
+14:28 <         CaZe > adnap: "a b"
+14:29 <         CaZe > adnap: "a b c", for that matter.
+14:36 <        adnap > CaZe: Ah. Now? http://bpaste.net/show/180690/
+14:37 <        adnap > CaZe: It outputs "a b" for "a b" and "a b\tc" for "a b c"
+14:37 <        adnap > ...And "ab\tcde" for "ab  cde"
+14:40 <         CaZe > adnap: Okay, what if '\t' is in the input?
+14:42 <        adnap > CaZe: entab: "\t" detab: "    "
+14:48 <         CaZe > adnap: Yes, but what if '\t' is contained in the input?
+14:48 <         CaZe > adnap: "\t   "
+14:49 <        adnap > CaZe: Oh, I see. It should reset the character count.
+14:50 <         CaZe > Yes.
+14:51 <         CaZe > Well, nc.
+14:53 <        adnap > Crap, I also didn't account for trailing blanks
+14:54 <        adnap > http://bpaste.net/show/180693/
+14:55 <        adnap > This one outputs 7 blanks for "\t   "
+14:55 <        adnap > Oops
+14:55 <        adnap > That's not what it does
+14:55 <        adnap > It oupputs "\t   " for input "\t   "
+14:56 <        adnap > *outputs (i.e. It doesn't change the input)
+15:04 <         CaZe > adnap: That's an interesting loop structure you have in main().
+15:04 <         CaZe > adnap: I wonder if you could exploit it better.
+15:10 <        adnap > CaZe: I don't know what you mean
+15:11 <         CaZe > adnap: Well currently, the call to entab() from the loop inside main() only returns when it reaches '\n'.
+15:11 <         CaZe > adnap: Which causes the loop to reiterate. '\n' isn't a terribly significant condition for a loop iteration.
+15:12 <        adnap > CaZe: It returns when it reaches '\n' or EOF. I don't know why I decided to have entab work on lines
+15:12 <        adnap > I could just process the whole file in one loop
+15:12 <         CaZe > adnap: Maybe if you found a more significant condition for the loop to iterate on, some of the logic in entab() will become easier.
+15:12 <        adnap > CaZe: Yes, I think so
+15:13 <      Zhivago > Personally I would use a stateful emitting transcoder.
+15:13 <        adnap > I am only using things introduced in Chapter 1 for this program though
+15:13 <        adnap > Zhivago: wat
+15:16 <       sifeic > ls
+15:16 <       sifeic > sorry, was just testing that I could post to this channel. For some reason I'm unable to post to #debian.
+15:17 <        adnap > CaZe: Much better (and hopefully still correct): http://bpaste.net/show/180701/
+15:17 <         CaZe > adnap: Well, I was suggesting you actually keep the structure that you had in main().
+15:18 <        adnap > CaZe: Why?
+15:18 <         CaZe > adnap: Because you could possibly exploit it in a better way that you were previously.
+15:18 <         CaZe > s/that/than/
+15:19 <        adnap > CaZe: Oh, did you want the program to work on chunks of N characters?
+15:19 <         CaZe > Perhaps.
+15:19 <        adnap > Lesse what I can do :P
+15:19 <         CaZe > Less than N, on occasion.
+15:22 <         CaZe > Like, if you read one characters into the next tabstop, and the following character is '\n', you probably just want to print that, and pretend that you read the remaining characters to the next tabstop.
+15:27 <      Zhivago > adnap: Like this http://bpaste.net/show/0V5hQNZv8A7gY3SGXElY/ -- but you can probably do better.
+15:28 <        adnap > CaZe: http://bpaste.net/show/180705/
+15:30 <        adnap > CaZe: I actually like the previous one (http://bpaste.net/show/180701/) better. It seems cleaner
+15:31 <        adnap > CaZe: One reason I like it is that I was able to eliminate the redundant for-loop that outputs blanks
+15:31 <      Zhivago > Instead of pulling the data through the converter, you can push the data through.
+15:31 <      Zhivago > Then the converter can be passed into various emission contexts.
+15:31 <        adnap > Zhivago: I don't know what you're talking about. Are yout talking to me? The vocabulary you are using is foreign.
+15:32 <      Zhivago > Yeah, it's CS.
+15:32 <      Zhivago > Or, rather English.
+15:33 <        adnap > Zhivago: I mean that i don't understand the definitions of "converter", "pull", "push", and "emission context" in the context of your sentence
+15:34 <        adnap > Zhivago: But I think you're just being snarky
+15:36 <      Zhivago > adnap: Those are all standard English. What does a converter do?
+16:03 <        adnap > Zhivago: I didn't understand all that target and cycle crap. I modified your code basically using the logic of http://bpaste.net/show/180701/: http://bpaste.net/show/180715/
+16:04 <        adnap > Zhivago: Also, I think your version outputs EOF
+16:05 <        adnap > Zhivago: I think I kinda understand your sentence now though. At least, I think I understand "push" and "pull". I think "push" just means "pass characters to entab" and "pull" means "entab calls getchar"
+16:10 <        adnap > I think I need to set coder->spaces to 0 when I output a tab.
+16:10 <        adnap > And coder->column
+16:25 <      Zhivago > adnap: No. coder->column should reflect the actual column. Only newline should reset it.
+16:26 <      Zhivago > And coder->spaces is set to 0 when you output a tab, since tabs are only output when a non-space is seen and seeing a non-space sets coder->spaces to 0.
+16:26 <      Zhivago > adnap: You should be able to see how to use column to implement line wrapping in addition to tabulation.
+16:27 <      Zhivago > adnap: Your modified logic is wrong.
+16:27 <      Zhivago > adnap: It will not emit a tab to reach the next tabstop unless it is already on a tabstop.
+16:28 <      Zhivago > Actually, it's worse than that -- it will only emit a tabstop when on the first tabstop and it doesn't track the column properly. :)
+16:30 <        adnap > Zhivago: I think it works with the change I mentioned: http://bpaste.net/show/180718/ I didn't intent to have column track the actual column, but to reset it every N characters
+16:30 <        adnap > *intend
+16:30 <      Zhivago > That's completely stupid. :)
+16:30 <        adnap > Why?
+16:30 <      Zhivago > Because that's not the column.
+16:31 <        adnap > Zhivago: Well, I didn't call it column; you did
+16:31 <        adnap > It was nc in my program
+16:31 <        adnap > It probably made more sense in your program
+16:31 <        adnap > I just didn't change any names so that the changes from your program would be more clear
+16:42 <         CaZe > adnap: http://ideone.com/jeBOMf
+16:42 <         CaZe > Not really that much better.
+16:42  *        CaZe looks at Zhivago's solution
+16:45 <        adnap > CaZe: I think you also need to reset columns when you output a tab
+16:45 <          ocx > hi all, i compiled my c program and included the executable in a public folder, i would like to protect my executable from being reverse engineered, how can i do that ? i wantto protect my source code thank you experts
+16:46 <         CaZe > adnap: I do.
+16:46 <        adnap > CaZe: And you should have column = 0 instead of column = N in the '\n' and '\t' cases
+16:47 <  Maxdamantus > ocx: if it's public within a POSIX system, you can make it executable for other users but not readable.
+16:47 <        adnap > CaZe: Oh, nvm
+16:47 <          ocx > Maxdamantus: mainly they will be ableto download the file...
+16:47 <          ocx > and execute it on their system
+16:47 <      Zhivago > If you reset columns when you output a tab, then it isn't columns.
+16:47 <        adnap > CaZe: Wait, yes, 'cause you output them immediately in the default case
+16:47 <      Zhivago > Call it something else.
+16:47 <  Maxdamantus > Then you can't stop people from reverse-engineering it.
+16:47 <        adnap > Zhivago: I did! nc (number of characters)
+16:47 <          ocx > Maxdamantus: can i make it harder at least?
+16:47 <      Zhivago > That's a silly name.
+16:47 <  Maxdamantus > unless you have control over the machines people are able to run it on.
+16:48 <        adnap > Zhivago: Wah wah
+16:48 <      Zhivago > What you seem to mean is the position within the current tabstop.
+16:48 <        adnap > Just being nitpicky now
+16:48 <      Zhivago > So something like tabstop_offset would be a non-retarded name.
+16:48 <        adnap > I don't care about opinions
+16:49 <      Zhivago > adnap: Well, that's probably why you're not very competent. :)
+16:49 <         CaZe > adnap: In both cases, I set column to N. That causes the function to return to main(). The loop in main() then restarts the call chain with a column value of 1.
+16:49 <          ocx > Maxdamantus: like at least make it harder for the kids out there...
+16:50 <        adnap > Zhivago: You're being an asshole
+16:50 <      Zhivago > adnap: In what regard?
+16:50 <      Zhivago > adnap: Do you disagree that you are not very competent?
+16:51 <  Maxdamantus > ocx: it depends what you're trying to protect.
+16:51 <        adnap > CaZe: Oh, I see!
+16:51 <  Maxdamantus > ocx: why are you actually concerned about it?
+16:51 <          ocx > Maxdamantus: i am trying to protect my source code, my methods algortihm etc
+16:52 <      Zhivago > ocx: Then store then on a secure server and expose a network api.
+16:52 <  Maxdamantus > Your source code probably isn't included.
+16:52 <      Zhivago > ocx: Anything else is just wishful thinking.
+16:52 <          ocx > Zhivago: application works offline
+16:52 <      Zhivago > ocx: Then you might as well rely on legal methods or on your code not being worth stealing.
+16:53 <      Zhivago > ocx: In either case there's no point in going to much trouble over it.
+16:53 <        adnap > Zhivago: I just think your putting me down. "competent" is subjective, and since you didn't point to anything specific, it seems you said it out of malice
+16:53 <        adnap > *you're
+16:53 <      Zhivago > adnap: You appear to be incompetent at judging that also.
+16:53 <          ocx > there is always tension in this channel :)
+16:53 <      Zhivago > adnap: Do you think that you are very competent in C coding?
+16:54 <        adnap > Zhivago: Oh, I remember you said it because I said I don't care about opinions. Somehow that makes me incompetent
+16:54 <        adnap > Zhivago: I just don't see what the point of calling me incompetent is. You just sound mean
+16:54 <      Zhivago > adnap: No. I observed that you are not very competent, and that ignoring opinion might be a significant reason for that lack of competence.
+16:55 <        adnap > Zhivago: Why?
+16:55 <      Zhivago > adnap: Imagine that you saw someone playing the recorder off-key and mentioned that, and they responded that "they do not care about opinions".
+16:55 <          ocx > c/c++ are always tensioned, ruby python are less tensioned does that explain the programming language reflecting on moods ? ;)
+16:55 <      Zhivago > adnap: What would be a likely reason for them continuing to play off-key?
+16:55 <        adnap > Zhivago: off-key is not an opinion
+16:55 <        adnap > It can be measured
+16:55 <          edk > sure it is.
+16:55 <        adnap > Like the output of a program
+16:55 <      Zhivago > adnap: Neither is your lack of competence in C programming.
+16:55 <      Zhivago > adnap: We can easily agree that you are not very competent at it.
+16:55 <        adnap > Zhivago: Who is "we"?
+16:56 <      Zhivago > Everyone who is very competent at it. :)
+16:56 <      Zhivago > Take a sample from this channel if you like.
+16:56 <        adnap > Zhivago: And why are you trying to prove that I am incomptent?
+16:56 <      Zhivago > adnap: I'm not trying to prove it. It is evident. I am trying to get you to think about why you may be remaining not very competent.
+16:57 <        adnap > Whatever
+16:57 < Crazylemon64 > adnap: To synthesize: you care about specific data points, rather than generic criticisms?
+16:57 <        adnap > Crazylemon64: Yeah, Zhivago isn't pointing out anything specific
+16:57 <      Zhivago > Apart from the specific point of "ignoring opinions"?
+16:58 <        adnap > And I don't know what his motive is. I make mistakes in C. I don't know why he is trying to label me though
+16:58 <      Zhivago > We can probably add reading comprehension issues.
+16:58 < Crazylemon64 > Hmm
+16:58 <        adnap > Zhivago: Well, you make mistakes in C too
+16:58 <      Zhivago > adnap: And?
+16:58 <          edk > adnap: I haven't been following the channel too closely, but I don't believe he said "you are incompetent because you make mistakes"
+16:59 <        adnap > Zhivago: So, I could do what you're doing any try to label you incompetent for making mistakes, but that's just mean. There's no point in labeling you but to be malicious
+16:59 <         boru > It seems fruitless to debate it, ad nauseum.
+16:59 <        adnap > boru: Okay, I agree
+16:59 < Crazylemon64 > To get to the original core of the argument: This was over the naming of a variable that controlled column indentation, correct?
+16:59 <        adnap > I just think Zhivago is being mean to me.
+16:59 <      Zhivago > adnap: I'm not trying to label you -- your lack of competence is obvious.
+16:59 <          edk > boru: Hopefully one or both of them will get bored.
+17:00 <          edk > boru: Hopefully one or both of them will get bored.
+17:00 <        adnap > It hurts my feelings
+17:00 <          edk > er, oops.
+17:00 <        adnap > Please don't be me
+17:00 <   hyphenated > adnap: he's mean to everybody
+17:00 <        adnap > mean
+17:00 < Crazylemon64 > I repeat, to get to the original core of the argument: This was over the naming of a variable that controlled column indentation, correct?
+17:00 <      Zhivago > adnap: What you need to consider are the behaviours that are keeping you incompetent.
+17:00 <        adnap > Crazylemon64: Yeah
+17:00 <      Zhivago > adnap: And it should be obvious that "ignoring opinions" is likely to be one of those.
+17:01 <        adnap > Zhivago: Well, maybe you could change your behavior to hurt my feelings less
+17:01 <      Zhivago > adnap: Why would I want to do that?
+17:01 <      Zhivago > adnap: Perhaps your hurt feelings are another strategy for remaining incompetent.
+17:01 <        adnap > Zhivago: private message me any other off-topic stuff
+17:02 <      Zhivago > adnap: I'm not going to private message you.
+17:02 < Crazylemon64 > If the variable doesn't behave as its name would intuit, a more accurate name may be advisable.
+17:03 <      Zhivago > crazy: Is that an opinion? :)
+17:03 < Crazylemon64 > That is a suggestion
+17:04 < Crazylemon64 > In this form of the word:
+17:04 < Crazylemon64 > 3.
+17:04 <         CaZe > I think column is a fine variable name for the offest within a tabstop.
+17:04 <      Zhivago > adnap: Do you ignore those, too? :)
+17:04 < Crazylemon64 > something suggested, as a piece of advice: We made the suggestion that she resign
+17:04 <         CaZe > To say otherwise would place undue significance on the '\n' character.
+17:04 <        adnap > Zhivago: I'm trying to respect the wishes of others in the channel who compalined about this off-topic debate
+17:05 < Crazylemon64 > Yeah, the name of a variable isn't too relevant. Let's move on..
+17:05 < Crazylemon64 > Well
+17:05 <         CaZe > In fact, '\n' should effect the same side effect as '\n'.
+17:05 <         CaZe > Err.
+17:05 <         CaZe > '\t'
+17:05 <          edk > adnap: just stop moaning, then.
+17:05 <         CaZe > Other than the actual character that's output.
+17:05 <      Zhivago > caze: Well, it would be obvious that that's a bad approach if you had irregular tabstops.
+17:06 <      Zhivago > caze: It's only the regularity of your tabstops that lets you get away with that.
+17:06 <         CaZe > Zhivago: Well, yeah.
+17:06 <      Zhivago > Which is why it's a terrible name. :)
+17:06 <         CaZe > Zhivago: But my entire program would have to be significantly rewritten in that case anyhow.
+17:07 < Crazylemon64 > For whom is the program for?
+17:07 < Crazylemon64 > If it's a personal program for people with regular tabs, it seems like a perfectly fine name.
+17:08 <      Zhivago > It's an educational piece.
+17:08 <      Zhivago > What is often overlooked is that practicing writing bad code helps you to write bad code better. :)
+17:09 < Crazylemon64 > "Bad code" being code that fails to account for all edge cases?
+17:10 <         CaZe > He's talking about readability.
+17:10 < Crazylemon64 > I see
+17:10 <      Zhivago > Well, all aspects.
+17:10 <         CaZe > What you're talking about is "broken code"
+17:10 <      Zhivago > When practicing a skill, the important thing is to practice doing it as correctly as possible.
+17:10 < Crazylemon64 > I see
+17:11 <      Zhivago > Rather than just putting N hours of half-arsed repetition in.
+17:11 <        jsoft > Im on osx, and am using fprintf() to write to a file. It returns > 0,  as expected. The file get's created. Except.. nothing is being written to it, it remains empty. Any ideas what might be going on here?
+17:11 <   hyphenated > jsoft: buffering
+17:12 <      Zhivago > jsoft: See setvbuf.
+17:15 <        jsoft > Hmm, thanks
+17:19 <         CaZe > Zhivago: Why don't you increment coder->column in entab() when c is not ' '?
+17:21 <      Zhivago > caze: Probably because I didn't test it -- I just wanted to demonstrate the approach.
+17:22 <         CaZe > Okay.
+17:38 <        Binbo > Dear gurus, need some helps
+17:38 <        Binbo > ideone.com/CHUHFa
+17:39 <        Binbo > my recv() always returns errno 88
+17:39 <       orbitz > what is errno 88?
+17:39 <        Binbo > socket operation on non-socket
+17:40 <        Binbo > but everything seems fine
+17:41 <      Zhivago > Well, if it seems fine, then there are no problems.
+17:42 <      Zhivago > I suggest that you consider the value of clientSocket ...
+17:43 <        Binbo > means? sorry i dont get it
+17:43 <      Zhivago > What is the value you assign to clientSocket?
+17:44 <        rob`` > ,c++
+17:44 <      candide > C++ is not C, try ##c++
+17:44 <        Binbo > clientSocket got value 0 , retruned by accept()
+17:45 <      Zhivago > Binbo: 0 is stdin.
+17:45 <      Zhivago > Binbo: Think about what value you're assigning to clientSocket ...
+17:45 <        rob`` > Binbo: check your operator precedence
+17:52 <        Binbo > sorry I might get the concept wrong.. The value is assigned by accept() call right?
+17:52 <      Zhivago > No.
+17:52 <      Zhivago > clientSocket = accept(mainSocket, (struct sockaddr *)&clientAddr,(socklen_t*) &size) < 0;
+17:52 <      Zhivago > What value is being assigned to clientSocket here?
+17:59 <        Binbo > damn, silly mistake
+17:59 <        Binbo > thanks!
+18:00 <         CaZe > Zhivago: How did you come up with the name "cycle"?
+18:02 <      Zhivago > caze: The position in the cycle. However, I'd probably prefer 'offset' there.
+18:03 <         CaZe > Zhivago: Also, why don't you emit '\t' characters as soon as you know you have enough ' ' characters?
+18:04 <         CaZe > Or as soon as you know that the spaces should be emitted as-is.
+18:06 <      Zhivago > caze: That would make it hard to avoid trailing spaces.
+18:08 <         CaZe > Trailing spaces before EOF?
+18:08 <         CaZe > That's a flaw in my program.
+18:08 <      Zhivago > And the end of lines.
+18:08 <      Zhivago > It's a natural direction that you'd want to be able to expand in.
+18:10 <         CaZe > I don't see how spaces leading up to a '\n' character is any different from spaces leading up to any other character.
+18:10 <         CaZe > Other than that you'd reset column to 0.
+18:11 <      Zhivago > Well, I can't help that. :)
+18:12 <         CaZe > What else is different about '\n'?
+18:12 <      Zhivago > You could look up "trailing spaces" on the internet. I'm sure someone has written an essay on it.
+18:13 <         CaZe > Oh wait, you want to omit trailing spaces.
+18:13 <      Zhivago > I'd like to support that option, all else being equivalent.
+18:14 <         CaZe > So in that case, you don't actually know if you should be emitting tabs or spaces, even if you've gone beyond the next tabstop.
+18:16 <      Zhivago > Why not?
+18:16 <      Zhivago > You know the span that you need to cover with spaces and tabs.
+18:18 <         CaZe > Because if for example, you have 3 * N + 2 spaces followed by '\n', then you don't want any of that whitespace to be emitted in any form.
+18:18 <         CaZe > Besides the '\n' itself.
+18:19 <      Zhivago > caze: That would be nice to be able to do, yes.
+18:20 <         CaZe > My approach won't work for that.
+18:20 <      Zhivago > Well, it's out of the scope of the current problem, so it's much of a muchness.
+18:20 <      Zhivago > But you did ask why I did it like that.
+18:21 <         CaZe > Yes, I was just curious.
+18:51 <       Flea86 > Hi I have a question: Does (0 << 4) basically entail a zero constant shifted by 4 bits to the left?
+18:51 <    basichash > When I try to run this code (http://ideone.com/xgW6rz), I get this error message:
+18:51 <    basichash > main.c: In function ‘fortune_cookie’:
+18:51 <    basichash > main.c:6:5: warning: format ‘%i’ expects argument of type ‘int’, but argument 2 has type ‘long unsigned int’ [-Wformat=] printf("msg occupies %i bytes\n", sizeof(msg)); ^
+18:51 <    basichash > butit works fine on ideone.com
+18:57 <    basichash > dw
+19:02 <     lh_mouse > Flea86, it is zero.
+19:02 <       Flea86 > lh_mouse: Thanks! for a moment I thought I was going friggen mad lol
+19:03 <       Flea86 > Doesn't add up why it's in this routine tho :/
+19:03 <     lh_mouse > Flea86, why do you need it?
+19:03 <       Flea86 > I'm trying to decipher some code, here's the rest of that line
+19:04 <       Flea86 > issue_token(send_mode,( 0 << 4 ) | DEF_USB_PID_SETUP)
+19:04 <       Flea86 > I'm trying to understand why they may have done that
+19:04 <     lh_mouse > Ah.
+19:05 <     lh_mouse > They explicitly specified a non-set flag. That's all.
+19:06 <       Flea86 > a non-set flag?
+19:07 <       Flea86 > hmm
+19:09 <       Flea86 > lh_mouse: Thanks for your help :)
+19:11 <     lh_mouse > My pleasure.
+19:19 <        linyu > hello! I 'v implement some rotines in one C program. Now  I want provide a command line to the user .The user can type in the commands to call these functions I implemented interactively.Is there any libraries  i can use to save some trouble?
+19:22 <      Zhivago > linyu: Consider "readline".
+19:23 <        linyu > Zhivago, I
+19:26 <        linyu > Zhivago, I 've heard of readline. It can provide command line editing features.Can it provide multi-thread controlling ? If possible,I want the function run in seprate thread.
+19:26 <         Apic > Celebrate Chaoflux
+19:26 <      Zhivago > linyu: You would be responsible for thread-safety.
+19:28 <      Zhivago > msg adnap What if you choose names that aren't nonsense, but mean something other than what they're used for?
+19:28 <          urn > is there any way to check if a void * is mallocd on the heap?
+19:28 <        linyu > Zhivago, Ok , I will read readline doc.
+19:31 <     lh_mouse > linyu, cross-thread UI makes no sense.
+19:33 <        linyu > lh_mouse, Maybe I didn't describe it right. I just want it works like bash. You type in, the rotine runs,simutaneously,the shell still responses to user.
+19:43 <          urn > it is illegal to free() a variable allocated on the stack correct?
+19:44 <        frag4 > why do yo uask such a question
+19:44 <        napsy > ofcurse you can free
+19:45 <          urn > I'm building a simple linked list and I'm using a void * to store the data in each node
+19:45 <      LeoNerd > It is only legal to free() something you have previously malloc() or realloc()'ed
+19:46 <          urn > in my deallocation function for cleaning up the linked list, I'm freeing the void * if it's not null. Which gives me an error if the void * points to a variable on the stack
+19:47 <          urn > LeoNerd, ok that's what I thought. valgrind is yelling at me so I just wanted to clarify. Kind of a C newbie here
+19:49 <          urn > so I guess my broader question is, if you want to make generic data structures in C, you have to use void pointers. And if you're using void pointers, you have to have each thing you want to store in the data structure dynamically allocated right?
+19:50 <      LeoNerd > Forget void pointers; that's true of -any- pointer. You have to keep track of who is responsible for it, whether it needs deallocation at the end
+19:51 <      Zhivago > urn: No.
+19:52 <      Zhivago > { struct foo { int bar; } foobar; void *p = &foobar; } <- there you go.
+19:57 <          urn > Zhivago, right that makes sense. So in that case you do NOT have to free() void *p. If you had a p = dynamically allocated variable, you would have to free(p);
+19:58 <      Zhivago > Just so.
+19:58 <          urn > and if for whatever reason you had dynamically allocated and stack variables in the same data structure, you couldn't just iterate through and free every void pointer because some would be stack.
+19:58 <          urn > s/would be/would be on the/
+19:59 <      Zhivago > C doesn't require a stack.
+19:59 <      Zhivago > C has the concept of auto, allocated, and static storage durations.
+19:59 <          urn > Zhivago, ok I mean't static vs dynamic allocation sorry.
+19:59 <      Zhivago > You should only free pointers to objects with allocated storage durations.
+20:00 <      LeoNerd > The word you are looking for is automatic storage. So called because the compiler will arrange for it to be deallocated automatically when the function returns
+20:00 <      Zhivago > auto and allocated are both dynamic.
+20:00 <      Zhivago > Basically you need to free things that were malloced (or realloced or calloced).
+20:01 <        frag4 > real question is why do you ask this in the first place, why would you pass random pointers to free?
+20:03 <          urn > of course. My problem was I am building a simple linked list. To free everything up when the list is destroyed I iterate through and free all the void pointers holding the data in each node.
+20:03 <      LeoNerd > Who gave you those pointers?
+20:03 <      LeoNerd > In general it's rude to free() someone else's data. Everyone should manage their own data.
+20:03 <      LeoNerd > If those are pointers user code gave to you, you do not have permission to free() them
+20:03 <      Zhivago > urn: If the list may contain objects that were not allocated, and you want to dispose of the objects, then you need to have this indicated somewhere.
+20:04 <      Zhivago > You could have a flag on each node of the list, for example.
+20:04 <      LeoNerd > Perhaps a flag somewhere, or a destroy function pointer?
+20:05 <      LeoNerd > GLib often does that kind of thing.. many times when you give a GLib structure a pointer to your own data, there's a *_full() version of the function that takes an additional parameter, to a  void (*)(void*)  function, which GLib will call when it wants to destroy the pointer
+20:05 <          urn > Yes okay thanks! That was the whole problem, how do I tell if the stored data is dynamically allocated and can be freed during deconstruction
+20:05 <      LeoNerd > You can then pass free, or your own destructor, or your own refcount-decrementor, or whatever is appropriate for your data structure
+20:06 <      LeoNerd > You don't
+20:06 <      LeoNerd > You have someone tell /you/ that
+20:06 <          urn > Yeah I don't need to get that complex, I'm just building common datastructures to get a feel for it.
+20:07 <      LeoNerd > When the user code passes you the pointer, they must tell /you/ if you should free() it or not
+20:07 <          urn > LeoNerd, exactly! which is why I'm just going to keep it really simple and just have two destroy() functions for my linked list
+20:08 <          urn > one will free all the data pointers and assumes the user dynamically allocated everything, other just frees each node, assuming stack allocation for each data
+20:08 <          urn > thanks for your help guys, very helpful
+20:09 <      LeoNerd > That isn't what anyone suggested
+20:09 <      LeoNerd > My suggestoin (at least) was a flag _PER LINKED LIST NODE_ to say "is this pointer to be free()ed when we destroy the node?"
+20:09 <      LeoNerd > struct node { struct node *next; void *userdata; unsigned int free_on_destory : 1; };   for example
+20:10 <          urn > If this was a production linked list yes, but it's more of an academic exercise for me....
+20:10 <      LeoNerd > Well, fair enough.. If you can guarantee every pointer will be of one type or other
+20:10 <          urn > I agree flags and that would be much better, but I just want to keep it really stupid now
+20:10 <          urn > no one but me will ever use this code probably haha
+20:11 <          urn > and if they do, well I feel bad for them because my linked list is hardly the best
+20:12 <      Zhivago > Well, the real question is -- why does deleting a link of a linked list imply that what was linked to it ought to be deleted?
+20:12 <      Zhivago > It sounds like you want garbage collection.
+20:12 <          urn > it's not deleting of a link in the linked list, it's for at the end of the linked list's life, when I want to free every node because I don't need the list anymore
+20:13 <      Zhivago > That should delete the links of the list.
+20:13 <          urn > which is what it does. I just iterate over the list and free each node
+20:14 <      Zhivago > Deleting a link of a list doesn't delete what it was linked to.
+20:14 <      Zhivago > What you're doing is some more general garbage collection scheme, except that you're not actually doing it, which is why it is half-arsed and confused.
+20:14 <      Zhivago > Personally, I would not supply a delete operation -- instead I would supply a pop() operation to incrementally disassemble the list.
+20:15 <      Zhivago > Then the user can say while (pop(&list, &node)) { free(node); } if that is appropriate.
+20:15 <          urn > Zhivago, I do have pop and unshift
+20:15 <      Zhivago > Then why do you have delete?
+20:15 <          urn > ... I thought it would be a good idea...
+20:16 <          urn > to just have a function that I can call that kills everything in the list no matter what
+20:16 <          urn > I dunno
+20:16 <      Zhivago > I'd like a pony.
+20:17 <      Zhivago > There is a principle that I'd like to share with you.
+20:17 <      fossjon > struct pony *mylittlepony = NULL;
+20:17 <      Zhivago > When in doubt, make it someone else's problem.
+20:17 <      Zhivago > This will help to avoid situations like this, and to keep your code simple.
+20:18 <      Zhivago > "Should I use malloc or a local variable to allocate this thing?"
+20:18 <      Zhivago > If the answer isn't clear, get whatever calls you to do it instead.
+20:18 <      Zhivago > At some point the correct policy will become obvious.
+20:19 <          urn > Thank you. You're right about that, I just spent 2 hours trying to find out stuff that doesn't even matter at all
+20:19 <      Zhivago > Your list isn't smart enough to know the correct policy -- delegate the decision to what uses the list.
+20:19 <      Zhivago > You're welcome.
+20:19 <      fossjon > my rule is, always make the CEO declare pointers first for you!
+20:19 <     jamesaxl > hello
+20:19 <      fossjon > that way your safe :)
+20:20 <      Zhivago > My safe isn't that way.
+20:23 <          urn > It felt so good to delete those stupid complicated functions and replace it with one for loop
+20:23 <          urn > delegation of responsibility is awesome!
+20:24 <      Zhivago > Indeed.
+20:45 <          ocx > is there any tool to obfuscate c code?
+20:46 <        frag4 > I heard people use emacs for that
+20:46 <        frag4 > and 2 space indentation
+20:47 <          ocx > frag4: can you emphasis onthat?
+20:47 <        frag4 > that was a joke
+20:47 <          ocx > ah ok
+20:52 <          ocx > so anyone?
+20:55 <      Zhivago > ocx: Get someone incompetent to write it.
+20:55 <      Zhivago > You might also find that a decompiler does what you want.
+20:55 <          ocx > word of the day: incompetent
+20:56 <          ocx > Zhivago: can i decompile and recompile
+20:57 <      Zhivago > Sure.
+20:57 <      Zhivago > It wouldn't be decompilation otherwise.
+20:57 <      Zhivago > I'm not sure what the point would be.
+20:57 <      Zhivago > ocx: I suggest "vulpine" as word of the day.
+21:09 <    scrubfest > I have allocated memory for my array a->items. If I need to realloc so that both a-items, and b->items can fit can I do: newdata = realloc((a->items+b-items), sizeof(void*)*newmaxsize)
+21:09 <    scrubfest > ?
+21:24 <      Zhivago > scrubfest: What does the first argument of realloc mean?
+21:24 <    scrubfest > ptr
+21:24 <      Zhivago > To?
+21:24 <    scrubfest > void
+21:25 <      katana- > hey Z still getting off on bullying people for bad grammar?
+21:25 <      Zhivago > katana: Are you still stabbing yourself in the face with a fork?
+21:25 <      katana- > pretty much
+21:25 <      Zhivago > scrubfest: What does the documentation say that pointer must come from?
+21:26 <      Zhivago > katana: Glad to hear it.
+21:27 <    scrubfest > "Pointer to a memory block previously allocated with malloc, calloc or realloc."
+21:28 <      Zhivago > Well, there you have it!
+21:29 <      Zhivago > So, what are you passing to realloc as its first argument?
+21:30 <      Zhivago > What they really meant is "pointer previously returned by malloc, calloc, or realloc, and not since free'd".
+21:31 <      Zhivago > That 'to' is sloppy.
+21:41 <      fossjon > or NULL
+21:43 <    scrubfest > Zhivago, both a->items and b->items have been allocated .
+21:44 <      Zhivago > So what does a->items + b->items mean?
+21:44 <    scrubfest > void* ptr + void* ptr
+21:44 <    scrubfest > ?
+21:44 <    scrubfest > :C
+21:45 <      Zhivago > scrubfest: What does it mean to add two pointers together in C?
+21:46 <      fossjon > its adding 2 memory addresses together
+21:46 <    scrubfest > I think it means that I...
+21:46 <    scrubfest > yhea that
+21:46 <      fossjon > (sizeof(a)+sizeof(b))*sizeof(ptr_type)
+21:46 <      fossjon > or length rather
+21:46 <        rob`` > wat
+21:46 <    scrubfest > i just moves... my a->items to a slot
+21:47 <    scrubfest > a->items+b->items
+21:47 <        rob`` > what would the result of adding two addresses be?
+21:47 <      Zhivago > > scrubfest: What does it mean to add two pointers together in C?
+21:48 <      Zhivago > scrubfest: I'll give you a hint -- it is illegal.
+21:48 <    scrubfest > It is? Doesn't it just give a pointer to the cell which the sum of a-items + b-items is
+21:49 <    scrubfest > in bytes
+21:49 <      katana- > p + 3 is ok
+21:49 <      katana- > you can't to p + q though
+21:49 <      fossjon > p + (q - p) ?
+21:50 <      katana- > what are you asking
+21:51 <      fossjon > i was trying to figure out why he/she was adding 2 pointers together
+21:51 <      Zhivago > It doesn't seem to know why it is.
+21:51 <      fossjon > :)
+21:51 <    scrubfest > I think it explained why it did it
+21:51 <      Zhivago > Where?
+21:51 <    basichash > What is wrong with my struct? http://ideone.com/T7BTbs
+21:52 <    scrubfest > Where it first purposed its question
+21:52 <      Zhivago > basichash: Ask a question about something that surprises you about your struct.
+21:52 <      Zhivago > scrub: No. I don't think it did.
+21:52 <    scrubfest > Although it was wrong to assume that the code he purposed was right, and that was why it proclaimed skeptisism towards it
+21:52 <      Zhivago > scrub: Anyhow, having understood that adding pointers together is illegal, and having read the documentation for what the first argument to realloc must be ...
+21:52 <    scrubfest > Damn, I left a he in there
+21:52 <    scrubfest > :D
+21:53 <      Zhivago > scrub: Can you fix your question so that it isn't obviously insane?
+21:53 <    scrubfest > I do not understand what you mean.
+21:53 <    basichash > Zhivago: Trying to create a struct with two char arrays. When I try to set the value of each array to a string, I get "incompatible types when assigning to type char[20]"
+21:53 <    scrubfest > Insane... really?
+21:53 <      fossjon > its way to cryptic in here
+21:53 <      Zhivago > basic: You cannot assign to an array.
+21:54 <      Zhivago > basic: Consider using memcpy instead or initializing.
+21:54 <      fossjon > basichash: you cant just assign a buffer to a string like that
+21:54 <      fossjon > you have to copy the string data into the buffer
+21:54 <      fossjon > :)
+21:55 <      Zhivago > Be careful of listening to people who can't spell "can't" properly.
+21:55 <      fossjon > this is the c channel, not the english channel
+21:55 <      katana- > anyone can spell can't properly, they just don't
+21:55 <    basichash > fossjon: how do I copy the string data into the buffer?
+21:55 <      fossjon > i kan spill as i wanting to!
+21:55 <      fossjon > memcpy or bcopy
+21:55 <      fossjon > or strcpyn
+21:55 <      fossjon > strncpy
+21:56 <      Zhivago > fossjon: Kureyo? Kureyo darun-mal-ro iyagihamyeon dwaeyo?
+21:56 <      fossjon > make sure to include a trailing null terminator
+21:56 <      Zhivago > fossjon: Just remember that practicing writing like a moron makes you a better moron.
+21:56 <      fossjon > i care more about c than english to be honest with you
+21:56 <      fossjon > and this is a c channel
+21:57 <      Zhivago > fossjon: Then you should avoid saying things like "assigning to a buffer".
+21:57 <      Zhivago > fossjon: And you don't need to copy the data into the array -- you can initialize it.
+21:57 <      Zhivago > fossjon: Also, char c[3]; What is the type of c?
+21:58 <           gl > here we are :)
+21:58 <      fossjon > basichash: bzero(me.firstname, 20 * sizeof(char)); strncpy(me.firstname, "test str", 20);
+21:58 <      Zhivago > Note that bzero is non-standard.
+21:58 <           gl > this question is like a fixed point, in here
+21:58 <      Zhivago > And sizeof (char) is redundant.
+21:58 <      fossjon > i like to think of c as a buffer
+21:58 <      fossjon > rather than a pointer
+21:58 <      fossjon > even though it is just a type of pointer
+21:58 <      Zhivago > And strncpy will zero the remainder of the space.
+21:58 <           gl > no matter what is the conversation subject, it will necessarily end with a 'char foo[4]; what is the type of foo?' :)
+21:59 <      Zhivago > So that bzero there is completely pointless.
+21:59 <      fossjon > im just trying to help the person
+21:59 <      Zhivago > 4 is an unfortunate size to choose for that question.
+21:59 <           gl > right
+21:59 <      Zhivago > fossjon: Then why are you giving them terrible advice?
+21:59 <      fossjon > im pushing them towards a more corrector solution
+21:59 <      Zhivago > fossjon: Then why are you giving them terrible advice?
+21:59 <      fossjon > because what they're doing now is wrong but its ok
+21:59 <      fossjon > :)
+21:59 <      Zhivago > fossjon: And what you're suggesting is also wrong.
+22:00 <      katana- > you could try not talking
+22:00 <      fossjon > in the last 2 minutes, ive given them more help than you have
+22:00 <      katana- > just a thought
+22:00 <      Zhivago > fossjon: You've given them a lot of misinformation.
+22:00 <      fossjon > ok then :)
+22:00 <      Zhivago > fossjon: How many bytes will strncpy(me.firstname, "test str", 20) write into me.firstname?
+22:00 <      fossjon > it will write 9 bytes
+22:00 <      Zhivago > Wrong.
+22:01 <      Zhivago > Please read the documentation for strncpy.
+22:01 <      fossjon > ok
+22:02 <      Zhivago > Let me know if you figure out how many bytes strncpy(me.firstname, "test str", 20) will write into me.firstname.
+22:02 <      fossjon > The  strncpy()  function  is  similar,  except that at most n bytes of src are copied.  Warning: If there is no null byte among the first n   bytes of src, the string placed in dest will not be null-terminated.
+22:02 <      fossjon > char *strncpy(char *dest, const char *src, size_t n);
+22:03 <      fossjon > is that so hard?
+22:03 <      Zhivago > fossjon: Keep reading, my retarded little friend. I didn't ask how many are read.
+22:03 <      fossjon > im quoting the man page
+22:03 <      fossjon > dont argue with me about it
+22:03 <      Zhivago > Did you manage to read all of it?
+22:03 <      fossjon > no
+22:04 <      Zhivago > Then read all of it, and try answering the question.
+22:04 <      fossjon > it goes on to say then, "If the length of src is less than n, strncpy() writes additional null bytes to dest to ensure that a total of n bytes are written."
+22:04 <      fossjon > so n bytes
+22:04 <      Zhivago > So, what's the answer to the question, my subliterate friend?
+22:04 <      fossjon > :)
+22:04 <      Zhivago > So, what was that bzero for?
+22:04 <      fossjon > and that is how you pass english class
+22:05 <      fossjon > the bzero is for safety reasons
+22:05 <      fossjon > its good practice to zero out a buffer before using it
+22:05 <      Zhivago > What safety does it provide, my retarded little friend?
+22:05 <      Zhivago > Do you write code like int i = 0; i = 5; ?
+22:05 <      Zhivago > Is that "good practice"?
+22:05 <           gl > strap + belt. useless, but it makes people feel more confident
+22:06 <      katana- > he wrote it because he didn't think it zero'd
+22:06 <      katana- > now he's lying to try to make himself feel like he didn't fuck up
+22:06 <           gl > well, in english, is it 'strap' or 'braces'?
+22:06 <           gl > braces/suspenders, i guess
+22:07 <      fossjon > i still standby zero'ing buffers
+22:07 <    basichash > How can I print out the address of a variable in decimal format?
+22:07 <      fossjon > esp since c depends on null terminators alot
+22:07 <      fossjon > its good to practice safe c
+22:08 <           gl > ,cc int foo = 0; printf("%d\n", (intptr_t) (void *) &foo);
+22:08 <      candide > gl: [warning: format '%d' expects argument of type 'int', but argument 2 has type 'long int' [-Wformat]] -6580
+22:08 <           gl > err, ld, then
+22:08 <           gl > ,cc int foo = 0; printf("%ld\n", (intptr_t) (void *) &foo);
+22:08 <      candide > gl: 140737488348748
+22:08 <           gl > i guess the (void *) cast is not necessary?
+22:08 <      Zhivago > fossjon: I've noticed that people who can't spell "it's" are generally idiots. You have contributed toward this observation. :)
+22:08 <    basichash > for example, I know %p is the format for hex, and I thought %u should work, but it doesn't
+22:09 <      Zhivago > gl: I believe that it is unnecessary.
+22:09 <      fossjon > :) i wasn't attempting to provide the most efficient solution, just one that works none the less
+22:09 <      Zhivago > basic: %p is not for hex.
+22:09 <           gl > okay
+22:09 <      Zhivago > fossjon: I think that you were trying to demonstrate illiteracy in C, and you succeeded.
+22:10 <    basichash > Zhivago: is it the default value?
+22:10 <      Zhivago > basic: %p is for whatever %p in scanf reads -- it's implementation dependent.
+22:10 <    basichash > Zhivago: is %u meant to print the decimal address?
+22:10 <      Zhivago > basic: Also note that you must cast whatever pointer you print with %p to void * first.
+22:11 <      Zhivago > basic: Pointers are not integers.
+22:11 <      fossjon > they are 32 bit binary numbers
+22:11 <      Zhivago > fossjon: Wrong.
+22:11 <      fossjon > which generally translate into an integer
+22:11 <      Zhivago > fossjon: Do you practice being wrong?
+22:11 <      fossjon > i guess it must be my hobby
+22:11 <    basichash > ok thanks
+22:12 <      fossjon > a pointer is 32 bits no?
+22:12 <           gl > no
+22:12 <      fossjon > on a 32 bit system?
+22:12 <           gl > not necessarily
+22:12 <      fossjon > how many bits make up a pointer then?
+22:12 <      LeoNerd > Sufficiently many, but not to excess
+22:12 <      fossjon > it must be some binary size
+22:12 <           gl > you don't have to know -- it's platform dependant
+22:13 <      fossjon > i was just trying to answer a general common case which is a 32 bit *nix system
+22:13 <         boru > Did they ask about a 32bit UNIX system?
+22:14 <      fossjon > ,cc char *p = malloc(10); printf("%p\n", p);
+22:14 <      candide > fossjon: 0x604ff0
+22:14 <      fossjon > how many hex digits are above including the leading 0s?
+22:14 <           gl > fossjon well, you can try, but the channel is about c, not x86-unix-c, so you should precise exactly the context before writing general assertions which are wrong, according to the standard
+22:15 <      fossjon > ,cc char p[10]; printf("%p\n", p);
+22:15 <      candide > fossjon: 0x7fffffffe630
+22:15 <      fossjon > there we go
+22:15 <      fossjon > how many now?
+22:15 <           gl > what are you trying to achieve?
+22:15 <      fossjon > 64 bit pointers no?
+22:15 <         boru > How many what?
+22:15 <     lh_mouse > gl, the void * cast is not necessary if you pass a (cv-qualified) char *.
+22:16 <      fossjon > im trying to show you how many bits a pointer is on a 64 bit system
+22:16 <           gl > what's a (cv-qualified) char *?
+22:16  *        boru sighs and returns to work.
+22:16 <           gl > fossjon: no, you're showing the size of a pointer on candide's platform
+22:16 <           gl > all 64 bits platforms are not identical
+22:17 <         ixon > gl: there surely is at least one pair of identical platforms :)
+22:17 <     lh_mouse > gl, http://stackoverflow.com/questions/9056328/printf-and-pointers
+22:17 <           gl > ixon: probably!
+22:18 <      tomz123 > In C, do you need to define prototypes of a function before the actual implementation of a function?
+22:18 <         ixon > hence, not all 64 bit platforms are not identical :p
+22:18 <         ixon > tomz123: only if you use the function before it's function header appeared.
+22:18 <           gl > lh_mouse: well, i know that the cast to void * is mandatory to comply with the %p specifier, but i wondered about (intptr_t) (void *) &foo versus (intptr_t) &foo
+22:19 <      tomz123 > I understand, only if implementation is after the main function.
+22:19 <         ixon > gl: there's %t for intptr_t
+22:19 <           gl > ixon: oh? didn't know that, thanks
+22:19 <         ixon > ah naw damn, %t is ptrdiff_t :/
+22:19 <      tomz123 > So would it be good practice to have the main function as the last function?
+22:19 <           gl > mh
+22:20 <     lh_mouse > ixon, no there isn't.
+22:20 <         ixon > tomz123: more like "some people practice it to put non-main functions before main"
+22:20 <     lh_mouse > ISO C N1750 §7.21.6.1 7 t Specifies that a following d, i, o, u, x, or X conversion specifier applies to a
+22:20 <     lh_mouse > ptrdiff_t or the corresponding unsigned integer type argument
+22:20 <           gl > ixon: for intptr_t there is a PRIdPTR
+22:20 <      tomz123 > thanks I understand.
+22:20 <           gl > PRIuPTR for uintptr_t, and so on
+22:20 <     lh_mouse > In %t cast you have to cast it to ptrdiff_t.
+22:20 <    Left_Turn > is intptr_t standard C?
+22:20 <     lh_mouse > Yes.
+22:21 <    Left_Turn > oh
+22:21 <     lh_mouse > #include <stddef.h>
+22:21 <    Left_Turn > ah ok.. havent come across it in k&r yet
+22:22 <     lh_mouse > gl, if you specify %p in printf, you MUST pass a void * or char *. Any other type leads to undefined behavior.
+22:22 <           gl > maybe it's not in the k&r, i suspect it's c99
+22:22 <    Left_Turn > oh true
+22:23 <           gl > lh_mouse: i know -- my original question was: printf("%"PRIdPTR, (intptr_t) (void *) &foo); or printf("%"PRIdPTR , (intptr_t) &foo);
+22:23 <     lh_mouse > gl, casting a pointer to integer is implementation defined.
+22:24 <     lh_mouse > The implementation's documentation will tell you whether they are the same or not.
+22:24 <           gl > ,cstd 7.18.1.4
+22:24 <      candide > For a list of links to C standards, use the `standard` factoid; for citing the C99 standard, use `c99std`; for citing the C11 standard, use `c11std`
+22:24 <           gl > ,c99std 7.18.1.4
+22:24 <      candide >  http://www.iso-9899.info/n1256.html#7.18.1.4 [Integer types capable of holding object pointers] 1 The following type designates a signed integer type with the property that any valid pointer to void can be converted to this type, then converted back to pointer to void, and the result will compare equal to the original pointer: intptr_t The following type designate... [truncated; see http://sprunge.us/PLPO for full text.]
+22:25 <           gl > lh_mouse: this is the purpose of intptr_t, any void * can be converted to it, and converted back to void *
+22:26 <     lh_mouse > gl, they are NOT guaranteed to have the same binary representation.
+22:26 <     lh_mouse > They are even NOT guaranteed to have the same size.
+22:27 <     lh_mouse > In short words: pointers are NOT integers.
+22:27 <           gl > no shit, sherlock.
+22:27 <           gl > well, i think i'll do like boru
+22:27 <           gl > 16:16:37  * boru sighs and returns to work.
+22:27  *          gl &
+22:57 <    basichash > Why do I get 16 when I use sizeof on a struct that has an "int i" and "char *name" when ints are 4 bytes are chars are 8 bytes?
+22:59 <      katana- > basichash, you'll find that the compilers tend to pack structs up like that since it's more efficient
+23:00 <      katana- > sometimes they'll choose to position things on word boundaries etc.
+23:08 <    lemonade` > chars are 8 bytes?
+23:08 <           gl > ,padding basichash
+23:08 <      candide > No such factoid 'padding'; did you mean [##c] boring, casting, main, parens, parsing, stdin, string, warnings, [##posix] raw_ping, [#philosophy] mankind, meaning, [global channel] add, admins, advice, candide, duffing, herring, morning, paren, ping, reading, sorting, talking, teaching or twiddling?
+23:08 <           gl > well
+--- Log closed Wed Feb 19 23:16:26 2014

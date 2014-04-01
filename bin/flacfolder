@@ -1,0 +1,19 @@
+#!/bin/bash
+
+shopt -s nullglob
+
+if [[ -z $1 ]]; then
+  filearray=( **/*.flac )
+else
+  filearray=( *.flac )
+fi
+
+
+for file in "${filearray[@]}"; do
+  echo "--------------------------------------------"
+  echo "./$file";
+
+  flac2mp3 320 "./$file" "./${file/flac/mp3}"
+
+done
+

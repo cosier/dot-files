@@ -1,0 +1,124 @@
+--- Log opened Tue Mar 25 23:26:37 2014
+23:26 -!- Irssi: #clojurescript: Total of 93 nicks [0 ops, 0 halfops, 0 voices, 93 normal]
+23:26 -!- Irssi: Join to #clojurescript was synced in 3 secs
+23:28 <         bwda > Hi, I have a cljs Repl running connected to emacs, and when I try to evaluate an expression that access a function in another namespace it doesn't work
+23:28 <         bwda > It only works if I use the full namespace name, not the :as name
+23:28 <         bwda > So does require for Clojurescript in the repl not work at the moment?
+23:44 <    ambrosebs > bwda: have you tried (ns <current-ns> (:require [want-ns :as n]))
+23:44 <        gtrak > ,#{"hello" "goodbye" do} ; that's hilarious
+23:44 <      lazybot > ⇒ "hello"
+23:44 <         bwda > ambrosebs: thanks, I'll give that a try
+23:47 <         bwda > ambrosebs: Ah actually that's what I'm already doing, but "n" is not defined when I try to use it in the repl
+23:48 <         bwda > I've tried evaluated the ns form as well, doesn't give me an error so I guess I'm in the right context for using "n"
+23:51 <        gtrak > lots of things in cljs don't give errors when they don't work
+--- Day changed Wed Mar 26 2014
+00:03 <         bwda > ah I figured it out, was a matter of how I started up the cljs repl..
+00:03 <         bwda > Needed to start the repl from a blank clj file first, then I could load my cljs fine
+00:04 <         bwda > I don't think my hair is gonna grow back from that one...
+00:25 <    ambrosebs > incredibly inspiring talk from dnolen yesterday https://www.youtube.com/watch?v=DMtwq3QtddY
+00:41 <        locks > ambrosebs: I am not surprised :}
+01:15 <          rlb > I'm poking at nodejs/clojurescript (not very knowledgeable about either yet) and wondered why this doesn't work: (def fs (node/require "fs"))  (.readFileSync fs "./foo")
+01:15 <          rlb > It dies with a "has no method" error.
+01:21 <          rlb > and (def fs (node/require "util"))  (.print util "./foo\n")
+01:21 <          rlb > works fine
+01:21 <          rlb > (given the appropriate -main, etc.)
+02:05 <          rlb > to answer my own question -- I think "lein cljsbuild auto" may have been getting confused, and I may also have needed to switch to ":optimizations :simple".
+02:06 <          rlb > I might try to track it down more specifically later.
+04:28 <          mye > someone knows the status of namespace destructuring in cljs that was introduced in clojure 1.6?
+04:30 <          mye > oh, its in master
+05:03 <          mye > dang, using cljs master the external browser connection fails
+05:04 <          mye > https://www.refheap.com/65640
+05:04 <          mye > (in lighttable)
+05:04 <          mye > just reverted to 2173 and its good
+05:05 <          mye > some1 using Lighttable and master successfully?
+--- Log closed Wed Mar 26 12:01:01 2014
+--- Log opened Wed Mar 26 12:01:22 2014
+12:01 -!- Irssi: #clojurescript: Total of 80 nicks [0 ops, 0 halfops, 0 voices, 80 normal]
+12:01 -!- Irssi: Join to #clojurescript was synced in 23 secs
+13:57 <       nwolfe > Any Omchaya users here?
+13:58 <       nwolfe > Trying to see what it provides on top of Kandan
+13:58 <       nwolfe > I'm missing something fundamental here, though I admit I haven't dug in
+14:00 <       nwolfe > I'm particularly interested in the "collaborative music player and queueing system"
+23:09 <John_M_Newman > hello
+23:10 <martinklepsch > John_M_Newman, hello
+23:10 <John_M_Newman > I'm building a core.async/reagent single page app / phone app
+23:11 <John_M_Newman > I'd like to add a settings page styled in a way similar to modern android apps, where a partial page slides out from the left
+23:11 <John_M_Newman > returning to the original screen, the page slides back to the left
+23:11 <John_M_Newman > does anybody have an idea on how best to attack this?
+23:12 <          cbp > I think that's more of a css question? :-P
+23:12 <martinklepsch > Yeah, think so too, John_M_Newman
+23:13 <John_M_Newman > cbp: so it can all be done in css?  Just use one page, and use css to slide left and right?
+23:14  * John_M_Newm google's android menu css
+23:15 <martinklepsch > John_M_Newman, android != web ... this might be more helpful: http://foundation.zurb.com/docs/components/offcanvas.html
+23:15 <          cbp > John_M_Newman: what you're describing sounds to me like a sliding div that shows and hides as you click some button. So technically that animation is all css
+23:16 <          cbp > Whether that window is already loaded and just hidden or not is another concern i guess
+23:17 <          cbp > all css + a bit of js i mean
+23:18 <John_M_Newman > okay
+23:18 <John_M_Newman > thanks martinklepsch and cbp !!!
+--- Day changed Thu Mar 27 2014
+02:31 <    lijnen___ > John_M_Newman: http://jakiestfu.github.io/Snap.js/demo/apps/default.html# < if you want to go for a small lib, this one might be something :)
+04:18 <John_M_Newman > lijnen___: Thanks!
+07:30 <    ambrosebs > dnolen_: amazing clojurewest talk congrats
+07:58 <      dnolen_ > ambrosebs: thanks!
+07:58 <      dnolen_ > so awesome they got them up so fast!
+07:58 <    ambrosebs > dnolen_: I felt like I was there :)
+09:32 <   Frozenlock > Is there a way to provide CSS in a cljs library?
+09:33 <   Frozenlock > As in, once in the project dependencies, the clj server can get the CSS directly from it.
+09:41 <          bja > Frozenlock, you could generate it in a macro and then serve it via garden
+09:42 <          bja > I don't know that this is a good idea, but it would probably work
+09:43 <   Frozenlock > Hmm... almost simpler to just copy the CSS file in the project :-/
+09:43 <   Frozenlock > I guess I'm overthinking it.
+09:44 <          bja > I feel like there's a way to put things into your jar
+09:44 <          bja > and then you could provide a ring adapter that would load them
+09:45 <          bja > https://github.com/weavejester/hiccup-bootstrap has an example of this
+09:45 <          bja > that seems uncomplicated
+09:46 <   Frozenlock > Interesting
+09:46 <   Frozenlock > I might end up doing this. I suppose this means that the using project must be compojure based.
+10:03 <    lijnen___ > dnolen_:  Can I find the cljs source of the example in the "Taking Off the Blindfold" article somewhere? :)
+--- Log closed Thu Mar 27 12:06:44 2014
+--- Log opened Thu Mar 27 12:06:57 2014
+12:06 -!- Irssi: #clojurescript: Total of 73 nicks [0 ops, 0 halfops, 0 voices, 73 normal]
+12:07 -!- Irssi: Join to #clojurescript was synced in 18 secs
+--- Log closed Thu Mar 27 14:22:27 2014
+--- Log opened Thu Mar 27 14:22:48 2014
+14:22 -!- Irssi: #clojurescript: Total of 73 nicks [0 ops, 0 halfops, 0 voices, 73 normal]
+14:23 -!- Irssi: Join to #clojurescript was synced in 18 secs
+14:25 <   Frozenlock > Any idea why this returns nil? (-> (js/jQuery "window") (.height))
+--- Day changed Fri Mar 28 2014
+04:20 <      dnolen_ > lijnen___: look at the source for my blog
+04:40 <    lijnen___ > dnolen_: Thanks! Found it already, overlooked the code folder :)
+--- Log closed Fri Mar 28 12:06:29 2014
+--- Log opened Fri Mar 28 12:06:42 2014
+12:06 -!- Irssi: #clojurescript: Total of 78 nicks [0 ops, 0 halfops, 0 voices, 78 normal]
+12:06 !holmes.freenode.net [freenode-info] if you're at a conference and other people are having trouble connecting, please mention it to staff: http://freenode.net/faq.shtml#gettinghelp
+12:06 -!- Irssi: Join to #clojurescript was synced in 18 secs
+--- Log closed Sat Mar 29 01:10:50 2014
+--- Log opened Sat Mar 29 01:11:07 2014
+01:11 -!- Irssi: #clojurescript: Total of 88 nicks [0 ops, 0 halfops, 0 voices, 88 normal]
+01:11 -!- Irssi: Join to #clojurescript was synced in 18 secs
+02:06 <      ninjudd > dnolen_: So I'm really excited about working on getting Om to render to native Cocoa views.
+02:06 <      dnolen_ > ninjudd: I think that's going to be pretty tricky without better support from React
+02:06 <      ninjudd > I've done some initial work on adding categories to various classes in the UIView hierarchy that allow rendering from JavaScriptCore with mostly just JSON data.
+02:07 <      dnolen_ > ninjudd: you might be able to hack something together in the near term though
+02:07 <      ninjudd > dnolen_: Yeah I think the best approach is going to be to add Cocoa rendering directly to React rather than Om, because it means I won’t have to rewrite all the diffing stuff, and more people will be able to use it.
+02:07 <      dnolen_ > ninjudd: I did spend a lot of time talking sebmarkbage, the full time dev on React, they have a good road map w/ respect to Om
+02:08 <      dnolen_ > ninjudd: in the future Om will likely be able to ditch the overly OO interface, and pluggable renderers will have much better support
+02:09 <      dnolen_ > ninjudd: until then, I don't think there's much you can do but dig into the React internals and try to follow along as things evolve.
+02:09 <      dnolen_ > anyways keep me posted how that goes, would love to see some examples and I'm sure other people would be excited to get on board with that
+02:12 <      ninjudd > dnolen_: Yeah. I started looking at the code, but it will take me a while to understand React enough to figure out the right place to insert my Cocoa wrappers.
+02:14 <      dnolen_ > ninjudd: this is probably a saner starting point https://github.com/facebook/react-art
+02:14 <      dnolen_ > this targets canvas as an alternate renderer
+02:14 <      ninjudd > cool. i'll take a look
+02:14 <      dnolen_ > so you can focus on just the bits of React you need to grok to get a different renderer to work
+02:15 <      ninjudd > and i'll ask some questions in #reactjs as soon as i understand it enough to compose a question
+04:15 <      ninjudd > dnolen_: hmm. it's a bit discouraging how often DOM and markup is mentioned in react/src/core, which is supposed to not be browser specific
+04:16 <      dnolen_ > ninjudd: yeah it's a well known issue http://facebook.github.io/react/blog/2014/03/28/the-road-to-1.0.html
+04:20 <      ninjudd > dnolen_: ah. so components don't actually have to return markup
+04:20 <      dnolen_ > ninjudd: yes
+04:38 <      ninjudd > got it. found this in ReactComponent.js: 'The "image" of a component tree, is the platform specific (typically serialized) data that represents a tree of lower level UI building blocks. On the web, this "image" is HTML markup which describes a construction of low level `div` and `span` nodes. Other platforms may have different encoding of this "image". This must be injected.'
+08:36 <   Frozenlock > What's the recommended cljs/clj communication lib these days? Shoreleave, cljs-http, cljs-ajax...?
+08:48 <   Frozenlock > ehh.. my Internet decided to die at the instant I asked the question. If anybody answered, could you please just repost it? :-p
+--- Log closed Sat Mar 29 12:02:06 2014
+--- Log opened Sat Mar 29 12:02:29 2014
+12:02 -!- Irssi: #clojurescript: Total of 73 nicks [0 ops, 0 halfops, 0 voices, 73 normal]
+12:02 -!- Irssi: Join to #clojurescript was synced in 23 secs

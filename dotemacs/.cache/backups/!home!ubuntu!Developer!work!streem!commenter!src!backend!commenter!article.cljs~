@@ -1,0 +1,96 @@
+;; Article Namespace
+(ns commenter.article
+  (:require-macros [cljs.core.async.macros :refer [go]])
+  (:require [commenter.database :as db]
+            [commenter.logger :as logger]
+            [commenter.stats :as stats]
+            [cljs.core.async :as async
+             :refer [put! chan <! >! close! alts!]]))
+
+
+;; Todo: Don't do this.
+;; To JSON and back, for compat reasons with clj objects
+(defn data-transform [data]
+  ;;(println "data-transform: " data)
+  (js->clj (JSON/parse (.stringify js/JSON data)) :keywordize-keys true))
+
+;; Requestor
+(def requestor (js/require "request"))
+
+;; Callback wrapper
+(defn request-handler [url channel]
+  (fn [err res body]
+    (go (>! channel {:url url :body body}))))
+
+;; Makes an actual http request for the data
+(defn request-article-html [in-channel out-channel]
+  ;;(println "Fetching html for " url)
+  (let [request requestor]
+    ;;(println "request-article-html inner scope setup")
+    ;; listen for requests
+    (go (while true
+          (let [url (<! in-channel)]
+            (println "articles >> incoming request received: " url "\n")
+            (request url (request-handler url out-channel)))))))
+
+
+;; Gets the articles from the database and manages the
+;; request queue / delegation to the request-article-html function
+(defn request-articles [root-channel]
+  ;;(println "request-articles")
+  (db/latest-articles
+   (fn [results]
+     (if results (do
+     ;; setup article data as well as in/out channels
+     ;; for managing the request queue
+     (let [articles    (data-transform results)
+           in-channel  (chan)
+           out-channel (chan)]
+
+       ;; initialise the requester in/out queue
+       (request-article-html in-channel out-channel)
+       ;;(println "request-article-html channel setup")
+
+       ;; listen for completed requests
+       (go (loop [remaining-articles articles]
+             ;;(println "Remaining articles to process:" (count remaining-articles))
+             ;;(println "Loop")
+             (if (= (count remaining-articles) 0)
+               (println "articles >> no more remaining articles \n"))
+
+             ;; let scope the url for easier checks
+             (let [item (last remaining-articles)
+                   url (get item :url)]
+               ;;(println "sending request" item)
+               (if url (>! in-channel url)))
+
+             ;; block on results
+             (let [ result (<! out-channel) ]
+               ;;(println "received result")
+               (>! root-channel result))
+
+             (stats/tick-remaining-articles (count remaining-articles))
+
+             ;; determine if we need to go another iteration
+             (if (> (count remaining-articles) 0)
+               (recur (pop remaining-articles)))
+             (if (= (count remaining-articles ) 0)
+               (println "articles >> Finished fetching all articles"))))))
+         (do
+           (println "articles >> db/latest-articles >> no articles found\n")
+           (stats/tick-remaining-articles 0)
+           (close! root-channel))
+         ))))
+
+
+
+;; Higher level function for article html reducing
+(defn get-html-for-all-articles [borrowed-channel]
+  ;;(println "Getting html for all articles")
+  (let [article-channel (chan)]
+    (request-articles article-channel)
+    (go (while true
+          (let [data (<! article-channel)]
+            ;;(println "Received Article Data" (:url data))
+            (if data
+              (>! borrowed-channel data)))))))

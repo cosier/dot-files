@@ -1,0 +1,61 @@
+<html>
+<head>
+<html>
+  <head>
+    <title>
+      Latest Articles Processed | Streem.com.au</title>
+  <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+  <link href="/ranking/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" />
+  <style>
+    body {
+      padding:20px;
+      }
+      td.col-link {
+        max-width:300px;
+        overflow:hidden;
+      }
+
+  </style>
+</head>
+<body>
+
+
+
+
+<hr/>
+<h1>Latest Comments Scanned ({{ articles.length }}) - Table JOIN with articles_comments_counts</h1>
+<table class='table table-striped'>
+  <thead>
+    <tr>
+      <th>Article ID</th>
+      <th>URL</th>
+      <th style="min-width:200px">Comments Status</th>
+      <th style="min-width:150px">Comments QTY</th>
+      <th style="min-width:150px">Update Time</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for article in articles %}
+  <tr>
+    <td>{{ article.articles_id }}</td>
+    <td><a href='{{ article.url }}' target="_blank"><strong>{{ article.url }}</strong></a></td>
+    <td><strong>
+      {% if article.comments_status == 1 %}
+      Disabled
+      {% elseif article.comments_status == 2%}
+      Enabled
+      {% else %}
+      {{ article.comments_status }}
+      {% endif %}
+
+
+    </strong></td>
+    <td>{{ article.comments_qty_found }}</td>
+    <td>{{ Date(JSON.stringify(article.update_time)) }}</td>
+  </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+</body>
+</html>

@@ -1,0 +1,28 @@
+(ns commenter.router
+  (:require [commenter.article :as article]
+            [commenter.database :as db]))
+
+(defn parse-url [url]
+  (.parse (js/require "url") url))
+
+(defn path-name [params]
+  (let [path (aget params "pathname")
+        path-cleaned (.replace path (js/RegExp. "commenter/" "g"))]
+    path-cleaned))
+
+
+(defn engage-route
+  "Handle end to end routing all of all incoming HTTP requests"
+  [req res]
+
+  (.log js/console (str "Incoming Request"))
+  (let [url (aget req "url")
+        params (parse-url url)
+        path (path-name params)]
+    (.end res (+ "Handling Route:" path ))))
+
+(comment
+  (article/comment-count 10)
+  (.replace "/commenter/live" (js/RegExp. "commenter/" "g") "")
+  )
+

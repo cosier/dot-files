@@ -1,0 +1,43 @@
+(ns commenter.core
+  (:require [commenter.article :as article]))
+
+
+
+;; Repl based commands for initialising the node infrastructure
+(comment
+  (load-namespace 'commenter.article)
+  (defn repl-setup
+    (require '[cljs.repl :as repl] '[cljs.repl.node :as node])
+    (repl/repl (node/run-node-nrepl))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Define a testing url to hit
+(def test-url "www.smh.com.au/world/oscar-pistorius-murder-trial-iphone-messages-reveal-dark-side-of-blade-runners-relationship-with-reeva-steenkamp-20140325-35fs9.html")
+
+;; Async result handler
+(defn result-callback [results]
+  (.log js/console "Comment Count Results:" results))
+
+
+;; Fetch the comments for a given url
+;; With parsing logic based of the type parameter
+(defn get-comment-count-for-article [url callback]
+    (article/comment-count url callback))
+
+
+;; Shotgun Fire
+(get-comment-count-for-article test-url result-callback)
+
+
+
+;; API Server Handler
+;; Let's scope the the server initialisation process here
+(let [http (js/require "http")
+      handler (fn [req res]
+                (.log js/console "Handling Request")
+                (.end res "Incoming"))
+      server (.createServer http handler)]
+  (.listen server 3132))
+
+
