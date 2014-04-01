@@ -1,9 +1,0 @@
-(ns commenter.stats)
-
-(def process-counter (atom 0))
-(def process-rate (atom 1))
-
-
-(defn calculate-process-statistics []
-  (swap! process-counter inc)
-  (println "logic >> process-rate per 1/min round: " (get-process-rate))

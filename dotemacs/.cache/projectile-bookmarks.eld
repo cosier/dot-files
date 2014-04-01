@@ -1,1 +1,0 @@
-("~/Developer/work/prime/web/" "~/.dot/dotemacs/" "~/Developer/work/streem/commenter/" "~/Developer/work/streem/ranking/" "~/Developer/work/streem/commenter-cljx/" "~/Developer/work/bidontask/" "~/Developer/access/guake-colors-solarized/")
