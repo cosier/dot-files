@@ -3,7 +3,7 @@
 cd ~/.dot
 
 # Dependency management
-git submodule update --init --recursive
+#git submodule update --init --recursive
 
 
 # Clean dst folders
@@ -15,12 +15,6 @@ if [[ -f "~/.vim" ]]; then
 fi
 
 # Install/overwrite new symlinks
-
-ln -sf ~/.dot/zshrc ~/.zshrc
-ln -sf ~/.dot/zprofile.zsh ~/.zprofile
-ln -sf ~/.dot/vimrc ~/.vimrc
-
-ln -sf ~/.dot/cmus ~/.cmus
 ln -sf ~/.dot/tmux.conf ~/.tmux.conf
 
 ln -sf ~/.dot/netrc ~/.netrc
@@ -29,8 +23,10 @@ ln -sf ~/.dot/netrc ~/.netrc
 ln -sf ~/.dot/irssi ~/.irssi
 ln -sf ~/.dot/dotemacs ~/.emacs.d
 
+rm ~/.vim
 ln -sf ~/.dot/vim ~/.vim
-ln -sf ~/.dot/hosts ~/.hosts
+rm ~/.etchosts
+ln -sf ~/.dot/hosts ~/.etchosts
 #ln -sf ~/.dot/xmodmap.rc ~/.Xmodmap
 
 mkdir -p ~/.ssh

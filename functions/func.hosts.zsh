@@ -6,11 +6,11 @@ function hosts-inject(){
   tmp=$(mktemp)
   tmp2=$(mktemp)
 
-  if [[ -z ~/.hosts ]]; then
-    echo "~/.hosts file non-existant"
+  if [[ -z ~/.etchosts ]]; then
+    echo "~/.etchosts file non-existant"
   else
     sudo cp /etc/hosts $tmp
-    cat ~/.hosts >> $tmp
+    cat ~/.etchosts >> $tmp
     cat $tmp | sort -u > $tmp2
 
     sudo mv $tmp2 /etc/hosts
@@ -20,7 +20,7 @@ function hosts-inject(){
 }
 
 function hosts-edit(){
-  vim ~/.hosts
+  vim ~/.etchosts
   hosts-inject
 }
 
