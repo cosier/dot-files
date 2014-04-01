@@ -10,7 +10,7 @@ function hosts-inject(){
     echo "~/.etchosts file non-existant"
   else
     sudo cp /etc/hosts $tmp
-    cat ~/.hosts >> $tmp
+    cat ~/.etchosts >> $tmp
     cat $tmp | sort -u > $tmp2
 
     sudo mv $tmp2 /etc/hosts
