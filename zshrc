@@ -8,12 +8,12 @@ export PGDATA="/usr/local/var/postgres"
 
 export HOMEBREW_GITHUB_API_TOKEN=15aaa9625f002474d5fbfe9bcaa9f83fe09ee3b7
 
-TERM=screen-256color-bce
+TERM=screen-256color
 
 bindkey "\e[1~" beginning-of-line
 bindkey "\e[4~" end-of-line
 
-ZSH_THEME="robbyrussell"
+ZSH_THEME="tomorrow"
 hostname=$(hostname)
 
 # Logic for selective themes
@@ -31,8 +31,7 @@ case "$hostname" in
 
     *)
       #echo -e "Vanilla Box Detected: $hostname"
-      ZSH_THEME="af-magic"
-      ZSH_THEME="robbyrussell"
+      ZSH_THEME="tomorrow"
       ;;
 esac
 
@@ -64,6 +63,10 @@ source ~/.dot/colors
 
 if [[ -a /usr/local/rvm/scripts/rvm ]]; then
     source /usr/local/rvm/scripts/rvm
+fi
+
+if [[ -a ~/.rvm/scripts/rvm ]]; then
+    source ~/.rvm/scripts/rvm
 fi
 
 if [[ -a ~/.Xmodmap ]]; then

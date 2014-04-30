@@ -1,23 +1,23 @@
 
 ;; ----- smex-history -----
 (
+ load-theme
  package-install
- global-set-key
- delete-trailing-whitespace
- kill-region
+ helm-find-files
+ color-theme-sanityinc-solarized-dark
+ color-theme-solarized-dark
+ customize
  cider
- kill-buffer-and-window
- windmove-up
 )
 
 ;; ----- smex-data -----
 (
- (customize . 2)
+ (customize . 4)
  (customize-face . 8)
  (customize-themes . 2)
  (helm-mode . 3)
  (helm-find . 1)
- (helm-find-files . 3)
+ (helm-find-files . 4)
  (list-packages . 8)
  (helm-info-flex . 1)
  (flex-isearch-mode . 3)
@@ -41,12 +41,12 @@
  (sr-speedbar-toggle . 1)
  (speedbar-toggle-etags . 1)
  (sr-speedbar-close . 1)
- (package-install . 11)
+ (package-install . 19)
  (dired-tree-up . 1)
  (customize-group . 1)
  (kill-buffer-and-window . 13)
- (load-theme . 13)
- (color-theme-solarized-dark . 1)
+ (load-theme . 41)
+ (color-theme-solarized-dark . 2)
  (other-frame . 1)
  (other-window . 1)
  (hl-line-mode . 11)
@@ -69,4 +69,6 @@
  (windmove-default-keybindings . 1)
  (windmove-up . 2)
  (global-set-key . 8)
+ (sml/customize-faces . 1)
+ (color-theme-sanityinc-solarized-dark . 1)
 )

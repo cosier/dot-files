@@ -8,36 +8,39 @@
 
 (add-to-list 'load-path (concat user-emacs-directory "config"))
 (add-to-list 'load-path (concat user-emacs-directory "elisp"))
-
+(require 'auto-install)
+(setq auto-install-directory "~/.emacs.d/auto-install/")
 (require 'cl)
 
 (require 'init-packages)
+
 (require 'init-util)
 (require 'init-core)
 (require 'init-org)
-(require 'init-eyecandy)
+;;(require 'init-eyecandy)
+
 
 (require 'init-editor)
-;; (require 'init-smartparens)
+(require 'init-smartparens)
 (require 'init-autopair)
 
-;;(require 'init-yasnippet)
+(require 'init-yasnippet)
 (require 'init-auto-complete)
-;; (require 'init-company)
+(require 'init-company)
 
 (require 'init-projectile)
 (require 'init-helm)
 (require 'init-ido)
 
-;;(require 'init-git)
+;;require 'init-git)
 (require 'init-flycheck)
 
-(require 'init-vim)
-;;(require 'init-stylus)
+;;(require 'init-vim)
+(require 'init-stylus)
 (require 'init-js)
 (require 'init-web)
 (require 'init-lisp)
-;;(require 'init-markdown)
+(require 'init-markdown)
 
 ;;(require 'init-evil)
 (require 'init-misc)
@@ -63,14 +66,14 @@
 
 ;; Setup the theming bro
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
-(load-theme 'granger t)
+(load-theme 'brin t)
 
 (global-hl-line-mode nil)
 (hl-line-mode nil)
 
-(set-face-background 'linum "brightblack")
-(set-face-foreground 'linum "#999999")
-(set-face-background hl-line-face "#000000")
+;;(set-face-background 'linum "brightblack")
+;;(set-face-foreground 'linum "#999999")
+;;(set-face-background hl-line-face "#000000")
 
 (global-set-key (kbd "C-c <left>")  'windmove-left)
 (global-set-key (kbd "C-c <right>") 'windmove-right)

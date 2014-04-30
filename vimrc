@@ -22,7 +22,7 @@ set shiftwidth=2
 set background=light
 let g:Powerline_theme='short'
 let g:Powerline_colorscheme='solarized256_light'
-
+colorscheme Tomorrow-Night-Eighties
 set list
 
 " Core Shortcuts

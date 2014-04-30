@@ -1,4 +1,6 @@
 127.0.0.1 localhost
+fe80::1%lo0 localhost
+::1             localhost
 
 127.0.0.1 bell
 127.0.0.1 ubuntu
@@ -7,26 +9,30 @@
 127.0.0.1 bot-dev.vza.ca
 127.0.0.1 vbo-dev.vza.ca
 127.0.0.1 tatami.dojopad.com
-127.0.0.1 ezcontacts.dev
 127.0.0.1 bulletpoints.dev
 127.0.0.1 houseofbargains.dev
 127.0.0.1 secu.dev
-127.0.0.1 commenter.streem.com.au
-127.0.0.1 ranking.streem.com.au
+127.0.0.1 dev.streem.com.au
 
 127.0.0.1 dev.studybloc.org
 
-127.0.0.1      dev.prime
+127.0.0.1      sample.dev
+127.0.0.1      sample.prod
+127.0.0.1      prime.dev
+127.0.0.1      prime.prod
+127.0.0.1      ezcontacts.dev
+127.0.0.1      ezcontacts.prod
 
-54.185.170.37  aws.troxy.com
-54.209.46.11   ezdev.troxy.com
+
+54.185.170.37  troxy
+54.86.62.162   ezdev
+54.86.62.162   ezdev.troxy.com
 
 106.187.52.184 kevin
 106.187.94.122 julia
 
-
+54.204.3.111 direct.enngraved.com
 107.170.16.158 do.bidontask.com
 
 106.187.52.184 streem
-106.187.94.122 streem-analytics
 

@@ -1,5 +1,49 @@
 ;;; -*- coding: utf-8 -*-
-(("/home/bailey/.emacs.d/.cache/ido.last" . 14739)
- ("/home/bailey/.emacs.d/.cache/recentf" . 514)
- ("/home/bailey/.emacs.d/elpa/gh-20140121.2038/gh-autoloads.el" . 4012)
- ("/home/bailey/.emacs.d/elpa/logito-20120225.1255/logito-autoloads.el" . 179))
+(("/Users/bailey/Developer/work/cachicha/"
+  (dired-filename . "/Users/bailey/Developer/work/cachicha/.idea"))
+ ("/Users/bailey/.emacs.d/.cache/recentf" . 2246)
+ ("/Users/bailey/.emacs.d/.cache/ido.last" . 6678)
+ ("/Users/bailey/Developer/work/cachicha/uploaderapp/"
+  (dired-filename . "/Users/bailey/Developer/work/cachicha/uploaderapp/phpunit.xml"))
+ ("/Users/bailey/Developer/work/cachicha/uploaderapp/phpunit.xml" . 71)
+ ("/Users/bailey/.emacs.d/elpa/sublime-themes-20140206.804/sublime-themes-autoloads.el" . 4337)
+ ("/Users/bailey/Developer/work/cachicha/.idea/"
+  (dired-filename . "/Users/bailey/Developer/work/cachicha/.idea/cachicha.iml"))
+ ("/Users/bailey/Developer/work/cachicha/.idea/cachicha.iml" . 435)
+ ("/Users/bailey/Developer/work/cachicha/uploaderapp/server.php" . 477)
+ ("/Users/bailey/.dot/dotemacs/elpa/flx-ido-20131030.1243/flx-ido.elc" . 4951)
+ ("/Users/bailey/.emacs.d/elpa/subatomic256-theme-20130620.1910/subatomic256-theme-autoloads.el" . 437)
+ ("/Users/bailey/.emacs.d/elpa/subatomic-theme-20140228.13/subatomic-theme-autoloads.el" . 425)
+ ("/Users/bailey/.emacs.d/elpa/tronesque-theme-20130822.1536/tronesque-theme-autoloads.el" . 425)
+ ("/Users/bailey/.emacs.d/elpa/flatui-theme-20140324.1915/flatui-theme-autoloads.el" . 445)
+ ("/Users/bailey/Developer/work/cachicha/www/"
+  (dired-filename . "/Users/bailey/Developer/work/cachicha/www/utils"))
+ ("/Users/bailey/Developer/work/cachicha/www/utils/"
+  (dired-filename . "/Users/bailey/Developer/work/cachicha/www/utils/uploader"))
+ ("/Users/bailey/Developer/work/cachicha/www/utils/uploader/"
+  (dired-filename . "/Users/bailey/Developer/work/cachicha/www/utils/uploader/js"))
+ ("/Users/bailey/Developer/work/cachicha/www/utils/uploader/js/"
+  (dired-filename . "/Users/bailey/Developer/work/cachicha/www/utils/uploader/js/init.js"))
+ ("/Users/bailey/Developer/work/cachicha/www/utils/uploader/js/init.js" . 3367)
+ ("/Users/bailey/.emacs.d/elpa/remember-theme-20140122.1500/remember-theme-autoloads.el" . 1183)
+ ("/Users/bailey/.emacs.d/elpa/color-theme-sanityinc-solarized-20140318.528/color-theme-sanityinc-solarized-autoloads.el" . 967)
+ ("/Users/bailey/Developer/work/cachicha/uploaderapp/artisan" . 706)
+ ("/Users/bailey/"
+  (dired-filename . "/Users/bailey/.oh-my-zsh"))
+ ("/Users/bailey/.emacs.d/elpa/smartparens-20140328.809/smartparens-autoloads.el" . 5955)
+ ("/Users/bailey/.emacs.d/elpa/company-20140404.555/company-autoloads.el" . 8359)
+ ("/Users/bailey/.emacs.d/elpa/archives/gnu/archive-contents" . 12363)
+ ("/Users/bailey/.emacs.d/elpa/archives/marmalade/archive-contents" . 83824)
+ ("/Users/bailey/.emacs.d/elpa/archives/org/archive-contents" . 185)
+ ("/Users/bailey/.emacs.d/elpa/archives/melpa/archive-contents" . 269595)
+ ("/etc/apache2/extra/"
+  (dired-filename . "/etc/apache2/extra/httpd-autoindex.conf"))
+ ("/Users/bailey/.ssh/"
+  (dired-filename . "/Users/bailey/.ssh/config"))
+ ("/Users/bailey/.emacs.d/themes/"
+  (dired-filename . "/Users/bailey/.emacs.d/themes/brin-theme.el"))
+ ("/Users/bailey/.dot/dotemacs/themes/spolsky-theme.el" . 4877)
+ ("/Users/bailey/.dot/dotemacs/themes/tomorrow-theme.el" . 276)
+ ("/Users/bailey/Developer/ext/Tomorrow-Theme/GNU Emacs/"
+  (dired-filename . "/Users/bailey/Developer/ext/Tomorrow-Theme/GNU Emacs/color-theme-tomorrow.el"))
+ ("/Users/bailey/Developer/ext/Tomorrow-Theme/GNU Emacs/color-theme-tomorrow.el" . 884))

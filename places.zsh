@@ -23,6 +23,9 @@ alias music='cd ~/Music'
 
 alias study='cd ~/Developer/work/studybloc/demo'
 
+alias cachi='cd ~/Developer/work/cachicha/uploaderapp'
+alias cachi-www='cachi; cd ../www/utils/uploader'
+
 # BidOnTask Development
 alias bid='cd $HOME_DIR/Developer/work/bidontask'
 
@@ -34,6 +37,7 @@ alias vbo='vivo'
 alias streem='cd ~/Developer/work/streem'
 alias scom='streem; cd commenter;'
 alias srank='streem; cd ranking;'
+alias strend='streem; cd trending;'
 # Prime zone
 alias prime='cd ~/Developer/work/prime/web'
 

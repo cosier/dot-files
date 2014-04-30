@@ -3,8 +3,8 @@
 function hosts-inject(){
   echo "Injecting Host configuration"
   sudo -v
-  tmp=$(mktemp)
-  tmp2=$(mktemp)
+  tmp=$(mktemp /tmp/hosts.XXXX)
+  tmp2=$(mktemp /tmp/hosts.XXXX)
 
   if [[ -z ~/.etchosts ]]; then
     echo "~/.etchosts file non-existant"

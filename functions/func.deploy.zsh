@@ -1,11 +1,6 @@
 #!/bin/zsh
 
-
-function deploy(){
-    local GITROOT="$(git rev-parse --show-toplevel)";
-    $GITROOT/bin/autodeploy.sh $@
-}
-
+alias deploy='cap deploy'
 function deploy-smartdorks(){
   git add .
   git commit -m "Auto deploy"

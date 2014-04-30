@@ -1,4 +1,4 @@
-alias emrc='vim ~/.emacs.d/init.el'
+alias emrc='vim ~/.emacs.d/lisp/init-local.el'
 
 function em(){
   emacs -nw $@

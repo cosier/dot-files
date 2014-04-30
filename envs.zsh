@@ -11,8 +11,13 @@ fi
 
 export DEVELOPER_HOME=$HOME_DIR/Developer
 
-export JDK_HOME=/usr/lib/jvm/default-java
-export JAVA_HOME=/usr/lib/jvm/default-java
+if [[ "$platform" == 'Linux' ]]; then
+  export JDK_HOME=/usr/lib/jvm/default-java
+  export JAVA_HOME=/usr/lib/jvm/default-java
+elif [[ "$platform" == 'Darwin' ]]; then
+  export JAVA_HOME=$(/usr/libexec/java_home)
+  export JDK_HOME=$(/usr/libexec/java_home)
+fi
 
 export CLOJURESCRIPT_HOME=$DEVELOPER_HOME/sdk/clojurescript-vanilla
 

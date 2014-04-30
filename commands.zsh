@@ -21,7 +21,7 @@ alias invert='xcalib -i -a'
 alias clipboard='xclip -sel clip'
 
 alias ack='ack-grep'
-alias ls='ls --group-directories-first --color=always'
+#alias ls='ls --group-directories-first --color=always'
 alias guake-dark='~/Developer/ext/guake-colors-solarized/set_dark.sh'
 alias guake-light='~/Developer/ext/guake-colors-solarized/set_light.sh'
 
