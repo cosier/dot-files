@@ -1,6 +1,8 @@
 #!/bin/zsh
 
-alias deploy='cap deploy'
+alias precompile='RAILS_ENV=production rake assets:precompile'
+alias capd='cap deploy'
+
 function deploy-smartdorks(){
   git add .
   git commit -m "Auto deploy"
@@ -21,3 +23,25 @@ function deploy-updater(){
   ssh root@streem "cd /var/www/updater; git pull origin master; pm2 restart all"
 }
 
+deploy-prime(){
+  default=ezcontacts
+
+  if [[ -z "$1" ]]
+  then
+    stage=$default
+  else
+    stage=$1
+  fi
+
+  echo "-----------------------"
+  echo "Deploying to $stage"
+  echo "-----------------------"
+  echo "Are you sure? - CTRL-C if your not feelin it"
+  read -rs -k 1 REPLY
+
+  cap $stage deploy
+
+}
+
+
+alias deploy='deploy-prime'

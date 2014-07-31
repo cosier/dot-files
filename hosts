@@ -22,14 +22,21 @@ fe80::1%lo0 localhost
 127.0.0.1      prime.prod
 127.0.0.1      ezcontacts.dev
 127.0.0.1      ezcontacts.prod
-
+127.0.0.1      dev.enngraved.com
+127.0.0.1      enngraved.dev
 
 54.185.170.37  troxy
 54.86.62.162   ezdev
 54.86.62.162   ezdev.troxy.com
 
+127.0.0.1      dev.wearmytags.com
+
+127.0.0.1      proxy.streem.com.au
+
 106.187.52.184 kevin
 106.187.94.122 julia
+
+127.0.0.1    dev.longtailapps.com
 
 54.204.3.111 direct.enngraved.com
 107.170.16.158 do.bidontask.com

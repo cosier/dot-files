@@ -79,7 +79,6 @@ alias php-lint='GITROOT="$(git rev-parse --show-toplevel)"; $GITROOT/bin/codelin
 
 # SSH
 alias ssh-proxy-vza='ssh bailey@direct.vza.ca -C -carcfour -D0.0.0.0:8192'
-alias ssh-proxy-vps='ssh bailey@vps.vza.ca -C -carcfour -D0.0.0.0:9090'
 alias ssh-vza='ssh bailey@direct.vza.ca -C -carcfour'
 alias ssh-vm='ssh bailey@vm.local'
 alias ssh-vza-mosh='mosh bailey@direct.vza.ca'
@@ -122,3 +121,8 @@ fi
 
 alias yt='youtube-dl'
 alias kng='sudo killall aircrack-ng'
+
+
+alias rake="noglob rake"
+alias zeus="noglob zeus"
+

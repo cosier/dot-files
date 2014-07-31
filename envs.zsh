@@ -8,6 +8,7 @@ else
 fi
 
 
+export EDITOR=vim
 
 export DEVELOPER_HOME=$HOME_DIR/Developer
 
@@ -15,8 +16,9 @@ if [[ "$platform" == 'Linux' ]]; then
   export JDK_HOME=/usr/lib/jvm/default-java
   export JAVA_HOME=/usr/lib/jvm/default-java
 elif [[ "$platform" == 'Darwin' ]]; then
-  export JAVA_HOME=$(/usr/libexec/java_home)
-  export JDK_HOME=$(/usr/libexec/java_home)
+  export JAVA_HOME=/Library/Internet\ Plug-Ins/JavaAppletPlugin.plugin/Contents/Home
+  export JDK_HOME=/Library/Internet\ Plug-Ins/JavaAppletPlugin.plugin/Contents/Home
+  export PATH=$PATH:/Library/Internet\ Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/bin
 fi
 
 export CLOJURESCRIPT_HOME=$DEVELOPER_HOME/sdk/clojurescript-vanilla

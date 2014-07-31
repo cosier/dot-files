@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-
+alias vim="stty stop '' -ixoff; vim"
 alias vim-bundles='cd ~/.vim/bundle'
 alias vadd='vim-add'
 alias vlist='vim-list'

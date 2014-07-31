@@ -13,7 +13,6 @@ TERM=screen-256color
 bindkey "\e[1~" beginning-of-line
 bindkey "\e[4~" end-of-line
 
-ZSH_THEME="tomorrow"
 hostname=$(hostname)
 
 # Logic for selective themes
@@ -31,7 +30,7 @@ case "$hostname" in
 
     *)
       #echo -e "Vanilla Box Detected: $hostname"
-      ZSH_THEME="tomorrow"
+      ZSH_THEME="robbyrussell"
       ;;
 esac
 

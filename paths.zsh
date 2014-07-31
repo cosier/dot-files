@@ -4,7 +4,7 @@ export WEBROOT=/var/www/dinecart/app/webroot
 export DINE=/var/www/dinecart
 
 # Add Android SDK Tools
-PATH=$PATH:/Users/bailey/Developer/sdk/adt-bundle-mac-x86_64-20130729/sdk/tools
+PATH=$PATH:/Users/bailey/Developer/sdk/android/sdk/platform-tools
 
 PATH=$PATH:/Users/bailey/Developer/qt/Qt5.2.0/5.2.0-rc1/clang_64/bin
 PATH=$PATH:/Users/bailey/Developer/sdk/ignifuga/tools
