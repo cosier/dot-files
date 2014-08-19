@@ -43,10 +43,12 @@ alias strend='streem; cd trending;'
 
 # Prime zone
 alias prime='cd ~/Developer/work/prime/system'
+alias wmt='cd ~/Developer/work/prime/system/lib/clients/wear_my_tags'
+alias ez='cd ~/Developer/work/prime/system/lib/clients/ez_contacts'
 
 # General Work
 alias work='cd ~/Developer/work'
-
+alias prc='cd ~/Developer/work/prc/www/system-prc'
 alias bk='cd ~/Developer/work/balaklava'
 
 alias bot='cd ~/Developer/work/bidontask'
