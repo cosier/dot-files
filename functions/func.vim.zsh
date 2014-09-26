@@ -6,6 +6,8 @@ alias vadd='vim-add'
 alias vlist='vim-list'
 alias vs='vim-search'
 
+alias vkeys='vim ~/.vim/keys.vim'
+
 function vim-add() {
     pushd ~/.dot > /dev/null
     local repo=$1

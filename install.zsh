@@ -15,7 +15,7 @@ if [[ -f "~/.vim" ]]; then
 fi
 
 # Install/overwrite new symlinks
-ln -sf ~/.dot/tmux.conf ~/.tmux.conf
+#ln -sf ~/.dot/tmux.conf ~/.tmux.conf
 
 ln -sf ~/.dot/netrc ~/.netrc
 #ln -sf ~/.dot/pgpass ~/.pgpass
@@ -31,7 +31,7 @@ ln -sf ~/.dot/hosts ~/.etchosts
 
 mkdir -p ~/.ssh
 cp ~/.dot/ssh/* ~/.ssh/
-cp ~/.dot/tmux/default_theme.sh ~/.dot/tmux/powerline/themes/default.sh
+#cp ~/.dot/tmux/default_theme.sh ~/.dot/tmux/powerline/themes/default.sh
 
 chmod 700 ~/.ssh
 chmod 600 ~/.ssh/*

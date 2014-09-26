@@ -55,12 +55,14 @@ alias bot='cd ~/Developer/work/bidontask'
 #alias ww='www'
 #alias wwww='www'
 
+alias openresty='cd /usr/local/etc/openresty'
+alias op='openresty'
 alias things='cd ~/Developer/things'
 
 alias stk='cd /usr/local/src/skia/trunk'
 
 alias playground='cd ~/Developer/playground'
 alias pg='playground'
-
+alias tm='cd ~/.tmux'
 
 
