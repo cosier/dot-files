@@ -42,18 +42,17 @@ alias spc='streem; cd proxy-client;'
 alias strend='streem; cd trending;'
 
 # Prime zone
-alias prime='cd ~/Developer/work/prime/system'
-alias wmt='cd ~/Developer/work/prime/system/lib/clients/wear_my_tags'
-alias ez='cd ~/Developer/work/prime/system/lib/clients/ez_contacts'
+alias tmkf='cd ~/Developer/projects/tmkf'
+
+# Tatar Work
+alias itt='cd ~/Developer/work/itt'
 
 # General Work
 alias work='cd ~/Developer/work'
-alias prc='cd ~/Developer/work/prc/www/system-prc'
-alias bk='cd ~/Developer/work/balaklava'
 
-alias bot='cd ~/Developer/work/bidontask'
-#alias ww='www'
-#alias wwww='www'
+alias prc='cd ~/Developer/work/prc/www/prc-system'
+alias prc-client='cd ~/Developer/work/prc/www/prc-client'
+alias prcc='prc-client'
 
 alias openresty='cd /usr/local/etc/openresty'
 alias op='openresty'

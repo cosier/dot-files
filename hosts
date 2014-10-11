@@ -7,11 +7,13 @@ fe80::1%lo0 localhost
 127.0.0.1 files.local
 127.0.0.1 vbo-dev.vza.ca
 
+88.208.24.59 xhamster.com
 
 
+127.0.0.1      itt.ngrok.com
 
 127.0.0.1      dev.wearmytags.com
 127.0.0.1      dev.pattaya-rec.com
 127.0.0.1      dev.longtailapps.com
 
-
+192.99.169.46   vps.vza.ca
