@@ -7,10 +7,15 @@ fe80::1%lo0 localhost
 127.0.0.1 files.local
 127.0.0.1 vbo-dev.vza.ca
 
-88.208.24.59 xhamster.com
+
+127.0.0.1 www.google-analytics.com
+127.0.0.1 google-analytics.com
+127.0.0.1 ssl.google-analytics.com
 
 
-127.0.0.1      itt.ngrok.com
+#127.0.0.1      itt.ngrok.com
+127.0.0.1      itt.local
+127.0.0.1      sp.local
 
 127.0.0.1      dev.wearmytags.com
 127.0.0.1      dev.pattaya-rec.com
