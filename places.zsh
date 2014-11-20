@@ -16,6 +16,7 @@ alias sites='cd /apps/sites';
 
 alias dev='cd ~/Developer/'
 alias ext='cd ~/Developer/ext'
+alias ext-gruber='cd ~/Developer/ext/gruber'
 alias pro='cd ~/Developer/projects'
 alias dojo='cd ~/Developer/work/dojo/app'
 alias tata='cd ~/Developer/work/dojo/app/src/tatami'
