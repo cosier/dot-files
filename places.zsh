@@ -26,8 +26,10 @@ alias music='cd ~/Music'
 
 alias study='cd ~/Developer/work/studybloc/demo'
 
+alias t1='cd ~/Developer/work/t1'
+
 # BidOnTask Development
-alias bid='cd $HOME_DIR/Developer/work/bidontask'
+alias bid='cd ~/Developer/work/bidontask'
 
 #VIVO Masks Development
 alias vivo='cd ~/Developer/work/vivo'

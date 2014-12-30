@@ -10,6 +10,7 @@ alias ssh-vps-mosh='mosh deploy@vps.vza.ca'
 alias ssh-proxy-wmt='ssh deploy@staging.wearmytags.com -c arcfour -D8192'
 alias ssh-proxy-vps='ssh bailey@vps.vza.ca -c arcfour -D8192'
 alias ssh-proxy-dc='ssh b2@dinecart.com -c arcfour -D8192'
+alias ssh-proxy-longtail='ssh deploy@direct.longtailapps.com -c arcfour -D8192'
 
 alias ssh-longtail='ssh -C -v deploy@direct.longtailapps.com'
 alias ssh-longtail-mosh='mosh --ssh="ssh -v" deploy@direct.longtailapps.com'
@@ -39,7 +40,7 @@ alias ssh-troxy='mosh --ssh="ssh -v -i ~/.ssh/smartdorks.pem" ubuntu@troxy.com'
 
 alias ssh-bullet='ssh -C -v -i ~/.ssh/bulletpoints.pem root@bulletpoints.com.au'
 alias ssh-hob='ssh -C -v ubuntu@houseofbargains.co.uk -i ~/.ssh/hob.pem'
-alias ssh-enngraved='ssh ubuntu@direct.enngraved.com -v -i ~/.ssh/enngraved.pem -C'
+alias ssh-enngraved='ssh ubuntu@enngraved.com -v -i ~/.ssh/enngraved.pem -C'
 alias ssh-enngraved-mosh='mosh --ssh="ssh -v -i ~/.ssh/enngraved.pem" ubuntu@direct.enngraved.com'
 
 alias ssh-studybloc='ssh -C -v ubuntu@studybloc.org -i ~/.ssh/studybloc.pem'
