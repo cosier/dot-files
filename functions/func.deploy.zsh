@@ -23,6 +23,11 @@ function deploy-updater(){
   ssh root@streem "cd /var/www/updater; git pull origin master; pm2 restart all"
 }
 
+function deploy-skej(){
+  git push heroku master;
+  git push origin master;
+}
+
 deploy-prime(){
   default=ezcontacts
 

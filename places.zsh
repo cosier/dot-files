@@ -50,6 +50,7 @@ alias tmkf='cd ~/Developer/projects/tmkf'
 # Tatar Work
 alias itt='cd ~/Developer/work/itt'
 alias sp='cd ~/Developer/work/sp'
+alias sb='cd ~/Developer/work/scaleboom/core'
 
 # General Work
 alias work='cd ~/Developer/work'

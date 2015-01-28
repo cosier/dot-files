@@ -6,18 +6,20 @@ alias ssh-uzzy='ssh bailey@uzzy -C'
 alias ssh-vps='ssh deploy@vps.vza.ca -C -v'
 alias ssh-vps-mosh='mosh deploy@vps.vza.ca'
 
+alias ssh-bidontask='ssh deploy@direct.bidontask.com -v -C'
+alias ssh-bidontask-mosh='mosh deploy@direct.bidontask.com'
 
 alias ssh-proxy-wmt='ssh deploy@staging.wearmytags.com -c arcfour -D8192'
 alias ssh-proxy-vps='ssh bailey@vps.vza.ca -c arcfour -D8192'
 alias ssh-proxy-dc='ssh b2@dinecart.com -c arcfour -D8192'
 alias ssh-proxy-longtail='ssh deploy@direct.longtailapps.com -c arcfour -D8192'
+alias ssh-proxy-bidontask='ssh bailey@direct.bidontask.com -v -c arcfour -D8192'
 
 alias ssh-longtail='ssh -C -v deploy@direct.longtailapps.com'
 alias ssh-longtail-mosh='mosh --ssh="ssh -v" deploy@direct.longtailapps.com'
 
 alias ssh-ezcontacts='ssh deploy@ezdev -v -i ~/.ssh/ezcontacts.pem -C'
 alias ssh-ezcontacts-mosh='mosh --ssh="ssh -v -i ~/.ssh/ezcontacts.pem" ubuntu@ezdev'
-
 
 alias ssh-wearmytags-prod='ssh -v -i ~/.ssh/wmt_frontend_nginx.pem deploy@wearmytags.com'
 alias ssh-wearmytags-staging='ssh deploy@54.86.216.36 -i ~/.ssh/wmt_frontend_nginx.pem'
