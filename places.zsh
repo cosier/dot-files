@@ -52,6 +52,8 @@ alias itt='cd ~/Developer/work/itt'
 alias sp='cd ~/Developer/work/sp'
 alias sb='cd ~/Developer/work/scaleboom/core'
 
+alias bot='cd ~/Developer/work/bidontask'
+
 # General Work
 alias work='cd ~/Developer/work'
 

@@ -6,6 +6,9 @@ export DINE=/var/www/dinecart
 # Add Android SDK Tools
 PATH=$PATH:/Users/bailey/Developer/sdk/android/sdk/platform-tools
 
+PATH=$PATH:~/go/bin
+PATH=$PATH:~/bin
+
 PATH=$PATH:/Users/bailey/Developer/qt/Qt5.2.0/5.2.0-rc1/clang_64/bin
 PATH=$PATH:/Users/bailey/Developer/sdk/ignifuga/tools
 #PATH=$PATH:/opt/java/current/bin

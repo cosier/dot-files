@@ -20,3 +20,7 @@ function rails-db-reload(){
   rake db:schema:load
   rake db:seed
 }
+
+function test-server(){
+  RAILS_ENV=test rails server -p 9000 -P tmp/pids/test_server_9000.pid
+}

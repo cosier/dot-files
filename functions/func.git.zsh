@@ -1,4 +1,4 @@
-alias push='git push --all'
+alias push='git remote | xargs -P10 -l git push --all'
 alias gh='git diff HEAD'
 
 alias git-reset-last-commit='GIT_COMMITTER_DATE="$DATE" git commit --amend --date "$DATE"'
@@ -15,3 +15,5 @@ function git-reset(){
 
   git filter-branch -f --env-filter "$FILTER_COMMAND"
 }
+
+

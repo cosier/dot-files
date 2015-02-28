@@ -7,7 +7,7 @@ else
   export HOME_DIR=/home/ubuntu
 fi
 
-
+export GOPATH=~/go
 export EDITOR=vim
 
 export DEVELOPER_HOME=$HOME_DIR/Developer

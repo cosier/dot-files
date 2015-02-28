@@ -8,8 +8,11 @@ echoRun() {
 }
 
 alias zr='zeus rake'
-
 alias parallel_prepare='rake parallel:prepare ; "rake parallel:rake\[db:globals\]" '
+
+spk(){
+  zeus rspec --fail-fast spec$@
+}
 
 zps() {
   # Run parallel_rspec, using zeus, passing in number of threads, default is 6
@@ -35,3 +38,5 @@ pgk() {
     pkill -fl $x;
   done
 }
+
+

@@ -1,5 +1,8 @@
 #!/bin/zsh
 
+function func-source(){
+    source ~/.dot/functions/func.$1.zsh
+}
 
 function func-create(){
     vim ~/.dot/functions/func.$1.zsh
