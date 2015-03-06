@@ -48,9 +48,14 @@ alias strend='streem; cd trending;'
 alias tmkf='cd ~/Developer/projects/tmkf'
 
 # Tatar Work
-alias itt='cd ~/Developer/work/itt'
-alias sp='cd ~/Developer/work/sp'
-alias sb='cd ~/Developer/work/scaleboom/core'
+alias skej='cd ~/Developer/work/skejio/core; omg skej'
+alias sp='skej'
+
+alias scaleboom='cd ~/Developer/work/scaleboom/core; omg sb'
+alias sb='scaleboom'
+alias scale='scaleboom'
+
+alias dyn='cd ~/Developer/work/dynamic/master; omg dynamic'
 
 alias bot='cd ~/Developer/work/bidontask'
 
@@ -61,8 +66,8 @@ alias prc='cd ~/Developer/work/prc/www/prc-system'
 alias prc-client='cd ~/Developer/work/prc/www/prc-client'
 alias prcc='prc-client'
 
-alias openresty='cd /usr/local/etc/openresty'
-alias op='openresty'
+alias dir-openresty='cd /usr/local/etc/openresty'
+alias op='sudo openresty'
 alias things='cd ~/Developer/things'
 
 alias stk='cd /usr/local/src/skia/trunk'

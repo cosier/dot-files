@@ -27,5 +27,8 @@ fe80::1%lo0 localhost
 127.0.0.1      dev.wearmytags.com
 127.0.0.1      dev.pattaya-rec.com
 127.0.0.1      dev.longtailapps.com
+127.0.0.1      dynamic.dev
+127.0.0.1      immi.dev
+
 
 192.99.169.46   vps.vza.ca
