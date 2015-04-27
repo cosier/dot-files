@@ -36,11 +36,11 @@ function proxy(){
     config=/usr/local/etc/polipo.conf
     if [[ "$1" == "edit" ]]; then; vim /usr/local/etc/polipo.conf; return; fi;
     if [[ "$1" == "socks" ]]; then; config=/usr/local/etc/polipo.socks.conf; fi;
-    
+
     if [[ "$1" == "kill" || "$2" == "kill" ]]; then
         sudo killall polipo
-    fi  
- 
+    fi
+
     echo " Using config: $config";
     mkdir -p /tmp/polipo
     polipo -c $config

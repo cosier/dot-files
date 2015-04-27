@@ -5,8 +5,32 @@ function py-serv(){
   python -m SimpleHTTPServer
 }
 
+function tour-server(){
+  rails server -p 9000
+}
 
-function rails-server-prc(){
-    rails server -p 6462
+function scaleboom-server(){
+  rails server -p 6464
+}
+
+function dynamic-server(){
+  rails server -p 2020
+}
+
+function skejio-ngrok(){
+  ngrok -hostname=skejio.cosier.ca -log='stdout' 4545
+}
+
+function skejio-server(){
+  thin start -p 4545
+}
+
+
+function bgrok(){
+  ngrok -hostname=backorders.cosier.ca 9191
+}
+
+function backorders-server(){
+  rails server -p 9191
 }
 

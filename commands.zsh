@@ -78,11 +78,9 @@ alias php-lint='GITROOT="$(git rev-parse --show-toplevel)"; $GITROOT/bin/codelin
 
 
 # SSH
-alias ssh-proxy-vza='ssh bailey@direct.vza.ca -C -carcfour -D0.0.0.0:8192'
-alias ssh-vza='ssh bailey@direct.vza.ca -C -carcfour'
 alias ssh-vm='ssh bailey@vm.local'
-alias ssh-vza-mosh='mosh bailey@direct.vza.ca'
 alias ssh-bot='mosh www-data@bidontask.com'
+alias vps-mosh='mosh bailey@vps.cosier.ca'
 alias update='git pull origin'
 
 alias gitgo='git add . -A; git commit -m "working changes"; pos'

@@ -5,6 +5,8 @@
 # ################################
 
 alias up-places='source ~/.dot/places.zsh'
+alias palaces='places'
+alias placels='places'
 
 alias lcl='cd /usr/local'
 alias lc='lcl'
@@ -12,7 +14,7 @@ alias lc='lcl'
 alias ig='cd ~/Developer/sdk/ignifuga'
 
 alias apps='cd /apps';
-alias sites='cd /apps/sites';
+alias sites='cd /usr/local/etc/openresty/sites-enabled';
 
 alias dev='cd ~/Developer/'
 alias ext='cd ~/Developer/ext'
@@ -48,14 +50,16 @@ alias strend='streem; cd trending;'
 alias tmkf='cd ~/Developer/projects/tmkf'
 
 # Tatar Work
-alias skej='cd ~/Developer/work/skejio/core; omg skej'
+alias skej='cd ~/Developer/work/skejio/core'
 alias sp='skej'
 
-alias scaleboom='cd ~/Developer/work/scaleboom/core; omg sb'
+alias scaleboom='cd ~/Developer/work/scaleboom/core; rvm use ruby-2.2.0; omg sb'
+alias ordercomp='cd ~/Developer/work/scaleboom/ordercomp;'
 alias sb='scaleboom'
 alias scale='scaleboom'
 
 alias dyn='cd ~/Developer/work/dynamic/master; omg dynamic'
+alias tour='cd ~/Developer/work/tourguideme; rvm use ruby-1.9.3-p194; omg tourguideme'
 
 alias bot='cd ~/Developer/work/bidontask'
 
@@ -65,6 +69,9 @@ alias work='cd ~/Developer/work'
 alias prc='cd ~/Developer/work/prc/www/prc-system'
 alias prc-client='cd ~/Developer/work/prc/www/prc-client'
 alias prcc='prc-client'
+
+alias backorders='cd ~/Developer/work/backorders/app'
+alias v41='cd ~/Developer/work/backorders/v41'
 
 alias dir-openresty='cd /usr/local/etc/openresty'
 alias op='sudo openresty'
