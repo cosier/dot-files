@@ -53,9 +53,8 @@ alias tmkf='cd ~/Developer/projects/tmkf'
 alias skej='cd ~/Developer/work/skejio/core'
 alias sp='skej'
 
-alias scaleboom='cd ~/Developer/work/scaleboom/core; rvm use ruby-2.2.0; omg sb'
-alias ordercomp='cd ~/Developer/work/scaleboom/ordercomp;'
-alias sb='scaleboom'
+alias scaleboom='cd ~/Developer/work/scaleboom/core'
+alias scale-order='cd ~/Developer/work/scaleboom/order;'
 alias scale='scaleboom'
 
 alias dyn='cd ~/Developer/work/dynamic/master; omg dynamic'
@@ -70,8 +69,8 @@ alias prc='cd ~/Developer/work/prc/www/prc-system'
 alias prc-client='cd ~/Developer/work/prc/www/prc-client'
 alias prcc='prc-client'
 
-alias backorders='cd ~/Developer/work/backorders/app'
-alias v41='cd ~/Developer/work/backorders/v41'
+alias backorders='cd ~/Developer/work/backorders'
+alias bo='backorders'
 
 alias dir-openresty='cd /usr/local/etc/openresty'
 alias op='sudo openresty'

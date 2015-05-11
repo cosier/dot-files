@@ -28,6 +28,13 @@ function deploy-skej(){
   git push origin master;
 }
 
+function deploy-backorders(){
+  git push origin master &;
+  git push heroku master;
+}
+
+alias bodeploy='deploy-backorders'
+
 deploy-prime(){
   default=ezcontacts
 

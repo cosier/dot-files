@@ -14,6 +14,7 @@ function scaleboom-server(){
 }
 
 function dynamic-server(){
+  dyn;
   rails server -p 2020
 }
 
@@ -33,4 +34,13 @@ function bgrok(){
 function backorders-server(){
   rails server -p 9191
 }
+function backorders-server-production(){
+  RAILS_ENV=production rails server -p 9292
+}
+
+
+alias boserv='backorders-server'
+alias skserv='skejio-server'
+alias dserv='dynamic-server'
+alias sbserv='scaleboom-server'
 
