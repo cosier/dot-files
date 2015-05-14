@@ -25,6 +25,10 @@ function test-server(){
   RAILS_ENV=test rails server -p 9000 -P tmp/pids/test_server_9000.pid
 }
 
-function production-console(){
+function console-prod(){
   RAILS_ENV=production rails console
+}
+
+function console(){
+  rails console
 }

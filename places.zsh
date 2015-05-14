@@ -19,6 +19,8 @@ alias sites='cd /usr/local/etc/openresty/sites-enabled';
 alias dev='cd ~/Developer/'
 alias ext='cd ~/Developer/ext'
 alias ext-gruber='cd ~/Developer/ext/gruber'
+alias ext-rust='cd ~/Developer/ext/rust'
+
 alias pro='cd ~/Developer/projects'
 alias dojo='cd ~/Developer/work/dojo/app'
 alias tata='cd ~/Developer/work/dojo/app/src/tatami'
@@ -29,6 +31,7 @@ alias music='cd ~/Music'
 alias study='cd ~/Developer/work/studybloc/demo'
 
 alias t1='cd ~/Developer/work/t1'
+alias servo='ext-rust; cd servo;'
 
 # BidOnTask Development
 alias bid='cd ~/Developer/work/bidontask'
