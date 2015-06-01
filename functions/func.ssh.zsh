@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-
+alias ssh-doug='ssh bailey@doug -v'
 alias ssh-uzzy='ssh bailey@uzzy -C'
 
 alias ssh-vps='ssh bailey@vps.cosier.ca -C -v'

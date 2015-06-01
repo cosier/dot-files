@@ -14,7 +14,6 @@ function scaleboom-server(){
 }
 
 function dynamic-server(){
-  dyn;
   rails server -p 2020
 }
 

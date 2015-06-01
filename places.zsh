@@ -20,6 +20,7 @@ alias dev='cd ~/Developer/'
 alias ext='cd ~/Developer/ext'
 alias ext-gruber='cd ~/Developer/ext/gruber'
 alias ext-rust='cd ~/Developer/ext/rust'
+alias rust='ext-rust'
 
 alias pro='cd ~/Developer/projects'
 alias dojo='cd ~/Developer/work/dojo/app'

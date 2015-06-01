@@ -3,11 +3,11 @@ function sp-msg(){
   #FROM="7378742833"
 
   # VALID NUMBER
-  FROM="3477669815"
+  FROM="19164096786"
 
   echo -en "\e[32mProcessing SMS..."
 
-  curl -s "http://skejio.cosier.ca/twilio/sms?ToCountry=US&ToState=TX&SmsMessageSid=SM3573b47acf00ea53d9b66e2d3a51ee32&NumMedia=0&ToCity=&FromZip=10601&SmsSid=SM3573b47acf00ea53d9b66e2d3a51ee32&FromState=NY&SmsStatus=received&FromCity=WHITE+PLAINS&Body=$1&FromCountry=US&To=%2B19402224539&ToZip=&MessageSid=SM3573b47acf00ea53d9b66e2d3a51ee32&AccountSid=ACbb4322aeefca921cab474b3920916e45&From=%2B$FROM&ApiVersion=2010-04-01" > ~/.tmp_sp_msg
+  curl -s "http://skejio.cosier.ca/twilio/sms?ToCountry=US&ToState=TX&SmsMessageSid=SM3573b47acf00ea53d9b66e2d3a51ee32&NumMedia=0&ToCity=&FromZip=10601&SmsSid=SM3573b47acf00ea53d9b66e2d3a51ee32&FromState=NY&SmsStatus=received&FromCity=WHITE+PLAINS&Body=$1&FromCountry=US&To=%2B12018855156&ToZip=&MessageSid=SM3573b47acf00ea53d9b66e2d3a51ee32&AccountSid=ACbb4322aeefca921cab474b3920916e45&From=%2B$FROM&ApiVersion=2010-04-01" > ~/.tmp_sp_msg
 
   echo -en "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b"
   sed -e 's/<[^>]*>//g' ~/.tmp_sp_msg
@@ -19,7 +19,7 @@ function sp-call(){
   #FROM="7378742833"
 
   # VALID NUMBER
-  FROM="3477669815"
+  FROM="19164096786"
 
   echo -en "\e[32mProcessing SMS..."
   curl -s "http://localhost:3000/twilio/voice?ToCountry=US&ToState=TX&SmsMessageSid=SM3573b47acf00ea53d9b66e2d3a51ee32&NumMedia=0&ToCity=&FromZip=10601&SmsSid=SM3573b47acf00ea53d9b66e2d3a51ee32&FromState=NY&SmsStatus=received&FromCity=WHITE+PLAINS&Digits=$1&FromCountry=US&To=%2B19402224539&ToZip=&MessageSid=SM3573b47acf00ea53d9b66e2d3a51ee32&AccountSid=ACbb4322aeefca921cab474b3920916e45&From=%2B$FROM&ApiVersion=2010-04-01" > ~/.tmp_sp_msg
