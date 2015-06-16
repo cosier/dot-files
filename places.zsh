@@ -56,6 +56,7 @@ alias tmkf='cd ~/Developer/projects/tmkf'
 # Tatar Work
 alias skej='cd ~/Developer/work/skejio/core'
 alias sp='skej'
+alias hub='cd ~/Developer/work/hubify/core; rvm use 2.1.5; omg hubify;'
 
 alias scaleboom='cd ~/Developer/work/scaleboom/core'
 alias scale-order='cd ~/Developer/work/scaleboom/order;'

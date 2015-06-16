@@ -7,7 +7,7 @@ fe80::1%lo0 localhost
 127.0.0.1 files.local
 127.0.0.1 vbo-dev.vza.ca
 
-192.168.5.100 doug
+192.168.1.50 doug
 192.168.5.100 vostro
 
 104.236.242.112 direct.bidontask.com
@@ -31,6 +31,8 @@ fe80::1%lo0 localhost
 127.0.0.1      dev.sb.cosier.ca
 127.0.0.1      test-store.dev.sb.cosier.ca
 127.0.0.1      tourguideme.dev
+127.0.0.1      hubify.cosier.ca
+
 
 127.0.0.1      dev.wearmytags.com
 127.0.0.1      dev.pattaya-rec.com

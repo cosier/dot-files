@@ -17,6 +17,14 @@ function dynamic-server(){
   rails server -p 2020
 }
 
+function hubify-server(){
+  rails server -p 2323
+}
+
+function hubify-ngrok(){
+  ngrok -hostname=hubify.cosier.ca -log='stdout' 2323
+}
+
 function skejio-ngrok(){
   ngrok -hostname=skejio.cosier.ca -log='stdout' 4545
 }
