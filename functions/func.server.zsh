@@ -18,7 +18,8 @@ function dynamic-server(){
 }
 
 function hubify-server(){
-  rails server -p 2323
+  # rails server -p 2323
+  unicorn -c config/unicorn.rb
 }
 
 function hubify-ngrok(){
