@@ -31,7 +31,6 @@ fe80::1%lo0 localhost
 127.0.0.1      dev.sb.cosier.ca
 127.0.0.1      test-store.dev.sb.cosier.ca
 127.0.0.1      tourguideme.dev
-127.0.0.1      hubify.cosier.ca
 
 
 127.0.0.1      dev.wearmytags.com
@@ -41,6 +40,7 @@ fe80::1%lo0 localhost
 127.0.0.1      immi.dev
 52.0.101.248   dynamic.prod
 
+127.0.0.1 hubify.cosier.ca
 
 192.99.169.46   vps.vza.ca
 
