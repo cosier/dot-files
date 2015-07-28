@@ -46,6 +46,10 @@ alias miner-cpu='bfgminer -o stratum+tcp://stratum.ozco.in:3333 -u bywda.bfg -p 
 alias vps_mount='cd ~/tmp; mkdir -p vps_mount; sshfs bailey@str.shogun.ca:/home/bailey ~/tmp/vps_mount; cd vps_mount'
 
 
+alias b2d='boot2docker'
+alias b2d-refresh-shell='eval "$(boot2docker shellinit)"'
+
+
 alias dns-cache-delete='sudo killall -HUP mDNSResponder'
 
 alias aux='ps aux | grep'
