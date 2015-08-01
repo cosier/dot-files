@@ -45,6 +45,11 @@ alias miner-cpu='bfgminer -o stratum+tcp://stratum.ozco.in:3333 -u bywda.bfg -p 
 # Mountpoints
 alias vps_mount='cd ~/tmp; mkdir -p vps_mount; sshfs bailey@str.shogun.ca:/home/bailey ~/tmp/vps_mount; cd vps_mount'
 
+# Docker
+alias docker='sudo docker'
+alias compose='sudo docker-compose'
+alias comp='compose'
+alias cmp='compose'
 
 alias dns-cache-delete='sudo killall -HUP mDNSResponder'
 

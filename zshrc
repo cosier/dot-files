@@ -46,7 +46,7 @@ DISABLE_AUTO_TITLE="true"
 
 # COMPLETION_WAITING_DOTS="true"
 
-plugins=(git)
+plugins=(git rvm ruby)
 
 source $ZSH/oh-my-zsh.sh
 source ~/.dot/envs.zsh
@@ -96,3 +96,6 @@ fi
 
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
+export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"

@@ -1,7 +1,7 @@
 127.0.0.1 localhost
 fe80::1%lo0 localhost
 ::1             localhost
-
+127.0.0.1 db
 127.0.0.1 bell
 127.0.0.1 ubuntu
 127.0.0.1 files.local
