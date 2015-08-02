@@ -17,3 +17,14 @@ function git-reset(){
 }
 
 
+alias rebase='git rebase -i'
+alias reb='rebase HEAD~2'
+alias rebb='rebase HEAD~2'
+alias rebbb='rebase HEAD~3'
+alias rebbbb='rebase HEAD~4'
+alias rebbbbb='rebase HEAD~5'
+alias rebbbbbb='rebase HEAD~6'
+alias rebbbbbbb='rebase HEAD~7'
+alias rebbbbbbbb='rebase HEAD~8'
+alias rebbbbbbbbb='rebase HEAD~9'
+alias rebbbbbbbbbb='rebase HEAD~10'
