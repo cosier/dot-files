@@ -8,6 +8,8 @@ alias up-places='source ~/.dot/places.zsh'
 alias palaces='places'
 alias placels='places'
 
+alias xeno='cd /Volumes/xeno'
+
 alias lcl='cd /usr/local'
 alias lc='lcl'
 
