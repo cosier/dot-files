@@ -54,11 +54,14 @@ alias cmp='compose'
 alias b2d='boot2docker'
 alias b2d-refresh-shell='eval "$(boot2docker shellinit)"'
 
-# Cargo
-alias cb='cargo build'
-alias build='clear; cargo build --verbose'
+# Rust
+alias cb='cargo test 2>&1 | less'
+alias ccb='cb'
+alias cbb='cb'
+alias ccvv='cb'
+alias cv='cb'
 
-
+alias ca='cargo'
 
 alias dns-cache-delete='sudo killall -HUP mDNSResponder'
 

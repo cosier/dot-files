@@ -1,10 +1,12 @@
 function setup-rails(){
   tmux rename-window SERVER
-  tmux new-window -n CONSOLE
   tmux new-window -n EDITOR
+  tmux new-window -n CONSOLE
   tmux new-window -n SCRATCH
   tmux new-window -n HEROKU
-  # tmux new-window -n AUX
+  tmux new-window -n AUXSRVS
+  tmux new-window -n STATIC
+
   # tmux move-window -t 99
   tmux select-window -t 1
   tmux send-keys vim
@@ -18,6 +20,11 @@ function setup-rails(){
 
 
   tmux select-window -t 1
+}
+
+function setup-compilers() {
+  tmux rename-window COMPILER
+  tmux new-window -n EDITOR
 }
 
 function setup-servers(){

@@ -8,6 +8,8 @@ alias up-places='source ~/.dot/places.zsh'
 alias palaces='places'
 alias placels='places'
 
+alias xeno='cd /Volumes/xeno'
+
 alias lcl='cd /usr/local'
 alias lc='lcl'
 
@@ -37,22 +39,12 @@ alias study='cd ~/Developer/work/studybloc/demo'
 
 alias t1='cd ~/Developer/work/t1'
 alias servo='ext-rust; cd servo;'
+alias duk='ext; cd duktape-rs'
 
-# BidOnTask Development
-alias bid='cd ~/Developer/work/bidontask'
-
-#VIVO Masks Development
-alias vivo='cd ~/Developer/work/vivo'
-alias vbo='vivo'
-
-# Streem related stuff
-alias streem='cd ~/Developer/work/streem'
-alias scom='streem; cd commenter;'
-alias srank='streem; cd ranking;'
-alias sagg='streem; cd aggregator;'
-alias spx='streem; cd proxy;'
-alias spc='streem; cd proxy-client;'
-alias strend='streem; cd trending;'
+# Dojo
+alias dojo='cd ~/Developer/work/dojo'
+alias tata='cd ~/Developer/work/dojo/tatami'
+alias ori='cd ~/Developer/work/dojo/origami'
 
 # Prime zone
 alias tmkf='cd ~/Developer/projects/tmkf'
