@@ -10,7 +10,7 @@ alias ssh-bidontask='ssh deploy@direct.bidontask.com -v -C'
 alias ssh-bidontask-mosh='mosh deploy@direct.bidontask.com'
 
 alias ssh-proxy-wmt='ssh deploy@staging.wearmytags.com -c arcfour -D8192'
-alias ssh-proxy-vps='ssh bailey@vps.cosier.ca -c arcfour -D8192'
+alias ssh-proxy-vps='autossh -M9092 bailey@vps.cosier.ca -c arcfour -D8192'
 alias ssh-proxy-dc='ssh b2@dinecart.com -c arcfour -D8192'
 alias ssh-proxy-longtail='ssh deploy@direct.longtailapps.com -c arcfour -D8192'
 alias ssh-proxy-bidontask='ssh bailey@direct.bidontask.com -v -c arcfour -D8192'
