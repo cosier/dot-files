@@ -19,6 +19,7 @@ alias tmuxrc='vim ~/.tmux.conf;tmux source-file ~/.tmux.conf'
 alias wgetp='wget -c --password=mtvmasta --user bailey'
 alias invert='xcalib -i -a'
 alias clipboard='xclip -sel clip'
+alias whereami='pwd'
 
 alias ack='ack-grep'
 #alias ls='ls --group-directories-first --color=always'

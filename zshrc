@@ -30,10 +30,12 @@ case "$hostname" in
 
     *)
       #echo -e "Vanilla Box Detected: $hostname"
-      ZSH_THEME="robbyrussell"
+      ZSH_THEME="bira"
       ;;
 esac
 
+
+ZSH_THEME="bira"
 HISTSIZE=5000 # session history size
 SAVEHIST=1000 # saved history
 

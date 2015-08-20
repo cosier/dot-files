@@ -29,6 +29,12 @@ alias scheme='cd /home/ubuntu/Developer/sdk/clojure-scheme'
 alias dc='cd ~/Developer/work/dinecart'
 alias music='cd ~/Music'
 
+
+alias dojo='cd ~/Developer/work/dojo'
+alias tata='cd ~/Developer/work/dojo/tatami'
+alias origami='cd ~/Developer/work/dojo/origami'
+alias ori='origami'
+
 alias study='cd ~/Developer/work/studybloc/demo'
 
 alias t1='cd ~/Developer/work/t1'

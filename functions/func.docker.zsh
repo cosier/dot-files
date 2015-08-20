@@ -4,3 +4,7 @@ function docker-env(){
   export DOCKER_TLS_VERIFY=1
   export DOCKER_CERT_PATH=/Users/bailey/.docker/machine/machines/default
 }
+
+function shipyard-cli(){
+  docker run -it shipyard/shipyard-cli
+}
