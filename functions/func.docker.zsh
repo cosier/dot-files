@@ -8,3 +8,14 @@ function docker-env(){
 function shipyard-cli(){
   docker run -it shipyard/shipyard-cli
 }
+
+function docker-ip(){
+  docker inspect --format '{{ .NetworkSettings.IPAddress }}' ${CID} $@
+}
+
+function docker-debug(){
+  pry-remote -w -s $(docker-ip core_web_1)
+}
+
+alias dc='docker-compose'
+alias dup='docker-compose up'
