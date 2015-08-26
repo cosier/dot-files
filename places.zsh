@@ -30,8 +30,8 @@ alias dc='cd ~/Developer/work/dinecart'
 alias music='cd ~/Music'
 
 
-alias dojo='cd ~/Developer/work/dojo'
-alias tata='cd ~/Developer/work/dojo/tatami'
+alias dojo='cd ~/Developer/dojo'
+alias tata='dojo; cd tatami'
 alias origami='cd ~/Developer/work/dojo/origami'
 alias ori='origami'
 

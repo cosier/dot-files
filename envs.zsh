@@ -12,7 +12,7 @@ export EDITOR=vim
 
 export DEVELOPER_HOME=$HOME_DIR/Developer
 
-export RUST_SRC_PATH=$HOME_DIR/Developer/ext/rust/src
+# export RUST_SRC_PATH=$HOME_DIR/Developer/ext/rust/src
 
 if [[ "$platform" == 'Linux' ]]; then
   export JDK_HOME=/usr/lib/jvm/default-java
