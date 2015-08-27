@@ -19,3 +19,4 @@ function docker-debug(){
 
 alias dc='docker-compose'
 alias dup='docker-compose up'
+alias run='docker-compose run'
