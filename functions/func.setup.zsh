@@ -6,6 +6,7 @@ function setup-rails(){
   tmux new-window -n HEROKU
   tmux new-window -n AUXSRVS
   tmux new-window -n STATIC
+  tmux new-window -n DOCKER
 
   # tmux move-window -t 99
   tmux select-window -t 1
