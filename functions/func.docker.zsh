@@ -17,6 +17,16 @@ function docker-debug(){
   pry-remote -w -s $(docker-ip core_web_1)
 }
 
+function docker-restart(){
+  docker-compose stop $@
+  docker-compose start $@
+}
+
+function docker-logs-clear(){
+  sudo bash -c "ls /var/lib/docker/containers/*/*.log | xargs rm"
+}
+
 alias dc='docker-compose'
 alias dup='docker-compose up'
 alias run='docker-compose run'
+alias rst='docker-restart'
