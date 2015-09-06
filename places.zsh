@@ -4,6 +4,8 @@
 # Filesystem "Places" Shortcut Directory
 # ################################
 
+alias assets='noglob cd ~/Desktop/assets/assets.hubify.com/'
+
 alias up-places='source ~/.dot/places.zsh'
 alias palaces='places'
 alias placels='places'
