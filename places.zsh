@@ -29,6 +29,9 @@ alias scheme='cd /home/ubuntu/Developer/sdk/clojure-scheme'
 alias dc='cd ~/Developer/work/dinecart'
 alias music='cd ~/Music'
 
+alias amazing='cd ~/Developer/work/amazing'
+alias backorders='amazing; cd backorders;'
+alias front='amazing; cd front;'
 
 alias dojo='cd ~/Developer/dojo'
 alias tata='dojo; cd tatami'
@@ -72,7 +75,6 @@ alias prc='cd ~/Developer/work/prc/www/prc-system'
 alias prc-client='cd ~/Developer/work/prc/www/prc-client'
 alias prcc='prc-client'
 
-alias backorders='cd ~/Developer/work/backorders'
 alias bo='backorders'
 
 alias dir-openresty='cd /usr/local/etc/openresty'
