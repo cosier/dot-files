@@ -1,5 +1,5 @@
 #!/bin/zsh
-
+alias google='links2 http://google.com/'
 alias service='sudo service'
 alias svim='sudo vim'
 alias gs='git status'
