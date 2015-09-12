@@ -54,7 +54,7 @@ alias tmkf='cd ~/Developer/projects/tmkf'
 # Tatar Work
 alias skej='cd ~/Developer/work/skejio/core'
 alias sp='skej'
-alias hub='cd ~/Developer/work/hubify/core; rvm use 2.2.2; omg hubify;'
+alias hub='cd ~/Developer/work/hubify/core; rvm use 2.2.2'
 alias ildar-hub='cd ~/Developer/work/hubify/ildar-hub'
 alias ildar='ildar-hub'
 
