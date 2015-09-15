@@ -17,6 +17,7 @@ if [ -n "$CHANGED" ]; then
   echo -e "Committing changes..."
   git add  --all .;
   git commit -m "Auto update...";
+  git pull origin master
   git push origin master
 else
   echo -e "Pulling Updates"
