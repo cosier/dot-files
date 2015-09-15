@@ -15,8 +15,10 @@ ln -sf ~/.dot/netrc ~/.netrc
 
 ln -sf ~/.dot/irssi ~/.irssi
 
+touch ~/.etchosts
 rm ~/.etchosts
 ln -sf ~/.dot/hosts ~/.etchosts
+
 #ln -sf ~/.dot/xmodmap.rc ~/.Xmodmap
 
 mkdir -p ~/.ssh
