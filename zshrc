@@ -48,7 +48,7 @@ DISABLE_AUTO_TITLE="true"
 
 # COMPLETION_WAITING_DOTS="true"
 
-plugins=(git rvm ruby)
+plugins=(git ruby)
 
 source $ZSH/oh-my-zsh.sh
 source ~/.dot/envs.zsh
