@@ -14,6 +14,7 @@ alias ssh-bidontask-mosh='mosh deploy@direct.bidontask.com'
 alias ssh-turbo='ssh bailey_cosier@turbo.cosier.ca -C'
 alias mosh-turbo='mosh bailey_cosier@turbo.cosier.ca'
 alias mt='mosh-turbo'
+alias ssh-proxy-turbo='ssh bailey_cosier@turbo.cosier.ca -D8192'
 
 alias ssh-proxy-vps='autossh -M9092 bailey@vps.cosier.ca -c arcfour -D0.0.0.0:8192'
 alias ssh-proxy-dc='ssh b2@dinecart.com -c arcfour -D8192'
