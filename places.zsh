@@ -33,6 +33,7 @@ alias music='cd ~/Music'
 
 alias amazing='cd ~/Developer/work/amazing'
 alias backorders='amazing; cd backorders;'
+alias nike='backorders; cd nike;'
 alias front='amazing; cd front;'
 
 alias dojo='cd ~/Developer/dojo'

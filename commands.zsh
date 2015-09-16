@@ -7,6 +7,8 @@ alias ga='git add . -A'
 alias git-root='ROOT="$(git rev-parse --show-toplevel)"; cd "$ROOT"'
 alias gr='git-root'
 
+alias fg='forego'
+
 alias commands='vim ~/.dot/commands.zsh; source ~/.dot/commands.zsh'
 alias refresh-commands='source ~/.dot/commands.zsh'
 alias zshrc='vim ~/.zshrc; source ~/.zshrc'
