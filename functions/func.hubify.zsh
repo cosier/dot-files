@@ -13,3 +13,11 @@ function hubify-prod-to-dev(){
     --access_key=AKIAI5O7YU4QZ3LU3AXA \
     --secret_key=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
 }
+
+function hubify-up(){
+  git push origin master:master &
+  git push origin staging:staging &
+  git push origin production:production
+}
+
+alias hup='hubify-up'

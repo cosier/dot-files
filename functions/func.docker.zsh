@@ -1,16 +1,8 @@
 function docker-env(){
-  # export DOCKER_HOST=tcp://192.168.99.100:2376
-  # export DOCKER_MACHINE_NAME=default
-  # export DOCKER_TLS_VERIFY=1
-  # export DOCKER_CERT_PATH=/Users/bailey/.docker/machine/machines/default
-
-  export DOCKER_HOST=tcp://192.168.59.103:2376
-  export DOCKER_CERT_PATH=/Users/bailey/.boot2docker/certs/boot2docker-vm
-  export DOCKER_TLS_VERIFY=1
+  eval "$(boot2docker shellinit)"
   echo "DOCKER_HOST: $DOCKER_HOST"
   echo "DOCKER_CERT_PATH: $DOCKER_CERT_PATH"
   echo "DOCKER_TLS_VERIFY: $DOCKER_TLS_VERIFY"
-
 }
 
 function shipyard-cli(){

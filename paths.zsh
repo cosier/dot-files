@@ -14,6 +14,7 @@ PATH=$PATH:/Users/bailey/Developer/qt/Qt5.2.0/5.2.0-rc1/clang_64/bin
 PATH=$PATH:/Users/bailey/Developer/sdk/ignifuga/tools
 #PATH=$PATH:/opt/java/current/bin
 PATH=$PATH:/usr/local/src/depot_tools
+PATH=$PATH:~/Developer/ext/depot_tools
 PATH=$PATH:/usr/local/Cellar/depot/tools
 PATH=$PATH:~/.dot/bin
 

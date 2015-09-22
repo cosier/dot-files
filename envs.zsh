@@ -35,3 +35,5 @@ else
     linux='yes'
 fi
 
+export RAILS_ENV=development
+
