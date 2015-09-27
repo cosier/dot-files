@@ -7,6 +7,9 @@ fe80::1%lo0 localhost
 127.0.0.1 files.local
 127.0.0.1 vbo-dev.vza.ca
 
+104.199.129.58 turbo.cosier.ca
+104.199.129.58 turbo
+
 192.168.220.132 virtual
 
 192.168.1.8 doug
