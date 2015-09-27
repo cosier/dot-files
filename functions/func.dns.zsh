@@ -6,9 +6,9 @@ function dns-connect(){
 
   echo "Using DNS Server: $server"
 
-  sudo iodine -r -TA -f $server iodine.cosier.ca
+  sudo iodine -r -I1 -P nemrymvi -TA -f $server iodine.cosier.ca
 }
 
 function dns-server(){
-  sudo iodined -c -f 10.0.0.1 iodine.cosier.ca
+  sudo iodined -c -P nemrymvi -f 10.0.0.1 iodine.cosier.ca
 }
