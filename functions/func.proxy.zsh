@@ -3,12 +3,6 @@
 
 #####################################
 # Proxy Management
-
-function dns-server(){
-    launchctl unload -w /System/Library/LaunchDaemons/org.isc.named.plist
-    launchctl load -w /System/Library/LaunchDaemons/org.isc.named.plist
-}
-
 function dns-tunnel-ec2(){
     while [ true ]
     do
