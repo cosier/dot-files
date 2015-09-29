@@ -55,4 +55,3 @@ deploy-prime(){
 
 }
 
-alias deploy='git add . ; git commit --allow-empty-message --no-edit ; git push heroku master -f'

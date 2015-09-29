@@ -1,7 +1,22 @@
+
+
+
 function deploy-hubify(){
-  git push heroku-staging master &
-  git push heroku master
-  git push origin master
+  git push origin master:master
+  deploy-hubify-staging
+  deploy-hubify-production
+}
+
+function deploy-hubify-staging(){
+  git checkout staging
+  git merge master
+  git push origin staging:staging
+}
+
+function deploy-hubify-production(){
+  git checkout production
+  git merge master
+  git push origin production:production
 }
 
 function hubify-backup-s3(){
@@ -21,3 +36,10 @@ function hubify-up(){
 }
 
 alias hup='hubify-up'
+alias hca='rake assets:precompile'
+alias deploy='deploy-hubify'
+alias dstage='deploy-hubify-staging'
+alias dprod='deploy-hubify-production'
+
+alias hssh='ssh ubuntu@ec2.hubify.com -v -i ~/.ssh/hubify_v2_dev.pem'
+alias mhssh='mosh bailey@ec2.hubify.com'
