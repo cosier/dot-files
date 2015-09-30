@@ -92,5 +92,7 @@ fi
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
+# eval "$(rbenv init -)"
 export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"
+
+docker-env fusion silent

@@ -1,8 +1,19 @@
 function docker-env(){
-  eval "$(boot2docker shellinit)"
-  echo "DOCKER_HOST: $DOCKER_HOST"
-  echo "DOCKER_CERT_PATH: $DOCKER_CERT_PATH"
-  echo "DOCKER_TLS_VERIFY: $DOCKER_TLS_VERIFY"
+  if [ -z "$1" ]; then
+    echo 'Docker Machine for Fusion'
+    target='fusion'
+  else
+    echo "Docker Machine for $1"
+    target=$1
+  fi
+
+  eval "$(docker-machine env $target)"
+
+  if [ -z "$2" ]; then
+    echo "DOCKER_HOST: $DOCKER_HOST"
+    echo "DOCKER_CERT_PATH: $DOCKER_CERT_PATH"
+    echo "DOCKER_TLS_VERIFY: $DOCKER_TLS_VERIFY"
+  fi
 }
 
 function shipyard-cli(){
