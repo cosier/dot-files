@@ -41,7 +41,7 @@ alias deploy='deploy-hubify'
 alias dstage='deploy-hubify-staging'
 alias dprod='deploy-hubify-production'
 
-alias hssh='ssh ubuntu@ec2.hubify.com -v -i ~/.ssh/hubify_v2_dev.pem'
-alias mhssh='mosh bailey@ec2.hubify.com'
+alias hssh='ssh ubuntu@direct.hubify.com -v -i ~/.ssh/hubify_v2_dev.pem'
+alias mhssh='mosh bailey@direct.hubify.com'
 
 alias unicorn-restart='sudo kill -USR2 $(ps aux | grep unicorn | grep master | awk '{ print $2 }')'
