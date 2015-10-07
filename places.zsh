@@ -26,7 +26,7 @@ alias ext-gruber='cd ~/Developer/ext/gruber'
 alias ext-rust='cd ~/Developer/ext/rust'
 alias rust='ext-rust'
 
-alias pro='cd ~/Developer/projects'
+alias pro='cd ~/Developer/work'
 alias scheme='cd /home/ubuntu/Developer/sdk/clojure-scheme'
 alias dc='cd ~/Developer/work/dinecart'
 alias music='cd ~/Music'
@@ -53,7 +53,7 @@ alias tata='cd ~/Developer/work/dojo/tatami'
 alias ori='cd ~/Developer/work/dojo/origami'
 
 # Prime zone
-alias tmkf='cd ~/Developer/projects/tmkf'
+alias tmkf='cd ~/Developer/work/tmkf'
 
 # Tatar Work
 alias skej='cd ~/Developer/work/skejio/core'

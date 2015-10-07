@@ -32,6 +32,7 @@ alias rsync='noglob rsync'
 alias scp='noglob scp'
 alias ssh='noglob ssh'
 
+alias airport='/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport'
 alias air='airport'
 
 alias size='du -hs '
