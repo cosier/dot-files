@@ -21,7 +21,7 @@ function shipyard-cli(){
 }
 
 function docker-ip(){
-  docker inspect --format '{{ .NetworkSettings.IPAddress }}' ${CID} $@
+  docker-machine ip fusion
 }
 
 function docker-debug(){
@@ -42,3 +42,5 @@ alias dup='docker-compose up'
 alias run='docker-compose run'
 alias rst='docker-restart'
 alias dm='docker-machine'
+
+alias web='docker run -t tutum.co/hubify/web'
