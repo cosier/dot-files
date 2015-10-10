@@ -3,6 +3,7 @@ if [[ "$platform" == 'Linux' ]]; then
   GYP_GENERATORS="ninja"
   export HOME_DIR=/home/ubuntu
   export GYP_DEFINES="skia_shared_lib=1"
+
 elif [[ "$platform" == 'Darwin' ]]; then
   export HOME_DIR=/Users/bailey
   GYP_GENERATORS="ninja,xcode"
@@ -31,6 +32,8 @@ fi
 export CLOJURESCRIPT_HOME=$DEVELOPER_HOME/sdk/clojurescript-vanilla
 
 export LA=/Users/bailey/Library/LaunchAgents
+
+export DATABASE_URL=postgres://docker:michigan\!\$007@localhost:5432/postgres
 
 
 platform=`uname`
