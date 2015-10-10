@@ -16,6 +16,7 @@ PATH=$PATH:/Users/bailey/Developer/sdk/ignifuga/tools
 PATH=$PATH:/usr/local/src/depot_tools
 PATH=$PATH:~/Developer/ext/depot_tools
 PATH=$PATH:/usr/local/Cellar/depot/tools
+PATH=$PATH:/opt/depot_tools
 PATH=$PATH:~/.dot/bin
 
 PATH=$PATH:/usr/local/src/clojurescript/bin
