@@ -95,4 +95,7 @@ export PATH="$HOME/.rbenv/bin:$PATH"
 # eval "$(rbenv init -)"
 export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"
 
-docker-env fusion silent
+case $OSTYPE in darwin*)
+  docker-env fusion silent
+  ;;
+esac
