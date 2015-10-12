@@ -72,7 +72,7 @@ alias dns-cache-delete='sudo killall -HUP mDNSResponder'
 alias aux='ps aux | grep'
 alias font-cache='sudo fc-cache -fv'
 
-alias iwant='sudo apt-get install'
+alias iwant='sudo apt-get install -y'
 alias up='sudo apt-get update'
 alias upgrade='sudo apt-get upgrade'
 alias icanhas='sudo apt-cache search'
