@@ -2,15 +2,17 @@ function setup-rails(){
   tmux rename-window SERVER
   tmux new-window -n EDITOR
   tmux new-window -n CONSOLE
+
   # tmux new-window -n HEROKU
   # tmux new-window -n AUXSRVS
-  tmux new-window -n DOCKER
+  # tmux new-window -n DOCKER
   # tmux new-window -n DOCKER
 
   # tmux move-window -t 99
   tmux select-window -t 1
   tmux send-keys vim
   tmux send-keys Enter
+
   # tmux select-window -t 0
   # tmux send-keys rails Space server
   # tmux send-keys Enter

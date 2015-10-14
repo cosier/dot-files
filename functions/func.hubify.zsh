@@ -27,6 +27,10 @@ function hubify-backup-s3-no-creds(){
   s3cmd --recursive cp s3://assets.hubify.com s3://hubify-backups/$(date +%-m_%-d_%Y_%I_%M)/
 }
 
+function hubify-s3-prod-to-dev(){
+  s3cmd --recursive cp s3://assets.hubify.com s3://dev.hubify.com/
+}
+
 function hubify-prod-to-dev(){
   s3cmd --recursive cp s3://assets.hubify.com/ s3://dev.assets.hubify.com/ \
     --access_key=AKIAI5O7YU4QZ3LU3AXA \

@@ -47,6 +47,8 @@ alias t1='cd ~/Developer/work/t1'
 alias servo='ext-rust; cd servo;'
 alias duk='ext; cd duktape-rs'
 
+alias coach='work; cd coachbase;'
+
 # Dojo
 alias dojo='cd ~/Developer/work/dojo'
 alias tata='cd ~/Developer/work/dojo/tatami'
