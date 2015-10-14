@@ -51,7 +51,7 @@ alias vps_mount='cd ~/tmp; mkdir -p vps_mount; sshfs bailey@str.shogun.ca:/home/
 
 # Docker
 # alias docker='sudo docker'
-alias compose='docker-compose'
+alias compose='docker-compose -f $(git rev-parse --show-toplevel)/docker/docker-compose.dev.yml'
 alias comp='compose'
 alias cmp='compose'
 
@@ -72,7 +72,7 @@ alias dns-cache-delete='sudo killall -HUP mDNSResponder'
 alias aux='ps aux | grep'
 alias font-cache='sudo fc-cache -fv'
 
-alias iwant='sudo apt-get install'
+alias iwant='sudo apt-get install -y'
 alias up='sudo apt-get update'
 alias upgrade='sudo apt-get upgrade'
 alias icanhas='sudo apt-cache search'

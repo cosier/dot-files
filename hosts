@@ -11,9 +11,10 @@ fe80::1%lo0 localhost
 104.199.129.58 turbo
 
 192.168.220.134 virtual
+192.168.220.135 fusion
 
 192.168.1.8 doug
-192.168.5.100 vostro
+192.168.1.56 vostro
 
 104.236.242.112 direct.bidontask.com
 127.0.0.1 dev.bidontask.com

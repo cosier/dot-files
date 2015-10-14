@@ -2,8 +2,8 @@ function setup-rails(){
   tmux rename-window SERVER
   tmux new-window -n EDITOR
   tmux new-window -n CONSOLE
-  tmux new-window -n HEROKU
-  tmux new-window -n AUXSRVS
+  # tmux new-window -n HEROKU
+  # tmux new-window -n AUXSRVS
   tmux new-window -n DOCKER
   # tmux new-window -n DOCKER
 
