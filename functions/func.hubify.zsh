@@ -44,7 +44,7 @@ function hubify-up(){
 }
 
 alias hup='hubify-up'
-alias hca='rake assets:precompile'
+alias hca='RAILS_ENV=production rake assets:precompile'
 alias deploy='deploy-hubify'
 alias dstage='deploy-hubify-staging'
 alias dprod='deploy-hubify-production'
