@@ -94,6 +94,6 @@ alias dprod='deploy-hubify-production'
 alias hssh='ssh ubuntu@dx.hubify.com -v -i ~/.ssh/hubify_v2_dev.pem'
 alias mhssh='mosh bailey@dx.hubify.com'
 alias ssh-hubify-spot='ssh -i ~/.ssh/hubify_dev_workloads.pem ubuntu@spot.hubify.com'
-alias mosh-hubify-spot='mosh --ssh="ssh -i ~/.ssh/hubify_dev_workloads.pem" ubuntu@spot.hubify.com'
+alias mosh-hubify-spot='LC_ALL=C.UTF-8 mosh --server="LANG=C.UTF-8 mosh-server" bailey@spot.hubify.com'
 
 alias unicorn-restart='sudo kill -USR2 $(ps aux | grep unicorn | grep master | awk '{ print $2 }')'
