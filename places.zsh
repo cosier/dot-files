@@ -65,6 +65,10 @@ alias hubify='cd /var/www/hubify'
 alias ildar-hub='cd ~/Developer/work/hubify/ildar-hub'
 alias ildar='ildar-hub'
 
+alias vop='cd ~/Developer/work/vop'
+alias vopm='cd ~/Developer/work/vop/mercury'
+alias vopp='cd ~/Developer/work/vop/puma'
+
 alias scaleboom='cd ~/Developer/work/scaleboom/core'
 alias scale-order='cd ~/Developer/work/scaleboom/order;'
 alias scale='scaleboom'

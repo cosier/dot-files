@@ -23,6 +23,8 @@ fe80::1%lo0 localhost
 127.0.0.1 google-analytics.com
 127.0.0.1 ssl.google-analytics.com
 
+159.203.103.26 beta.coachbase.com
+
 127.0.0.1      tourguideme.cosier.ca
 127.0.0.1      backorders.cosier.ca
 127.0.0.1      prod.backorders.cosier.ca
