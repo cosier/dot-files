@@ -1,6 +1,6 @@
 
 function deploy-hubify(){
-  git push origin master:master
+  git push github master:master
   deploy-hubify-staging
   deploy-hubify-production
 }
@@ -8,13 +8,13 @@ function deploy-hubify(){
 function deploy-hubify-staging(){
   git checkout staging
   git merge master
-  git push origin staging:staging
+  git push github staging:staging
 }
 
 function deploy-hubify-production(){
   git checkout production
   git merge master
-  git push origin production:production
+  git push github production:production
 }
 
 function hubify-backup-s3(){
@@ -80,9 +80,24 @@ function hubify-prod-to-dev(){
 }
 
 function hubify-up(){
-  git push origin master:master &
-  git push origin staging:staging &
-  git push origin production:production
+  git push github master:master &
+  git push github staging:staging &
+  git push github production:production
+}
+
+function hubify-staging-migrate(){
+  RAILS_ENV=production DATABASE_URL="postgres://docker:michigan!\$007@db.hubify-staging.hubify.svc.tutum.io:5432/postgres" rake db:migrate
+}
+function hubify-production-migrate(){
+  RAILS_ENV=production DATABASE_URL="postgres://docker:michigan!\$007@db.hubify-production.hubify.svc.tutum.io:5432/postgres" rake db:migrate
+}
+
+function hubify-staging-console(){
+  DATABASE_URL="postgres://docker:michigan!\$007@db.hubify-staging.hubify.svc.tutum.io:5432/postgres" rails console
+}
+
+function hubify-production-console(){
+  DATABASE_URL="postgres://docker:michigan!\$007@db.hubify-production.hubify.svc.tutum.io:5432/postgres" rails console
 }
 
 alias hup='hubify-up'
