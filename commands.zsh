@@ -51,7 +51,7 @@ alias vps_mount='cd ~/tmp; mkdir -p vps_mount; sshfs bailey@str.shogun.ca:/home/
 
 # Docker
 # alias docker='sudo docker'
-alias compose='docker-compose -f $(git rev-parse --show-toplevel)/docker/docker-compose.dev.yml'
+alias compose='docker-compose -f $(git rev-parse --show-toplevel)/docker-compose.yml'
 alias comp='compose'
 alias cmp='compose'
 
