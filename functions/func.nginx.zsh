@@ -7,6 +7,11 @@ alias nginx='sudo nginx'
 alias sites-enabled='cd /usr/local/etc/nginx/sites-enabled'
 alias nginx-sites='sites-enabled'
 
+function ngx(){
+  PIDS=$(sudo ps aux | grep nginx | awk '{ print $2 }')
+  echo "Restarting NGINX: PID(s) -> $PIDS"
+  sudo kill -USR1 $PIDS
+}
 
 function ngx-sites(){
   echo "Sites in Enabled:"

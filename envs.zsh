@@ -33,7 +33,7 @@ export CLOJURESCRIPT_HOME=$DEVELOPER_HOME/sdk/clojurescript-vanilla
 
 export LA=/Users/bailey/Library/LaunchAgents
 
-export DATABASE_URL=postgres://docker:michigan\!\$007@localhost:5432/postgres
+# export DATABASE_URL=postgres://docker:michigan\!\$007@localhost:5432/postgres
 
 
 platform=`uname`
