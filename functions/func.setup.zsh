@@ -33,7 +33,23 @@ function setup-compilers() {
 function setup-servers(){
   tmux rename-window REDIS
   tmux new-window -n POSTGRESQL
-  tmux send-keys postgres
+  tmux send-keys     postgres
   tmux new-window -n ELASTIC
-  tmux send-keys elasticsearch
+  tmux send-keys     elasticsearch
+}
+
+function setup-vop(){
+  tmux rename-window SERVER
+
+  tmux new-window -n MERCURY
+
+  tmux send-keys     vop;Space cd Space mercury; Space vim Space .
+  tmux new-window -n NGINX
+  tmux send-keys     vop;Space cd Space nginx; Space vim Space .
+
+  tmux new-window -n PUMA
+  tmux send-keys     vop;Space cd Space puma; Space vim Space .
+
+  tmux new-window -n CONSOLE
+  tmux send-keys     elasticsearch
 }

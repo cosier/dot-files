@@ -66,8 +66,9 @@ alias ildar-hub='cd ~/Developer/work/hubify/ildar-hub'
 alias ildar='ildar-hub'
 
 alias vop='cd ~/Developer/work/vop'
-alias vopm='cd ~/Developer/work/vop/mercury'
-alias vopp='cd ~/Developer/work/vop/puma'
+alias mrc='cd ~/Developer/work/vop/mercury'
+alias ngx='cd ~/Developer/work/vop/nginx'
+alias pma='cd ~/Developer/work/vop/puma'
 
 alias scaleboom='cd ~/Developer/work/scaleboom/core'
 alias scale-order='cd ~/Developer/work/scaleboom/order;'
