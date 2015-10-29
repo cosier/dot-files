@@ -55,6 +55,8 @@ alias compose='docker-compose -f $(git rev-parse --show-toplevel)/docker-compose
 alias comp='compose'
 alias cmp='compose'
 
+alias vmp='docker-compose -f ~/Developer/work/vop/docker-compose.yml'
+
 alias b2d='boot2docker'
 alias b2d-refresh-shell='eval "$(boot2docker shellinit)"'
 
