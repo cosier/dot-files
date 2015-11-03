@@ -33,6 +33,21 @@ function hubify-production-migrate(){
   RAILS_ENV=production DATABASE_URL="postgres://docker:michigan!\$007@db.hubify-production.hubify.svc.tutum.io:5432/postgres" rake db:migrate
 }
 
+function hubify-dev-db(){
+  port=$1
+  host=$2
+  if [ -z "$port" ]; then
+    port='5432'
+  fi
+  if [ -z "$host" ]; then
+    host='172.17.2.0'
+  fi
+
+  DATABASE_URL="postgres://docker:michigan!\$007@$host:$port/postgres"
+  echo "DATABASE_URL=$DATABASE_URL"
+  export DATABASE_URL=$DATABASE_URL
+}
+
 function hubify-dev-console(){
   port=$1
   if [ -z "$port" ]; then

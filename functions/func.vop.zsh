@@ -12,3 +12,5 @@ function build-vop(){
 }
 
 alias bv='build-vop'
+alias v='vmp'
+alias vs='~/Developer/work/vop/bin/start.sh'
