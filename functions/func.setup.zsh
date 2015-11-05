@@ -25,9 +25,11 @@ function setup-rails(){
   tmux select-window -t 1
 }
 
-function setup-compilers() {
-  tmux rename-window COMPILER
+function setup-basic() {
+  tmux rename-window SERVER
   tmux new-window -n EDITOR
+  tmux new-window -n CONSOLE
+  tmux select-window -t 0
 }
 
 function setup-servers(){
