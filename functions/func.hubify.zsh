@@ -1,6 +1,5 @@
 #!/bin/zsh
 
-
 function deploy-hubify(){
   git push github master:master
   deploy-hubify-staging
@@ -72,7 +71,8 @@ function hubify-production-console(){
 
 alias hup='hubify-up'
 alias hca='RAILS_ENV=production rake assets:precompile'
-alias deploy='deploy-hubify'
+alias hs='~/Developer/work/hubify/bin/start.sh'
+alias hmp='docker-compose -f ~/Developer/work/hubify/docker-compose.yml'
 alias dstage='deploy-hubify-staging'
 alias dprod='deploy-hubify-production'
 
