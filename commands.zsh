@@ -9,6 +9,8 @@ alias gr='git-root'
 
 alias fg='forego'
 
+alias curl='noglob curl'
+
 alias commands='vim ~/.dot/commands.zsh; source ~/.dot/commands.zsh'
 alias refresh-commands='source ~/.dot/commands.zsh'
 alias zshrc='vim ~/.zshrc; source ~/.zshrc'

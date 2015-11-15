@@ -4,7 +4,7 @@ function build(){
 
   if [ -f bin/build.sh ]; then
     ROOT=$(git rev-parse --show-toplevel)
-    sudo $ROOT/bin/build.sh $@
+    $ROOT/bin/build.sh $@
   else
     echo "Could not find build script: $(pwd)/bin/build.sh"
   fi
