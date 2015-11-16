@@ -2,7 +2,6 @@
 
 #####################################
 # Nginx Management
-alias nginx='sudo nginx'
 
 alias sites-enabled='cd /usr/local/etc/nginx/sites-enabled'
 alias nginx-sites='sites-enabled'
