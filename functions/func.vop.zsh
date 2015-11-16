@@ -14,3 +14,6 @@ function build-vop(){
 alias bv='build-vop'
 alias v='vmp'
 alias vs='~/Developer/work/vop/bin/start.sh'
+alias vp='~/Developer/work/vop/bin/start.production.sh'
+alias vmstart='~/Developer/work/vop/bin/start.manual.sh'
+alias vmstop='~/Developer/work/vop/bin/stop.manual.sh'
