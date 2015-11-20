@@ -4,6 +4,13 @@ alias gh='git diff HEAD'
 alias git-reset-last-commit='GIT_COMMITTER_DATE="$DATE" git commit --amend --date "$DATE"'
 
 
+function git-reset-by(){
+  DELTA=$1
+  DATE=$(date -v-$DELTA "+%m/%d/%Y %H:%M:%S")
+  echo "Target Date: $DATE"
+  git-reset-last-commit
+}
+
 function git-reset(){
   COMMIT=$(git log -n $1 --pretty=format:"%H" | tail -n1)
   TARGET_DATE=$2
