@@ -51,17 +51,6 @@ alias miner-cpu='bfgminer -o stratum+tcp://stratum.ozco.in:3333 -u bywda.bfg -p 
 # Mountpoints
 alias vps_mount='cd ~/tmp; mkdir -p vps_mount; sshfs bailey@str.shogun.ca:/home/bailey ~/tmp/vps_mount; cd vps_mount'
 
-# Docker
-# alias docker='sudo docker'
-alias compose='docker-compose -f $(git rev-parse --show-toplevel)/docker-compose.yml'
-alias comp='compose'
-alias cmp='compose'
-
-alias vmp='docker-compose -f ~/Developer/work/vop/docker-compose.yml'
-
-alias b2d='boot2docker'
-alias b2d-refresh-shell='eval "$(boot2docker shellinit)"'
-
 # Rust
 alias cb='cargo test 2>&1 | less'
 alias ccb='cb'
