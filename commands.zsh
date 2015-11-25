@@ -7,7 +7,8 @@ alias ga='git add . -A'
 alias git-root='ROOT="$(git rev-parse --show-toplevel)"; cd "$ROOT"'
 alias gr='git-root'
 
-alias fg='forego'
+alias fgo='forego'
+alias fm='foreman'
 
 alias curl='noglob curl'
 
