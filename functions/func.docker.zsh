@@ -37,6 +37,20 @@ function docker-logs-clear(){
   sudo bash -c "ls /var/lib/docker/containers/*/*.log | xargs rm"
 }
 
+
+# Docker
+# alias docker='sudo docker'
+alias compose='docker-compose -f $(git rev-parse --show-toplevel)/docker/development/docker-compose.yml'
+alias compose-production='docker-compose -f $(git rev-parse --show-toplevel)/docker/production/docker-compose.yml'
+
+alias cmp='source ~/.dot/functions/func.docker.zsh; compose'
+alias cmpp='source ~/.dot/functions/func.docker.zsh; compose-production'
+
+alias vmp='docker-compose -f ~/Developer/work/vop/docker-compose.yml'
+
+alias b2d='boot2docker'
+alias b2d-refresh-shell='eval "$(boot2docker shellinit)"'
+
 alias dc='docker-compose'
 alias dup='docker-compose up'
 alias run='docker-compose run'

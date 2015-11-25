@@ -6,7 +6,14 @@ alias git-reset-last-commit='GIT_COMMITTER_DATE="$DATE" git commit --amend --dat
 
 function git-reset-by(){
   DELTA=$1
-  DATE=$(date -v-$DELTA "+%m/%d/%Y %H:%M:%S")
+  if [[ "$(uname)" == "Darwin" ]]; then
+    echo "Using BSD Date"
+    DATE=$(date -v-$DELTA "+%m/%d/%Y %H:%M:%S")
+  else
+    echo "Using Gnu Date"
+    DATE=$(date -ud"-$DELTA" "+%m/%d/%Y %H:%M:%S")
+  fi
+
   echo "Target Date: $DATE"
   git-reset-last-commit
 }
