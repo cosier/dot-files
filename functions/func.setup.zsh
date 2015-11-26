@@ -32,6 +32,12 @@ function setup-basic() {
   tmux select-window -t 0
 }
 
+function setup-tmkf() {
+  tmux rename-window MAIN
+  tmux new-window -n FU
+  tmux select-window -t 0
+}
+
 function setup-servers(){
   tmux rename-window REDIS
   tmux new-window -n POSTGRESQL
