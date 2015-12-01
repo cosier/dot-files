@@ -13,6 +13,12 @@ function build-vop(){
 
 alias bv='build-vop'
 alias v='vmp'
+
+alias vc='vcprod'
+alias vcprod='~/Developer/work/vop/bin/compose.production.sh'
+alias vcdev='~/Developer/work/vop/bin/compose.development.sh'
+
+alias metal='~/Developer/work/vop/bin/start.metal.sh'
 alias vs='~/Developer/work/vop/bin/start.sh'
 alias vp='~/Developer/work/vop/bin/start.production.sh'
 alias vmstart='~/Developer/work/vop/bin/start.manual.sh'
