@@ -17,22 +17,18 @@ function setup-zen() {
   setup-dir $@
   setup-clean
 
-  tmux rename-window SRV
+  tmux rename-window V
 
-  tmux new-window -n V1
-  tmux new-window -n E1
+  tmux new-window -n A
+  tmux new-window -n R
+  tmux move-window -s 3 -t 99
 
-  tmux new-window -n AX
-  tmux new-window -n REMOTE
-  tmux move-window -s 4 -t 99
+  # tmux select-window -t 2
+  # tmux send-keys -t 2 emacs Space -nw Enter
+
   tmux select-window -t 0
+  tmux send-keys vim Enter
 
-  tmux select-window -t 2
-  tmux send-keys -t 2 emacs Space -nw Enter
-  tmux select-window -t 1
-  tmux send-keys -t 1 vim Enter
-  sleep 1
-  tmux select-window -t 0
 }
 
 

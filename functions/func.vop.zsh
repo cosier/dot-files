@@ -13,6 +13,8 @@ function build-vop(){
 
 alias bv='build-vop'
 alias v='vmp'
+alias zenv='zen ~/Developer/work/vop'
+alias zenvp='zen ~/Developer/work/vop/puma'
 
 alias vc='vcprod'
 alias vcprod='~/Developer/work/vop/bin/compose.production.sh'
