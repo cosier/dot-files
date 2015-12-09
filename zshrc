@@ -96,6 +96,6 @@ export PATH="$HOME/.rbenv/bin:$PATH"
 export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"
 
 case $OSTYPE in darwin*)
-  docker-env fusion silent
+  # docker-env fusion silent
   ;;
 esac
