@@ -12,6 +12,8 @@ alias fm='foreman'
 
 alias curl='noglob curl'
 
+alias stree='/Applications/SourceTree.app/Contents/Resources/stree'
+
 alias commands='vim ~/.dot/commands.zsh; source ~/.dot/commands.zsh'
 alias refresh-commands='source ~/.dot/commands.zsh'
 alias zshrc='vim ~/.zshrc; source ~/.zshrc'

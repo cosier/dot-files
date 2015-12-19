@@ -8,11 +8,11 @@ elif [[ "$platform" == 'Darwin' ]]; then
   export HOME_DIR=/Users/bailey
   GYP_GENERATORS="ninja,xcode"
   GYP_DEFINES="skia_os=mac skia_arch_width=64 skia_shared_lib=1"
-
 else
   export HOME_DIR=/home/ubuntu
 fi
 
+export LAPIS_OPENRESTY=$(which openresty)
 export GOPATH=~/go
 export EDITOR=vim
 
