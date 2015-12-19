@@ -3,9 +3,9 @@ function vop-db(){
 }
 
 function build-vop(){
-  TARGET=~/Developer/work/vop/$1
+  TARGET=vop; $1
   if [ -d $TARGET ]; then
-    docker build -t tutum.co/vopsy/$1 ~/Developer/work/vop/$1
+    docker build -t tutum.co/vopsy/$1 vop; $1
   else
     echo "Unable to build: $TARGET"
   fi
@@ -13,15 +13,15 @@ function build-vop(){
 
 alias bv='build-vop'
 alias v='vmp'
-alias zenv='zen ~/Developer/work/vop'
-alias zenvp='zen ~/Developer/work/vop/puma'
+alias zenv='vop; zen'
+alias zenvp='zen vop; puma'
 
 alias vc='vcprod'
-alias vcprod='~/Developer/work/vop/bin/compose.production.sh'
-alias vcdev='~/Developer/work/vop/bin/compose.development.sh'
+alias vcprod='vop; bin/compose.production.sh'
+alias vcdev='vop; bin/compose.development.sh'
 
-alias metal='~/Developer/work/vop/bin/start.metal.sh'
-alias vs='~/Developer/work/vop/bin/start.sh'
-alias vp='~/Developer/work/vop/bin/start.production.sh'
-alias vmstart='~/Developer/work/vop/bin/start.manual.sh'
-alias vmstop='~/Developer/work/vop/bin/stop.manual.sh'
+alias metal='vop; bin/start.metal.sh'
+alias vs='vop; bin/start.sh'
+alias vp='vop; bin/start.production.sh'
+alias vmstart='vop; bin/start.manual.sh'
+alias vmstop='vop; bin/stop.manual.sh'
