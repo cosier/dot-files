@@ -2,6 +2,8 @@
 
 alias cloud-turbo='gcloud compute --project "amazingbackorders" ssh --zone "asia-east1-b" "turbo"'
 
+alias ssh-sg='ssh ubuntu@sg.voiceofpsychic.com -v -i ~/.ssh/sg.pem'
+
 alias ssh-z1='ssh ubuntu@dx.z1.voiceofpsychic.com -v -i ~/.ssh/z1dev.pem'
 alias ssh-z1-b='ssh bailey@dx.z1.voiceofpsychic.com -v'
 alias mosh-z1='mosh bailey@dx.staging.voiceofpsychic.com'
