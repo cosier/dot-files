@@ -11,6 +11,20 @@ function build-vop(){
   fi
 }
 
+export VOP_PRODUCTION_DB="postgres://vopsy:michigan007@db.staging.voiceofpsychic.com:5500/vopsy"
+
+function vop-production-console(){
+  DATABASE_URL=$VOP_PRODUCTION_DB rails console
+}
+
+function vop-production-migrate(){
+  DATABASE_URL=$VOP_PRODUCTION_DB rake db:migrate
+}
+
+function vop-production-metal(){
+  DATABASE_URL=$VOP_PRODUCTION_DB vopmetal
+}
+
 alias bv='build-vop'
 alias v='vmp'
 alias zenv='vop; zen'
