@@ -28,7 +28,7 @@ function vop-production-metal(){
 alias bv='build-vop'
 alias v='vmp'
 alias zenv='vop; zen'
-alias zenvp='zen vop; puma'
+alias zenvp='zen /vopsy; cd puma'
 
 alias vc='vcprod'
 alias vcprod='vop; bin/compose.production.sh'
@@ -39,3 +39,10 @@ alias vs='vop; bin/start.sh'
 alias vp='vop; bin/start.production.sh'
 alias vmstart='vop; bin/start.manual.sh'
 alias vmstop='vop; bin/stop.manual.sh'
+
+alias mosh-vop-staging='mosh dx.staging.voiceofpsychic.com'
+alias ssh-vop-staging='ssh bailey@dx.staging.voiceofpsychic.com'
+
+alias tunnel-vop-sg='sh -N -R 172.31.25.63:3131:0.0.0.0:3000 sg.voiceofpsychic.com -v'
+alias tunnel-sg='tunnel-vop-sg'
+alias tsg='tunnel-sg'

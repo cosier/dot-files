@@ -27,9 +27,13 @@ alias ext-rust='cd ~/Developer/ext/rust'
 alias rust='ext-rust'
 
 alias pro='cd ~/Developer/work'
+
 alias scheme='cd /home/ubuntu/Developer/sdk/clojure-scheme'
 alias dc='cd ~/Developer/work/dinecart'
 alias music='cd ~/Music'
+
+alias rct='cd ~/Developer/work/racoons/t'
+alias rce='cd ~/Developer/work/racoons/elevator'
 
 alias amazing='cd ~/Developer/work/amazing'
 alias backorders='amazing; cd backorders;'

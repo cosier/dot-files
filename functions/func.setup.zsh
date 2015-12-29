@@ -14,7 +14,9 @@ function setup-dir() {
 }
 
 function setup-zen() {
-  setup-dir $@
+  if [ -n "$1" ]; then
+    setup-dir $1
+  fi
   setup-clean
 
   tmux rename-window Server
