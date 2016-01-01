@@ -1,6 +1,6 @@
 function build(){
   before=$(pwd)
-  cd ~/Developer/work/vop
+  cd /vopsy
 
   if [ -f bin/build.sh ]; then
     ROOT=$(git rev-parse --show-toplevel)
