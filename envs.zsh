@@ -43,5 +43,8 @@ else
     linux='yes'
 fi
 
-export RAILS_ENV=development
+# export RAILS_ENV=development
 
+if [ -f ~/.env ]; then
+  source ~/.env;
+fi
