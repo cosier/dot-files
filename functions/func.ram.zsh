@@ -28,6 +28,7 @@ function ram-create-fs(){
   fs_cmd="/sbin/newfs_hfs -v 'ram-${name}' /dev/${2}"
 
   echo "$fs_cmd"
+  echo "$fs_cmd" | pbcopy
   # $fs_cmd
 }
 
