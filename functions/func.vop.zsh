@@ -25,6 +25,14 @@ function vop-production-metal(){
   DATABASE_URL=$VOP_PRODUCTION_DB vopmetal
 }
 
+function docker-vop(){
+  docker --tlsverify --tlscacert=/vopsy/shared/certs/fullchain.pem --tlscert=/vopsy/shared/certs/cert.pem --tlskey=/vopsy/shared/certs/private.pem $@
+}
+
+function docker-vop-set-host(){
+  export DOCKER_HOST="tcp://local.voiceofpsychic.com:2376"
+}
+
 alias bv='build-vop'
 alias v='vmp'
 alias zenv='vop; zen'
