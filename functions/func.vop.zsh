@@ -26,7 +26,12 @@ function vop-production-metal(){
 }
 
 function docker-vop(){
-  docker --tlsverify --tlscacert=/vopsy/shared/certs/fullchain.pem --tlscert=/vopsy/shared/certs/cert.pem --tlskey=/vopsy/shared/certs/private.pem $@
+  cmd=$(docker-vop-echo $@)
+  $cmd
+}
+
+function docker-vop-echo(){
+  echo "docker --tlsverify --tlscacert=/vopsy/shared/certs/fullchain.pem --tlscert=/vopsy/shared/certs/cert.pem --tlskey=/vopsy/shared/certs/private.pem $@"
 }
 
 function docker-vop-set-host(){
