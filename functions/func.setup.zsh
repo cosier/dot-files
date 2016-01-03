@@ -13,6 +13,20 @@ function setup-dir() {
   fi
 }
 
+function setup-tmkf() {
+  if [ -n "$1" ]; then
+    setup-dir $1
+  fi
+  setup-clean
+
+  tmux rename-window BUILD
+  tmux new-window -n "  V     "
+  tmux new-window -n "  E     "
+  tmux new-window -n "  Ariel     "
+  tmux new-window -n "  Mantis     "
+  tmux select-window -t 0
+}
+
 function setup-zen() {
   if [ -n "$1" ]; then
     setup-dir $1
@@ -21,9 +35,11 @@ function setup-zen() {
 
   tmux rename-window Server
 
-  tmux new-window -n V
-  tmux new-window -n A
-  tmux new-window -n R
+  tmux new-window -n "  V     "
+  tmux new-window -n "  Ariel     "
+  tmux new-window -n "  Mantis     "
+  tmux new-window -n "  Remote  "
+  tmux new-window -n "  Tunnel  "
   # tmux move-window -s 3 -t 99
 
   # tmux select-window -t 2
@@ -73,16 +89,6 @@ function setup-basic() {
   tmux select-window -t 0
 }
 
-function setup-tmkf() {
-  setup-clean
-
-  tmux kill-window -a
-  tmux move-window -t 0
-
-  tmux rename-window MAIN
-  tmux new-window -n FU
-  tmux select-window -t 0
-}
 
 function setup-servers(){
   setup-clean

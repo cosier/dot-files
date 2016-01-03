@@ -37,6 +37,10 @@ function docker-logs-clear(){
   sudo bash -c "ls /var/lib/docker/containers/*/*.log | xargs rm"
 }
 
+function docker-kill-all(){
+  docker kill $(docker ps | awk '{ print $1 }')
+}
+
 
 # Docker
 # alias docker='sudo docker'
