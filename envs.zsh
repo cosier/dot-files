@@ -48,3 +48,5 @@ fi
 if [ -f ~/.env ]; then
   source ~/.env;
 fi
+
+alias envsup='source ~/.env'
