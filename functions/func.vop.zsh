@@ -27,7 +27,7 @@ function vop-production-metal(){
 
 function docker-vop(){
   cmd=$(docker-vop-echo $@)
-  $cmd
+  sh -c $cmd
 }
 
 function docker-vop-echo(){
