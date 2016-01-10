@@ -30,5 +30,9 @@ function console-prod(){
 }
 
 function console(){
-  rails console
+  gr; bin/rails console
+}
+
+function spc(){
+  gr; bin/rake spec
 }
