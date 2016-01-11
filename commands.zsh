@@ -116,7 +116,7 @@ alias gitgo='GITROOT="$(git rev-parse --show-toplevel)"; git add . ; git commit 
 
 # PHP
 
-alias console='GITROOT="$(git rev-parse --show-toplevel)"; $GITROOT/app/console'
+# alias console='GITROOT="$(git rev-parse --show-toplevel)"; $GITROOT/app/console'
 alias db='dbase'
 # System
 alias trackpad-disable='xinput set-prop 17 "Device Enabled" 0'
