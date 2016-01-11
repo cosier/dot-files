@@ -34,5 +34,5 @@ function console(){
 }
 
 function spc(){
-  gr; bin/rake spec
+  gr; bin/rake spec RAILS_ENV=test
 }
