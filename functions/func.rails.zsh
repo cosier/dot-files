@@ -41,3 +41,7 @@ function spec(){
   gr; bin/rake spec
   cd $cur
 }
+
+function spc(){
+  gr; bin/rake spec
+}
