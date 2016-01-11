@@ -22,8 +22,8 @@ function setup-tmkf() {
   tmux rename-window BUILD
   tmux new-window -n "  V     "
   tmux new-window -n "  E     "
-  tmux new-window -n "  Ariel     "
-  tmux new-window -n "  Mantis     "
+  tmux new-window -n "  ARI     "
+  tmux new-window -n "  MTI     "
   tmux select-window -t 0
 }
 
@@ -35,11 +35,10 @@ function setup-zen() {
 
   tmux rename-window Server
 
-  tmux new-window -n "  V     "
-  tmux new-window -n "  Ariel     "
-  tmux new-window -n "  Mantis     "
-  tmux new-window -n "  Remote  "
-  tmux new-window -n "  Tunnel  "
+  tmux new-window -n "   V      "
+  tmux new-window -n "  ARI     "
+  tmux new-window -n "  MTI     "
+  tmux new-window -n "  TNT     "
   # tmux move-window -s 3 -t 99
 
   # tmux select-window -t 2

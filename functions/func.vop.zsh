@@ -13,6 +13,10 @@ function build-vop(){
 
 export VOP_PRODUCTION_DB="postgres://vopsy:michigan007@db.staging.voiceofpsychic.com:5500/vopsy"
 
+function vop-rake(){
+  DATABASE_URL=$VOP_PRODUCTION_DB rake $@
+}
+
 function vop-production-console(){
   DATABASE_URL=$VOP_PRODUCTION_DB rails console
 }
@@ -26,8 +30,7 @@ function vop-production-metal(){
 }
 
 function docker-vop(){
-  cmd=$(docker-vop-echo $@)
-  $cmd
+  docker-vop-echo $@
 }
 
 function docker-vop-echo(){
@@ -36,6 +39,26 @@ function docker-vop-echo(){
 
 function docker-vop-set-host(){
   export DOCKER_HOST="tcp://local.voiceofpsychic.com:2376"
+}
+
+function docker-vop-socket(){
+  DOCKER_HOST=tcp://socket.voiceofpsychic.com:2376 \
+    docker \
+      --tlsverify \
+      --tlscacert=/vopsy/shared/certs/fullchain.pem \
+      --tlscert=/vopsy/shared/certs/cert.pem \
+      --tlskey=/vopsy/shared/certs/private.pem \
+      $@
+}
+
+function docker-vop-staging(){
+  DOCKER_HOST=tcp://dx.staging.voiceofpsychic.com:2376 \
+    docker \
+      --tlsverify \
+      --tlscacert=/vopsy/shared/certs/fullchain.pem \
+      --tlscert=/vopsy/shared/certs/cert.pem \
+      --tlskey=/vopsy/shared/certs/private.pem \
+      $@
 }
 
 alias bv='build-vop'
@@ -58,8 +81,9 @@ alias ssh-vop-staging='ssh bailey@dx.staging.voiceofpsychic.com'
 
 function tunnel-vop(){
   REMOTE=$1
-  LOCAL=$1
-  ssh -N -R \*:$REMOTE:0.0.0.0:$LOCAL sg.voiceofpsychic.com -v
+  LOCAL=$2
+  ssh -N -R \*:$REMOTE:0.0.0.0:$LOCAL socket.voiceofpsychic.com -v
 }
-alias tunnel-vop-puma='source ~/.dot/functions/func.vop.zsh; tunnel-vop 3000'
-alias tunnel-vop-mercury='source ~/.dot/functions/func.vop.zsh; tunnel-vop 8181'
+alias tunnel-vop-nginx='source ~/.dot/functions/func.vop.zsh; tunnel-vop 9999 80'
+alias tunnel-vop-webpack='source ~/.dot/functions/func.vop.zsh; tunnel-vop 3808 3808'
+# alias tunnel-vop-mercury='source ~/.dot/functions/func.vop.zsh; tunnel-vop 8181'
