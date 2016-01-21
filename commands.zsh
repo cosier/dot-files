@@ -9,6 +9,7 @@ alias gr='git-root'
 
 alias fgo='forego'
 alias fm='foreman'
+alias rpc='gr; bin/rspec'
 
 alias curl='noglob curl'
 
