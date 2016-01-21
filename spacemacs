@@ -26,7 +26,7 @@
      git
      github
      markdown
-     ;; org
+    ;; org
      (shell :variables
             shell-default-position 'right)
      syntax-checking

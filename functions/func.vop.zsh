@@ -62,6 +62,10 @@ function docker-vop-staging(){
       $@
 }
 
+alias pma-serv='WEBPACK_DEV_HOST=local.voiceofpsychic.com WEBPACK_DEV_PORT=443 DISABLE_PUMA=false /vopsy/puma/bin/start.sh'
+alias js-serv='WEBPACK_FORCE=true /vopsy/puma/bin/webpack.sh'
+alias redis-serv='/vopsy/redis/bin/start.sh'
+
 alias bv='build-vop'
 alias v='vmp'
 alias zenv='vop; zen'
