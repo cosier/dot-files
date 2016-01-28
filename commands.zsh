@@ -11,6 +11,7 @@ alias rspec='gr; bin/rspec'
 
 alias fgo='forego'
 alias fm='foreman'
+alias rpc='gr; bin/rspec'
 
 alias curl='noglob curl'
 
