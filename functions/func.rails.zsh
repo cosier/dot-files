@@ -46,3 +46,7 @@ function spc(){
   # gr; bin/rake spec RAILS_ENV=test $@ | tail -n +1
   zeus rspec
 }
+
+function rails(){
+  gr; bin/rails $@
+}
