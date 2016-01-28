@@ -20,7 +20,7 @@
      auto-completion
      bailey
      themes-megapack
-     
+
      ;; better-defaults
      emacs-lisp
      git
@@ -175,7 +175,10 @@ layers configuration."
   (setq-default js-indent-level 2)
   (setq-default js2-basic-offset 2)
   (setq mac-option-modifier 'none)
+  (global-hl-line-mode -1)
+  (global-linum-mode)
 )
+
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
