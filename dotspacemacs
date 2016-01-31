@@ -5,8 +5,11 @@
 
 ;; Settings
 ;; --------
+(add-to-list 'default-frame-alist '(foreground-color . "#E0DFDB"))
+(add-to-list 'default-frame-alist '(background-color . "#102372"))
 
 (setq-default
+ paradox-github-token 'b0dbca2f11412f30a2a24934f083a4b83976411f
  ;; Default theme applied at startup
  dotspacemacs-default-theme 'solarized-dark
  ;; Guide-key delay in seconds. The Guide-key is the popup buffer listing
@@ -41,7 +44,7 @@
    dotspacemacs-distribution 'spacemacs
    ;; List of additional paths where to look for configuration layers.
    ;; Paths must have a trailing slash (i.e. `~/.mycontribs/')
-   dotspacemacs-configuration-layer-path '()
+   dotspacemacs-configuration-layer-path '("~/.dot/spacemacs/")
    ;; List of configuration layers to load. If it is the symbol `all' instead
    ;; of a list then all discovered layers will be installed.
    dotspacemacs-configuration-layers
@@ -51,24 +54,25 @@
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
-     ;; auto-completion
-     ;; better-defaults
+     auto-completion
+     better-defaults
      emacs-lisp
      git
      lua
      ruby
      ruby-on-rails
      react
-
      markdown
+
+     bailey
 
      ;; org
      ;; (shell :variables
      ;;        shell-default-height 30
      ;;        shell-default-position 'bottom)
-     ;; spell-checking
+     spell-checking
      syntax-checking
-     ;; version-control
+     version-control
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
