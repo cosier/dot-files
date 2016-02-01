@@ -40,3 +40,11 @@
   (add-to-list 'auto-mode-alist '("\\.cjsx\\'" . coffee-mode))
   (add-to-list 'auto-mode-alist '("\\.coffee\\.erb\\'" . coffee-mode))
  )
+
+(setq bailey-packages
+      '(
+        haml-mode
+        slim-mode
+        coffee-mode
+        web-mode
+        ))

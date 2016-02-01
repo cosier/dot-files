@@ -62,6 +62,14 @@ function docker-vop-staging(){
       $@
 }
 
+function vop-c4(){
+  mosh c4.voiceofpsychic.com
+}
+
+function vop-socket(){
+  mosh socket.voiceofpsychic.com
+}
+
 alias pma-serv='APP_ENV=development WEBPACK_DEV_HOST=local.voiceofpsychic.com WEBPACK_DEV_PORT=443 WEBPACK_DEV_PROTOCOL=https DISABLE_PUMA=false /vopsy/puma/bin/start.sh'
 alias js-serv='WEBPACK_FORCE=true /vopsy/puma/bin/webpack.sh'
 alias redis-serv='/vopsy/redis/bin/start.sh'

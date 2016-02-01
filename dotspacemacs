@@ -11,7 +11,7 @@
 (setq-default
  paradox-github-token 'b0dbca2f11412f30a2a24934f083a4b83976411f
  ;; Default theme applied at startup
- dotspacemacs-default-theme 'solarized-dark
+ dotspacemacs-default-theme 'spacemacs-dark
  ;; Guide-key delay in seconds. The Guide-key is the popup buffer listing
  ;; the commands bound to the current keystrokes.
  dotspacemacs-guide-key-delay 0.4
@@ -42,9 +42,9 @@
    ;; `+distribution'. For now available distributions are `spacemacs-base'
    ;; or `spacemacs'. (default 'spacemacs)
    dotspacemacs-distribution 'spacemacs
+
    ;; List of additional paths where to look for configuration layers.
-   ;; Paths must have a trailing slash (i.e. `~/.mycontribs/')
-   dotspacemacs-configuration-layer-path '("~/.dot/spacemacs/")
+   dotspacemacs-configuration-layer-path `("~/.dot/spacemacs/")
    ;; List of configuration layers to load. If it is the symbol `all' instead
    ;; of a list then all discovered layers will be installed.
    dotspacemacs-configuration-layers
@@ -116,7 +116,7 @@
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(solarized-dark)
+   dotspacemacs-themes '(spacemacs-dark)
    ;; If non nil the cursor color matches the state color.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
@@ -235,7 +235,20 @@ layers configuration. You are free to put any user code."
   (setq tab-width 2)
   (setq c-basic-offset 2)
   (setq indent-tabs-mode nil)
+
+  (use-package jsx-mode)
+  (use-package haml-mode)
+  (use-package slim-mode)
+  (use-package coffee-mode)
+  (use-package web-mode)
+
+  (add-to-list 'auto-mode-alist '("\\.cjsx\\'" . coffee-mode))
+  (add-to-list 'auto-mode-alist '("\\.coffee\\.erb\\'" . coffee-mode))
+
+  (global-set-key (kbd "c-a c-g") 'helm-ag)
+
+
 )
 
-;; Do not write anything past this comment. This is where Emacs will
-;; auto-generate custom variable definitions.
+;; Donot write anything past this comment. This is where Emacs will
+;; au-generate custom variable definitions.
