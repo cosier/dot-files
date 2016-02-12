@@ -36,6 +36,7 @@
   (use-package slim-mode)
   (use-package coffee-mode)
   (use-package web-mode)
+  (use-package darcula-theme)
 
   (add-to-list 'auto-mode-alist '("\\.cjsx\\'" . coffee-mode))
   (add-to-list 'auto-mode-alist '("\\.coffee\\.erb\\'" . coffee-mode))

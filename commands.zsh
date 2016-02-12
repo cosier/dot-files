@@ -15,7 +15,7 @@ alias rpc='gr; bin/rspec'
 
 alias curl='noglob curl'
 
-alias stree='/Applications/SourceTree.app/Contents/Resources/stree'
+# alias stree='/Applications/SourceTree.app/Contents/Resources/stree'
 
 alias commands='vim ~/.dot/commands.zsh; source ~/.dot/commands.zsh'
 alias refresh-commands='source ~/.dot/commands.zsh'
@@ -114,7 +114,7 @@ alias rake_db_clean='rake db:drop db:create db:schema:load'
 # Tmux
 alias tfresh='tmux source-file ~/.tmux.conf'
 
-# GIT
+ GIT
 alias gitgo='GITROOT="$(git rev-parse --show-toplevel)"; git add . ; git commit -a -m "Automatic commit"'
 
 # PHP
