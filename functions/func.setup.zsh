@@ -36,6 +36,8 @@ function setup-vop() {
   tmux rename-window Server
 
   tmux new-window -n "        V          "
+  tmux new-window -n "       MRC         "
+  tmux new-window -n "       PMA         "
   tmux new-window -n "      RSPEC        "
   tmux new-window -n "     CONSOLE       "
   tmux new-window -n "    REMOTE [C4]    "
