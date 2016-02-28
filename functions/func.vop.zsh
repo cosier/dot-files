@@ -74,6 +74,32 @@ function vop-mrc(){
   /vopsy/mercury/bin/start.sh $@
 }
 
+function vop-ramit(){
+  sudo rm /vopsy
+  sudo ln -sf /ram/vop /vopsy
+}
+
+function vop-diskit(){
+  sudo rm /vopsy
+  sudo ln -fs ~bailey/Developer/work/vop /vopsy
+}
+
+function vop-ram-init(){
+  sudo cp -Rv ~bailey/Developer/work/vop/ /ram/vop/
+}
+
+function vop-ram-dump(){
+  if [[ -z "$1" ]]; then
+    # sudo cp -R /ram/vop/ ~bailey/Developer/work/
+    sudo rsync --delete -a --progress /ram/vop/ ~bailey/Developer/work
+  else
+    sudo rsync --delete -a --progress /ram/vop/$1 ~bailey/Developer/work/vop
+  fi
+}
+
+alias pma-dump='vop-ram-dump puma'
+alias mrc-dump='vop-ram-dump mercury'
+
 alias pma-serv='APP_ENV=development WEBPACK_DEV_HOST=local.voiceofpsychic.com WEBPACK_DEV_PORT=443 WEBPACK_DEV_PROTOCOL=https DISABLE_PUMA=false /vopsy/puma/bin/start.sh'
 alias js-serv='WEBPACK_FORCE=true /vopsy/puma/bin/webpack.sh'
 alias redis-serv='/vopsy/redis/bin/start.sh'
