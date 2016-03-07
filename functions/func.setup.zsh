@@ -38,7 +38,8 @@ function setup-zen() {
   tmux new-window -n "  V     "
   tmux new-window -n "  Ariel     "
   tmux new-window -n "  Mantis     "
-  tmux new-window -n "  Remote  "
+  tmux new-window -n "  Remote [C4]  "
+  tmux new-window -n "  Remote [SO]  "
   tmux new-window -n "  Tunnel  "
   # tmux move-window -s 3 -t 99
 
