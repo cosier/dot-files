@@ -2,6 +2,13 @@
 
 
 
+function kill-puma(){
+  pid=$(sudo ps aux | grep puma | grep 3000 | awk '{ print $2 }')
+
+  echo "Sending kill signal to $pid"
+  sudo kill -9 $pid
+}
+
 function restart-puma(){
   pid=$(sudo ps aux | grep puma | grep 3000 | awk '{ print $2 }')
 

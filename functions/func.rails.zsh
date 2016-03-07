@@ -30,5 +30,23 @@ function console-prod(){
 }
 
 function console(){
-  rails console
+  cur=$(pwd)
+  gr; bin/rails console $@
+  cd $cur
+}
+
+function spec(){
+  # defined in 'rails.func'
+  cur=$(pwd)
+  gr; bin/rake spec $@
+  cd $cur
+}
+
+function spc(){
+  # gr; bin/rake spec RAILS_ENV=test $@ | tail -n +1
+  zeus rspec
+}
+
+function rails(){
+  gr; bin/rails $@
 }

@@ -7,12 +7,15 @@ alias ga='git add . -A'
 alias git-root='ROOT="$(git rev-parse --show-toplevel)"; cd "$ROOT"'
 alias gr='git-root'
 
+alias rspec='gr; bin/rspec'
+
 alias fgo='forego'
 alias fm='foreman'
+alias rpc='gr; bin/rspec'
 
 alias curl='noglob curl'
 
-alias stree='/Applications/SourceTree.app/Contents/Resources/stree'
+# alias stree='/Applications/SourceTree.app/Contents/Resources/stree'
 
 alias commands='vim ~/.dot/commands.zsh; source ~/.dot/commands.zsh'
 alias refresh-commands='source ~/.dot/commands.zsh'
@@ -116,7 +119,7 @@ alias gitgo='GITROOT="$(git rev-parse --show-toplevel)"; git add . ; git commit 
 
 # PHP
 
-alias console='GITROOT="$(git rev-parse --show-toplevel)"; $GITROOT/app/console'
+# alias console='GITROOT="$(git rev-parse --show-toplevel)"; $GITROOT/app/console'
 alias db='dbase'
 # System
 alias trackpad-disable='xinput set-prop 17 "Device Enabled" 0'
