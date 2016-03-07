@@ -13,6 +13,10 @@ function build-vop(){
 
 export VOP_PRODUCTION_DB="postgres://vopsy:michigan007@db.staging.voiceofpsychic.com:5500/vopsy"
 
+function vop-production-db-dump(){
+  pg_dump --verbose -Fc --no-acl --no-owner $VOP_PRODUCTION_DB > vop_production_$(date '+%Y%m%d').dump
+}
+
 function vop-rake(){
   DATABASE_URL=$VOP_PRODUCTION_DB rake $@
 }
@@ -96,6 +100,8 @@ function vop-ram-dump(){
     sudo rsync --delete -a --progress /ram/vop/$1 ~bailey/Developer/work/vop
   fi
 }
+
+alias dump='vop-ram-dump'
 
 alias pma-dump='vop-ram-dump puma'
 alias mrc-dump='vop-ram-dump mercury'
