@@ -114,7 +114,7 @@ alias rake_db_clean='rake db:drop db:create db:schema:load'
 # Tmux
 alias tfresh='tmux source-file ~/.tmux.conf'
 
- GIT
+# GIT
 alias gitgo='GITROOT="$(git rev-parse --show-toplevel)"; git add . ; git commit -a -m "Automatic commit"'
 alias gf='git flow'
 # PHP
