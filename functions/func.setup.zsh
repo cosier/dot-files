@@ -57,10 +57,11 @@ function setup-vop() {
   tmux new-window -n "    V      "
   tmux new-window -n "   MRC     "
   tmux new-window -n "   PMA     "
-  tmux new-window -n "  RSPEC    "
-  tmux new-window -n " CONSOLE   "
-  tmux new-window -n "REMOTE [C4]"
-  tmux new-window -n "REMOTE [SO]"
+  # tmux new-window -n "  REMOTE   "
+  # tmux new-window -n "  TUNNEL   "
+  # tmux new-window -n "  RSPEC    "
+  # tmux new-window -n " CONSOLE   "
+  # tmux new-window -n "REMOTE [SO]"
 
   # tmux select-window -t 2
   # tmux send-keys -t 2 emacs Space -nw Enter

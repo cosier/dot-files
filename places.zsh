@@ -76,6 +76,8 @@ alias vop='cd /vopsy'
 alias mrc='vop; cd mercury'
 alias ngx='vop; cd nginx'
 alias pma='vop; cd puma'
+alias prx='vop; cd proxy'
+alias cns='vop; cd consul'
 
 alias scaleboom='cd ~/Developer/work/scaleboom/core'
 alias scale-order='cd ~/Developer/work/scaleboom/order;'

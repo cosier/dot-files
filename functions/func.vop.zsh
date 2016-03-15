@@ -133,6 +133,12 @@ function tunnel-vop(){
   LOCAL=$2
   ssh -N -R \*:$REMOTE:0.0.0.0:$LOCAL socket.voiceofpsychic.com -v
 }
+
+function tunnel-vop-c4(){
+  REMOTE=$1
+  LOCAL=$2
+  ssh -N -R \*:$REMOTE:0.0.0.0:$LOCAL c4.voiceofpsychic.com -v
+}
 alias tunnel-vop-nginx='source ~/.dot/functions/func.vop.zsh; tunnel-vop 9980 80'
 alias tunnel-vop-webpack='source ~/.dot/functions/func.vop.zsh; tunnel-vop 3808 3808'
 # alias tunnel-vop-mercury='source ~/.dot/functions/func.vop.zsh; tunnel-vop 8181'
