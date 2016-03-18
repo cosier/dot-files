@@ -76,6 +76,7 @@ alias vop='cd /vopsy'
 alias mrc='vop; cd mercury'
 alias ngx='vop; cd nginx'
 alias pma='vop; cd puma'
+alias front='vop; cd puma/app/frontend/app'
 alias prx='vop; cd proxy'
 alias cns='vop; cd consul'
 
