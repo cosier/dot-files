@@ -2,6 +2,10 @@ function vop-db(){
   export DATABASE_URL='postgres://vop:hamster!$007@localhost:5432/vop_dev'
 }
 
+function vop-logs(){
+  /vopsy/bin/logs.sh
+}
+
 function build-vop(){
   TARGET=vop; $1
   if [ -d $TARGET ]; then
@@ -133,6 +137,12 @@ function tunnel-vop(){
   LOCAL=$2
   ssh -N -R \*:$REMOTE:0.0.0.0:$LOCAL socket.voiceofpsychic.com -v
 }
-alias tunnel-vop-nginx='source ~/.dot/functions/func.vop.zsh; tunnel-vop 9999 80'
+
+function tunnel-vop-c4(){
+  REMOTE=$1
+  LOCAL=$2
+  ssh -N -R \*:$REMOTE:0.0.0.0:$LOCAL c4.voiceofpsychic.com -v
+}
+alias tunnel-vop-nginx='source ~/.dot/functions/func.vop.zsh; tunnel-vop 9980 80'
 alias tunnel-vop-webpack='source ~/.dot/functions/func.vop.zsh; tunnel-vop 3808 3808'
 # alias tunnel-vop-mercury='source ~/.dot/functions/func.vop.zsh; tunnel-vop 8181'
