@@ -16,6 +16,11 @@ function docker-env(){
   fi
 }
 
+function docker-cleanup(){
+  docker images --no-trunc| grep none | awk '{print $3}' | xargs -r docker rmi
+}
+
+
 function shipyard-cli(){
   docker run -it shipyard/shipyard-cli
 }
