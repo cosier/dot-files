@@ -3,8 +3,8 @@
 # ################################
 # Filesystem "Places" Shortcut Directory
 # ################################
-
-alias assets='noglob cd ~/Desktop/assets/assets.hubify.com/'
+alias emd='cd ~/.emacs.d'
+alias emv='emd'
 
 alias up-places='source ~/.dot/places.zsh'
 alias palaces='places'
