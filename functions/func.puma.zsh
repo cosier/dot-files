@@ -18,3 +18,4 @@ function restart-puma(){
 
 alias kpuma='restart-puma'
 alias rpm='source ~/.dot/functions/func.puma.zsh; restart-puma'
+alias rpk='source ~/.dot/functions/func.puma.zsh; kill-puma'
