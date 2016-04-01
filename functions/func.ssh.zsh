@@ -4,6 +4,11 @@ alias cloud-turbo='gcloud compute --project "amazingbackorders" ssh --zone "asia
 
 alias ssh-sg='ssh bailey@sg.voiceofpsychic.com'
 
+alias vostro='mosh vostros --ssh="ssh -v" --server=/usr/local/bin/mosh-server'
+alias vostros='vostro'
+alias vos='vostro'
+alias vo='vostro'
+
 alias ssh-z1='ssh ubuntu@dx.z1.voiceofpsychic.com -v -i ~/.ssh/z1dev.pem'
 alias ssh-z1-b='ssh bailey@dx.z1.voiceofpsychic.com -v'
 alias mosh-z1='mosh bailey@dx.staging.voiceofpsychic.com'

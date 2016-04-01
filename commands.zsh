@@ -116,7 +116,7 @@ alias tfresh='tmux source-file ~/.tmux.conf'
 
 # GIT
 alias gitgo='GITROOT="$(git rev-parse --show-toplevel)"; git add . ; git commit -a -m "Automatic commit"'
-
+alias gf='git flow'
 # PHP
 
 # alias console='GITROOT="$(git rev-parse --show-toplevel)"; $GITROOT/app/console'

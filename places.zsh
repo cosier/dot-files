@@ -3,8 +3,8 @@
 # ################################
 # Filesystem "Places" Shortcut Directory
 # ################################
-
-alias assets='noglob cd ~/Desktop/assets/assets.hubify.com/'
+alias emd='cd ~/.emacs.d'
+alias emv='emd'
 
 alias up-places='source ~/.dot/places.zsh'
 alias palaces='places'
@@ -76,6 +76,9 @@ alias vop='cd /vopsy'
 alias mrc='vop; cd mercury'
 alias ngx='vop; cd nginx'
 alias pma='vop; cd puma'
+alias front='vop; cd puma/app/frontend/app'
+alias prx='vop; cd proxy'
+alias cns='vop; cd consul'
 
 alias scaleboom='cd ~/Developer/work/scaleboom/core'
 alias scale-order='cd ~/Developer/work/scaleboom/order;'

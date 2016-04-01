@@ -22,7 +22,7 @@ if [ ! -f ~/.irssi ]; then
   ln -sf ~/.dot/irssi ~/.irssi
 fi
 
-ln -sf ~/.dot/spacemacs/config ~/.spacemacs
+#ln -sf ~/.dot/spacemacs/config ~/.spacemacs
 ln -sf ~/.dot/hosts ~/.etchosts
 
 #ln -sf ~/.dot/xmodmap.rc ~/.Xmodmap

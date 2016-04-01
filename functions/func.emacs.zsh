@@ -1,4 +1,4 @@
-alias emrc='vim ~/.emacs.d/lisp/init-local.el'
+alias emrc='em ~/.emacs.d/spacemacs.conf'
 
 function em(){
   emacs -nw $@

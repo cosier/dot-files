@@ -1,19 +1,23 @@
 function ram-disk-me(){
-
   echo "Creating Ramdisk: $size"
 
 }
 
 function ram-create-dev(){
-  if [[ -z "$1" ]]; then
-    echo "No size MB given :<"
+  if [[ -z "$2" ]]; then
+    echo "No size MB given as first param :<"
+    return;
+  fi
+  if [[ -z "$2" ]]; then
+    echo "No Name given as second param :<"
     return;
   fi
 
 
-  MB=$1
+  MB=$2
   size=$(( $MB * 2097 ))
-  mount="$(pwd)/$1"
+
+  mount="/ram/$2"
 
   ramfs_size_sectors=$((${MB}*1024*1024/512))
   ramdisk_dev=$(hdid -nomount ram://${ramfs_size_sectors})
