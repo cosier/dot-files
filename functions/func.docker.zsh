@@ -16,6 +16,10 @@ function docker-env(){
   fi
 }
 
+function docker-kill-runners(){
+  docker kill $(app ps | grep run | awk '{ print $1 }')
+}
+
 function docker-cleanup(){
   docker images --no-trunc| grep none | awk '{print $3}' | xargs -r docker rmi
 }
