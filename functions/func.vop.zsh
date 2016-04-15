@@ -132,10 +132,10 @@ alias vmstop='vop; bin/stop.manual.sh'
 alias mosh-vop-staging='mosh dx.staging.voiceofpsychic.com'
 alias ssh-vop-staging='ssh bailey@dx.staging.voiceofpsychic.com'
 
-function tunnel-vop(){
+function tunnel-vop-local(){
   REMOTE=$1
   LOCAL=$2
-  ssh -N -R \*:$REMOTE:0.0.0.0:$LOCAL socket.voiceofpsychic.com -v
+  ssh -N -R \*:$REMOTE:0.0.0.0:$LOCAL dx.local.voiceofpsychic.com -v
 }
 
 function tunnel-vop-c4(){
@@ -143,6 +143,4 @@ function tunnel-vop-c4(){
   LOCAL=$2
   ssh -N -R \*:$REMOTE:0.0.0.0:$LOCAL c4.voiceofpsychic.com -v
 }
-alias tunnel-vop-nginx='source ~/.dot/functions/func.vop.zsh; tunnel-vop 9980 80'
-alias tunnel-vop-webpack='source ~/.dot/functions/func.vop.zsh; tunnel-vop 3808 3808'
-# alias tunnel-vop-mercury='source ~/.dot/functions/func.vop.zsh; tunnel-vop 8181'
+alias tunnel-vop='source ~/.dot/functions/func.vop.zsh; tunnel-vop-local 9980 80'

@@ -45,6 +45,8 @@ alias tata='dojo; cd tatami'
 alias origami='cd ~/Developer/work/dojo/origami'
 alias ori='origami'
 
+alias key='cd ~/Developer/work/keyport'
+
 alias study='cd ~/Developer/work/studybloc/demo'
 
 alias t1='cd ~/Developer/work/t1'
@@ -76,6 +78,7 @@ alias vop='cd /vopsy'
 alias mrc='vop; cd mercury'
 alias ngx='vop; cd nginx'
 alias pma='vop; cd puma'
+alias pmc='vop; cd client'
 alias front='vop; cd puma/app/frontend/app'
 alias prx='vop; cd proxy'
 alias cns='vop; cd consul'
