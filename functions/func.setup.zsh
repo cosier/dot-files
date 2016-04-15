@@ -73,7 +73,16 @@ function setup-zen() {
 
   tmux rename-window Server
 
+<<<<<<< HEAD
   tmux new-window -n "   Zen      "
+=======
+  tmux new-window -n "  V     "
+  tmux new-window -n "  Ariel     "
+  tmux new-window -n "  Mantis     "
+  tmux new-window -n "  Remote [C4]  "
+  tmux new-window -n "  Remote [SO]  "
+  tmux new-window -n "  Tunnel  "
+>>>>>>> c0cf5748767c40d5821eb5c6402259d7f2eab46a
   # tmux move-window -s 3 -t 99
 
   # tmux select-window -t 2
