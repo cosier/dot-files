@@ -57,11 +57,6 @@ function setup-vop() {
   tmux new-window -n "    V      "
   tmux new-window -n "   MRC     "
   tmux new-window -n "   PMA     "
-  # tmux new-window -n "  REMOTE   "
-  # tmux new-window -n "  TUNNEL   "
-  # tmux new-window -n "  RSPEC    "
-  # tmux new-window -n " CONSOLE   "
-  # tmux new-window -n "REMOTE [SO]"
 
   # tmux select-window -t 2
   # tmux send-keys -t 2 emacs Space -nw Enter
@@ -78,12 +73,7 @@ function setup-zen() {
 
   tmux rename-window Server
 
-  tmux new-window -n "  V     "
-  tmux new-window -n "  Ariel     "
-  tmux new-window -n "  Mantis     "
-  tmux new-window -n "  Remote [C4]  "
-  tmux new-window -n "  Remote [SO]  "
-  tmux new-window -n "  Tunnel  "
+  tmux new-window -n "   Zen      "
   # tmux move-window -s 3 -t 99
 
   # tmux select-window -t 2
