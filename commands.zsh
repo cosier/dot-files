@@ -1,6 +1,6 @@
 #!/bin/zsh
 alias google='links2 http://google.com/'
-alias service='sudo service'
+
 alias svim='sudo vim'
 alias gs='git status'
 alias ga='git add . -A'
@@ -14,6 +14,7 @@ alias fm='foreman'
 alias rpc='gr; bin/rspec'
 
 alias curl='noglob curl'
+alias ksw='keyboard-swap-caps'
 
 # alias stree='/Applications/SourceTree.app/Contents/Resources/stree'
 

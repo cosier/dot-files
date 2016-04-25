@@ -9,7 +9,8 @@ cd ~/.dot
 
 # Install/overwrite new symlinks
 if [ ! -f ~/.tmux.conf ]; then
-  ln -s ~/.dot/tmux.conf ~/.tmux.conf
+
+  # ln -s ~/.dot/tmux.conf ~/.tmux.conf
 fi
 
 if [ ! -f ~/.netrc ]; then
