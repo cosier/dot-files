@@ -52,14 +52,13 @@ function setup-vop() {
   fi
   setup-clean
 
-  tmux rename-window Server
+  tmux rename-window Core
 
-  tmux new-window -n "   MTL   "
-  tmux new-window -n "   DKR   "
   tmux new-window -n "   CL3   "
   tmux new-window -n "   PMA   "
   tmux new-window -n "   MRC   "
   tmux new-window -n "   NGX   "
+  tmux new-window -n "   RMT   "
 
   # tmux select-window -t 2
   # tmux send-keys -t 2 emacs Space -nw Enter
