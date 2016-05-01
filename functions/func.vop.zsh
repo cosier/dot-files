@@ -6,6 +6,10 @@ function vop-logs(){
   /vopsy/bin/logs.sh
 }
 
+function vop-redis(){
+  redis-cli -h dx.staging.voiceofpsychic.com -a vopredmachina419 $@
+}
+
 function build-vop(){
   TARGET=vop; $1
   if [ -d $TARGET ]; then
