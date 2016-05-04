@@ -67,6 +67,24 @@ function setup-vop() {
   # tmux send-keys vim Enter
 }
 
+function setup-vop-client(){
+  if [ -n "$1" ]; then
+    setup-dir $1
+  fi
+  setup-clean
+
+  tmux rename-window Client
+
+  # tmux move-window -s 3 -t 99
+
+  # tmux select-window -t 2
+  # tmux send-keys -t 2 emacs Space -nw Enter
+
+  tmux select-window -t 0
+  # tmux send-keys vim Enter
+}
+
+
 function setup-zen() {
   if [ -n "$1" ]; then
     setup-dir $1

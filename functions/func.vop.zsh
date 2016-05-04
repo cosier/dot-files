@@ -6,6 +6,10 @@ function vop-logs(){
   /vopsy/bin/logs.sh
 }
 
+function vop-client(){
+  sudo CODE_CACHE=on CLIENT_PORT_80=80 CLIENTPORT_443=443 /vopsy/client/bin/start.sh
+}
+
 function vop-redis(){
   redis-cli -h dx.staging.voiceofpsychic.com -a vopredmachina419 $@
 }
