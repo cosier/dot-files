@@ -32,6 +32,7 @@ fi
 export CLOJURESCRIPT_HOME=$DEVELOPER_HOME/sdk/clojurescript-vanilla
 
 export LA=/Users/bailey/Library/LaunchAgents
+# export EMACS_SERVER_FILE=/var/run/emacs.sock
 
 # export DATABASE_URL=postgres://docker:michigan\!\$007@localhost:5432/postgres
 
