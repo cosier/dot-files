@@ -14,6 +14,10 @@ function vop-redis(){
   redis-cli -h dx.staging.voiceofpsychic.com -a vopredmachina419 $@
 }
 
+function vop-redis-local(){
+  redis-cli -h 127.0.0.1 -a vopredmachina419 $@
+}
+
 function build-vop(){
   TARGET=vop; $1
   if [ -d $TARGET ]; then

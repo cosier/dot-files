@@ -10,8 +10,24 @@ function em(){
   if [ -z "$EMS" ]; then
     EMS=vop
   fi
-  echo "Starting emacs: $EMS at $DIR"
-  emacsclient --server-file=$EMS $DIR
+  # echo "Starting emacs: $EMS at $DIR"
+  # emacsclient --server-file=$EMS $DIR
+  emacs -nw $DIR
+}
+
+function emi(){
+  if [ -z "$1" ]; then
+    DIR=$(pwd)
+  else
+    DIR=$1
+  fi
+
+  if [ -z "$EMS" ]; then
+    EMS=vop
+  fi
+  # echo "Starting emacs: $EMS at $DIR"
+  # emacsclient --server-file=$EMS $DIR
+  emacs -nw $DIR
 }
 
 function emacs-server(){
