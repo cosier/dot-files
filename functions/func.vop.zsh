@@ -18,6 +18,10 @@ function vop-redis-local(){
   redis-cli -h 127.0.0.1 -a vopredmachina419 $@
 }
 
+function vop-z1(){
+  mosh z1deploy@c4x.voiceofpsychic.com
+}
+
 function build-vop(){
   TARGET=vop; $1
   if [ -d $TARGET ]; then
@@ -153,6 +157,6 @@ function tunnel-vop-local(){
 function tunnel-vop-c4(){
   REMOTE=$1
   LOCAL=$2
-  ssh -N -R \*:$REMOTE:0.0.0.0:$LOCAL c4.voiceofpsychic.com -v
+  ssh -N -R \*:$REMOTE:0.0.0.0:$LOCAL c4.expertswap.com -v
 }
 alias tunnel-vop='source ~/.dot/functions/func.vop.zsh; tunnel-vop-local 9980 80'
