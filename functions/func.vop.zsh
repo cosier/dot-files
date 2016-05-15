@@ -153,6 +153,6 @@ function tunnel-vop-local(){
 function tunnel-vop-c4(){
   REMOTE=$1
   LOCAL=$2
-  ssh -N -R \*:$REMOTE:0.0.0.0:$LOCAL c4.voiceofpsychic.com -v
+  ssh -N -R \*:$REMOTE:0.0.0.0:$LOCAL c4.expertswap.com -v
 }
 alias tunnel-vop='source ~/.dot/functions/func.vop.zsh; tunnel-vop-local 9980 80'
