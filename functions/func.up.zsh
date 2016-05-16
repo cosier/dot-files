@@ -25,3 +25,14 @@ function up-metal(){
   metal
 }
 
+function up-staging(){
+  cd /vopsy;
+  tmux rename-window STAGING;
+  mosh c4.expertswap.com
+}
+
+function up-production(){
+  cd /vopsy;
+  tmux rename-window PRODUCTION;
+  mosh z1deploy@c4x.voiceofpsychic.com
+}
