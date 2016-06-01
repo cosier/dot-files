@@ -97,6 +97,9 @@ function vop-socket(){
 function vop-mrc(){
   /vopsy/mercury/bin/start.sh $@
 }
+function vop-lander(){
+  /vopsy/lander/bin/start.sh $@
+}
 
 function vop-ramit(){
   sudo rm /vopsy
@@ -139,7 +142,7 @@ alias vc='vcprod'
 alias vcprod='vop; bin/compose.production.sh'
 alias vcdev='vop; bin/compose.development.sh'
 
-alias metal='vop; bin/start.metal.sh'
+alias metal='vop; emmy/bin/start.metal.sh'
 alias vs='vop; bin/start.sh'
 alias vp='vop; bin/start.production.sh'
 alias vmstart='vop; bin/start.manual.sh'
