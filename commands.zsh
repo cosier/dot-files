@@ -1,6 +1,6 @@
 #!/bin/zsh
 alias google='links2 http://google.com/'
-
+alias lg='app logs -f'
 alias svim='sudo vim'
 alias gs='git status'
 alias ga='git add . -A'

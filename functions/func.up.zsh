@@ -1,3 +1,6 @@
+function t(){
+  tmux rename-window $@
+}
 function up-ngx(){
   cd /vopsy/nginx;
   tmux rename-window NGX
@@ -28,11 +31,13 @@ function up-metal(){
 function up-staging(){
   cd /vopsy;
   tmux rename-window STAGING;
+  tmux move-window -t 98
   mosh c4.expertswap.com
 }
 
 function up-production(){
   cd /vopsy;
   tmux rename-window PRODUCTION;
+  tmux move-window -t 99
   mosh z1deploy@c4x.voiceofpsychic.com
 }
