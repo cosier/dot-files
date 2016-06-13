@@ -74,7 +74,7 @@ alias hubify='cd /var/www/hubify'
 alias ildar-hub='cd ~/Developer/work/hubify/html/ildar-hub'
 alias ildar='ildar-hub'
 
-alias vop='cd ~/Developer/work/vop'
+alias vop='/vopsy'
 alias mrc='vop; cd mercury'
 alias ngx='vop; cd nginx'
 alias pma='vop; cd puma'

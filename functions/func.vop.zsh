@@ -1,6 +1,18 @@
+alias lmerc='app logs -f mercury'
+alias lmerc='app logs -f nginx'
+alias lm='lmerc'
+alias lmrc='lmerc'
+
 function vop-db(){
   export DATABASE_URL='postgres://vop:hamster!$007@localhost:5432/vop_dev'
 }
+
+function vop-build(){
+  cd /vopsy/$1
+  docker build -t vopnl1/$1 .
+}
+
+alias b='vop-build'
 
 function vop-logs(){
   /vopsy/bin/logs.sh
