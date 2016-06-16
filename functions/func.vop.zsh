@@ -2,6 +2,9 @@ alias lmerc='app logs -f mercury'
 alias lmerc='app logs -f nginx'
 alias lm='lmerc'
 alias lmrc='lmerc'
+alias lnd='vop; cd lander'
+alias var='vop; cd var;'
+alias baseos='vop; cd base-os';
 
 function vop-db(){
   export DATABASE_URL='postgres://vop:hamster!$007@localhost:5432/vop_dev'
