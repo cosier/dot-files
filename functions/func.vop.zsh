@@ -5,6 +5,55 @@ alias lmrc='lmerc'
 alias lnd='vop; cd lander'
 alias var='vop; cd var;'
 alias baseos='vop; cd base-os';
+alias vps='vop-service'
+alias vev='vop-env'
+alias vpp='vop-port'
+
+function vop-port(){
+  if [ -z "$1" ]; then
+    echo "No service name provided"
+    return
+  fi
+  SERVICE=$1
+  shift
+
+  app ps $SERVICE | grep $SERVICE | awk '{ print $7}' | tr ':' '\n' | grep "\->" | tr '\->' '\n' | grep -v tcp
+}
+
+function vop-service(){
+  if [ -z "$1" ]; then
+    echo "No service name provided"
+    return
+  fi
+  file=/vopsy/var/compose/includes/_$1.yml
+  if [ ! -f $file ]; then
+    echo "File does not exist: $file"
+    return
+  else
+    vim $file
+  fi
+}
+
+function vop-env(){
+  if [ -z "$1" ]; then
+    echo "No service name provided"
+    return
+  fi
+
+  if [ -z "$EDITOR" ]; then
+    EDITOR=vim
+  fi
+
+  file=/vopsy/var/env/$1/development.env
+  if [ ! -f $file ]; then
+    echo "File does not exist: $file"
+    return
+  else
+    $EDITOR $file
+  fi
+}
+
+
 
 alias app='rocket'
 
