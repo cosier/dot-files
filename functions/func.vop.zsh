@@ -6,6 +6,8 @@ alias lnd='vop; cd lander'
 alias var='vop; cd var;'
 alias baseos='vop; cd base-os';
 
+alias app='rocket'
+
 function vop-db(){
   export DATABASE_URL='postgres://vop:hamster!$007@localhost:5432/vop_dev'
 }
