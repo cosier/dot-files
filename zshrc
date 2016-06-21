@@ -7,8 +7,10 @@ export GIT_EDITOR=vim
 export PGDATA="/usr/local/var/postgres"
 
 export HOMEBREW_GITHUB_API_TOKEN=15aaa9625f002474d5fbfe9bcaa9f83fe09ee3b7
-ulimit -n 42000
+
 TERM=screen-256color
+
+ulimit -n 9999
 
 bindkey "\e[1~" beginning-of-line
 bindkey "\e[4~" end-of-line

@@ -9,6 +9,10 @@ alias vps='vop-service'
 alias vev='vop-env'
 alias vpp='vop-port'
 
+alias l='app logs -f'
+
+alias app='rocket'
+
 function vop-port(){
   if [ -z "$1" ]; then
     echo "No service name provided"
@@ -62,6 +66,7 @@ function vop-db(){
 }
 
 function vop-build(){
+  [ ! -d /vopsy/$1 ]; echo "Directory does not exist:" >2 exit 3
   cd /vopsy/$1
   docker build -t vopnl1/$1 .
 }
