@@ -35,6 +35,13 @@ function up-staging(){
   mosh c4.expertswap.com
 }
 
+function up-hubify(){
+  cd /vopsy;
+  tmux rename-window STAGING;
+  tmux move-window -t 98
+  mosh xena@hubify
+}
+
 function up-production(){
   cd /vopsy;
   tmux rename-window PRODUCTION;

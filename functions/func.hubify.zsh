@@ -1,90 +1,12 @@
 #!/bin/zsh
 
-function deploy-hubify(){
-  git push github master:master
-  deploy-hubify-staging
-  deploy-hubify-production
-}
 
-function deploy-hubify-staging(){
-  git checkout staging
-  git merge master
-  git push github staging:staging
-}
-
-function deploy-hubify-production(){
-  git checkout production
-  git merge master
-  git push github production:production
-}
-
-
-function hubify-up(){
-  git push github master:master &
-  git push github staging:staging &
-  git push github production:production
-}
-
-function hubify-staging-migrate(){
-  RAILS_ENV=production DATABASE_URL="postgres://docker:michigan!\$007@db.hubify-staging.hubify.svc.tutum.io:5432/postgres" rake db:migrate
-}
-function hubify-production-migrate(){
-  RAILS_ENV=production DATABASE_URL="postgres://docker:michigan!\$007@db.hubify-production.hubify.svc.tutum.io:5432/postgres" rake db:migrate
-}
-
-function hubify-dev-db(){
-  port=$1
-  host=$2
-  if [ -z "$port" ]; then
-    port='5432'
-  fi
-  if [ -z "$host" ]; then
-    host='172.17.2.0'
-  fi
-
-  DATABASE_URL="postgres://docker:michigan!\$007@$host:$port/postgres"
-  echo "DATABASE_URL=$DATABASE_URL"
-  export DATABASE_URL=$DATABASE_URL
-}
-
-function hubify-dev-console(){
-  port=$1
-  if [ -z "$port" ]; then
-    port='5432'
-  fi
-  DATABASE_URL="postgres://docker:michigan!\$007@localhost:$port/postgres"
-  echo "DATABASE_URL=$DATABASE_URL"
-  DATABASE_URL=$DATABASE_URL rails console
-}
-
-function hubify-staging-console(){
-  DATABASE_URL="postgres://docker:michigan!\$007@db.hubify-staging.hubify.svc.tutum.io:5432/postgres"
-  echo "DATABASE_URL=$DATABASE_URL"
-  DATABASE_URL=$DATABASE_URL rails console
-}
-
-function hubify-production-console(){
-  DATABASE_URL="postgres://docker:michigan!\$007@db.hubify-production.hubify.svc.tutum.io:5432/postgres"
-  echo "DATABASE_URL=$DATABASE_URL"
-  DATABASE_URL=$DATABASE_URL rails console
-}
-
-alias hup='hubify-up'
-alias hca='RAILS_ENV=production rake assets:precompile'
-alias hs='~/Developer/work/hubify/bin/start.sh'
-alias hmp='docker-compose -f ~/Developer/work/hubify/docker-compose.yml'
-alias dstage='deploy-hubify-staging'
-alias dprod='deploy-hubify-production'
-
-alias hssh='ssh ubuntu@dx.hubify.com -v -i ~/.ssh/hubify_v2_dev.pem'
-alias mhssh='mosh bailey@dx.hubify.com'
-alias ssh-hubify-spot='ssh -i ~/.ssh/hubify_dev_workloads.pem ubuntu@spot.hubify.com'
-alias mosh-hubify-spot='LC_ALL=C.UTF-8 mosh --server="LANG=C.UTF-8 mosh-server" bailey@spot.hubify.com'
-
-alias unicorn-restart='sudo kill -USR2 $(ps aux | grep unicorn | grep master | awk '{ print $2 }')'
-
-
-
+alias h='hubify'
+alias hs='hub; cd services'
+alias hmrc='hs; cd mercury'
+alias hdoor='hs; cd doorman'
+alias hrails='hs; cd rails'
+alias rails='hs; cd rails'
 
 #####################################
 # S3 Backups commands
