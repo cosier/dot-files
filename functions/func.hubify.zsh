@@ -1,12 +1,18 @@
 #!/bin/zsh
 
-
+alias hb='hubify build'
 alias h='hubify'
 alias hs='hub; cd services'
 alias hmrc='hs; cd mercury'
 alias hdoor='hs; cd doorman'
 alias hrails='hs; cd rails'
 alias rails='hs; cd rails'
+alias hos='hub; cd os'
+alias hcd='hub; cd'
+
+alias ssh-hubify='ssh xena@sg.hubify.com'
+
+alias app='hubify'
 
 #####################################
 # S3 Backups commands

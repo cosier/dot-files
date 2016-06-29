@@ -1,15 +1,5 @@
 alias zune='cd /zune'
 alias z='zune'
-alias lmerc='app logs -f mercury'
-alias lmerc='app logs -f nginx'
-alias lm='lmerc'
-alias lmrc='lmerc'
-alias lnd='zune; cd lander'
-alias var='zune; cd var;'
-alias baseos='zune; cd base-os';
-alias vps='zune-service'
-alias vev='zune-env'
-alias vpp='zune-port'
 
 function zune-port(){
   if [ -z "$1" ]; then

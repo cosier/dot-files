@@ -1,18 +1,3 @@
-alias lmerc='app logs -f mercury'
-alias lmerc='app logs -f nginx'
-alias lm='lmerc'
-alias lmrc='lmerc'
-alias lnd='vop; cd lander'
-alias var='vop; cd var;'
-alias baseos='vop; cd base-os';
-alias vps='vop-service'
-alias vev='vop-env'
-alias vpp='vop-port'
-
-alias l='app logs -f'
-
-alias app='rocket'
-
 function vop-port(){
   if [ -z "$1" ]; then
     echo "No service name provided"
@@ -199,32 +184,32 @@ function vop-ram-dump(){
   fi
 }
 
-alias dump='vop-ram-dump'
+# alias dump='vop-ram-dump'
 
-alias pma-dump='vop-ram-dump puma'
-alias mrc-dump='vop-ram-dump mercury'
+# alias pma-dump='vop-ram-dump puma'
+# alias mrc-dump='vop-ram-dump mercury'
 
-alias pma-serv='APP_ENV=development WEBPACK_DEV_HOST=local.voiceofpsychic.com WEBPACK_DEV_PORT=443 WEBPACK_DEV_PROTOCOL=https DISABLE_PUMA=false /vopsy/puma/bin/start.sh'
-alias js-serv='WEBPACK_FORCE=true /vopsy/puma/bin/webpack.sh'
-alias redis-serv='/vopsy/redis/bin/start.sh'
+# alias pma-serv='APP_ENV=development WEBPACK_DEV_HOST=local.voiceofpsychic.com WEBPACK_DEV_PORT=443 WEBPACK_DEV_PROTOCOL=https DISABLE_PUMA=false /vopsy/puma/bin/start.sh'
+# alias js-serv='WEBPACK_FORCE=true /vopsy/puma/bin/webpack.sh'
+# alias redis-serv='/vopsy/redis/bin/start.sh'
 
-alias bv='build-vop'
-alias v='vmp'
-alias zenv='vop; zen'
-alias zenvp='zen /vopsy; cd puma'
+# alias bv='build-vop'
+# alias v='vmp'
+# alias zenv='vop; zen'
+# alias zenvp='zen /vopsy; cd puma'
 
-alias vc='vcprod'
-alias vcprod='vop; bin/compose.production.sh'
-alias vcdev='vop; bin/compose.development.sh'
+# alias vc='vcprod'
+# alias vcprod='vop; bin/compose.production.sh'
+# alias vcdev='vop; bin/compose.development.sh'
 
-alias metal='vop; emmy/bin/start.metal.sh'
-alias vs='vop; bin/start.sh'
-alias vp='vop; bin/start.production.sh'
-alias vmstart='vop; bin/start.manual.sh'
-alias vmstop='vop; bin/stop.manual.sh'
+# alias metal='vop; emmy/bin/start.metal.sh'
+# alias vs='vop; bin/start.sh'
+# alias vp='vop; bin/start.production.sh'
+# alias vmstart='vop; bin/start.manual.sh'
+# alias vmstop='vop; bin/stop.manual.sh'
 
-alias mosh-vop-staging='mosh dx.staging.voiceofpsychic.com'
-alias ssh-vop-staging='ssh bailey@dx.staging.voiceofpsychic.com'
+# alias mosh-vop-staging='mosh dx.staging.voiceofpsychic.com'
+# alias ssh-vop-staging='ssh bailey@dx.staging.voiceofpsychic.com'
 
 function tunnel-vop-local(){
   REMOTE=$1
