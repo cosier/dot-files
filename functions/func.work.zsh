@@ -3,20 +3,30 @@ alias door='service-doorman'
 alias mrc='service-mercury'
 alias vev='env-service'
 alias vps='compose-service'
-
+alias b='build-service'
+alias build='build-service'
+alias logs='logs-service'
 
 function mount-hubify(){
   export APP_MOUNT=/hubify
+  export APP_NAME=hubify
   mount-save
 }
 
 function mount-zune(){
   export APP_MOUNT=/zune
+  export APP_NAME=zune
   mount-save
 }
 
 function mount-save(){
-  echo "$APP_MOUNT" > ~/.app_mount
+  if [ -n "$APP_MOUNT" ]; then
+    echo "$APP_MOUNT" > ~/.app_mount
+  fi
+
+  if [ -n "$APP_NAME" ]; then
+    echo "$APP_NAME" > ~/.app_name
+  fi
 }
 
 function mount-reload(){
@@ -25,28 +35,48 @@ function mount-reload(){
   else
     export APP_MOUNT=/hubify
   fi
+  if [ -f ~/.app_name ]; then
+    export APP_NAME=$(cat ~/.app_name)
+  else
+    export APP_NAME=hubify
+  fi
 }
 
 if [ -z "$APP_MOUNT" ]; then
   mount-reload
 fi
+if [ -z "$APP_NAME" ]; then
+  mount-reload
+fi
 
-function compose-service(){
-  if [ -z "$APP_MOUNT" ]; then
-    APP_MOUNT=$APP_MOUNT
+function logs-service(){
+  if [ -z "$APP_NAME" ]; then
+    echo "APP_NAME not defined"
+    return
+  fi
+
+  $APP_NAME logs -f $1
+}
+
+function build-service(){
+  if [ -z "$APP_NAME" ]; then
+    echo "APP_NAME not defined"
+    return
   fi
 
   service=$1
+  echo "$APP_NAME: building"
+  $APP_NAME build $service
+}
+
+function compose-service(){
+  service=$1
 
   COMPOSE=$APP_MOUNT/vault/compose/includes/_$service.yml
-  vim COMPOSE
+  vim $COMPOSE
 }
 
 function env-service(){
-  if [ -z "$APP_MOUNT" ]; then
-    APP_MOUNT=$APP_MOUNT
-  fi
-
   service=$1
 
   SDIR=$APP_MOUNT/vault/env/$service
