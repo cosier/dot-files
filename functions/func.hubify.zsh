@@ -11,6 +11,8 @@ alias hos='hub; cd os'
 alias hcd='hub; cd'
 
 alias ssh-hubify='ssh xena@sg.hubify.com'
+alias proxy-hubify='ssh xena@sg.hubify.com -D8192'
+alias mosh-hubify='mosh xena@sg.hubify.com'
 
 alias app='hubify'
 

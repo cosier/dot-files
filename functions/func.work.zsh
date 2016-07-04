@@ -6,6 +6,9 @@ alias vps='compose-service'
 alias b='build-service'
 alias build='build-service'
 alias logs='logs-service'
+alias l='logs'
+
+alias pmc='client-service'
 
 function mount-hubify(){
   export APP_MOUNT=/hubify
@@ -56,6 +59,16 @@ function logs-service(){
   fi
 
   $APP_NAME logs -f $1
+}
+
+function client-service(){
+  if [ -z "$APP_MOUNT" ]; then
+    echo "APP_MOUNT not defined"
+    return
+  fi
+
+  CLIENT_ROOT=$APP_MOUNT/services/client
+  cd $CLIENT_ROOT
 }
 
 function build-service(){

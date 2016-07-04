@@ -69,14 +69,9 @@ alias tmkf='cd ~/Developer/work/tmkf'
 # Tatar Work
 alias skej='cd ~/Developer/work/skejio/core'
 alias sp='skej'
-alias hub='cd /hubify'
 
+alias hub='cd /hubify'
 alias zune='cd /zune'
-alias mrc='zune; cd services/mercury'
-alias ngx='zune; cd services/doorman'
-alias pma='zune; cd services/puma'
-alias pmc='zune; cd services/client'
-alias cns='zune; cd services/consul'
 
 alias scaleboom='cd ~/Developer/work/scaleboom/core'
 alias scale-order='cd ~/Developer/work/scaleboom/order;'
