@@ -57,8 +57,6 @@ function zune-build(){
   /zune/bin/build.sh
 }
 
-alias b='zune-build'
-
 function zune-logs(){
   /zunesy/bin/logs.sh
 }

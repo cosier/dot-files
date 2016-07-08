@@ -1,14 +1,20 @@
 
 alias door='service-doorman'
-alias mrc='service-mercury'
 alias vev='env-service'
 alias vps='compose-service'
 alias b='build-service'
 alias build='build-service'
 alias logs='logs-service'
 alias l='logs'
+alias srv='app-mount; cd services'
+alias pad='srv; cd padrino'
+alias mrc='srv; cd mercury'
+alias pmc='src; cd client'
 
-alias pmc='client-service'
+function app-mount(){
+  mount-reload
+  cd $APP_MOUNT
+}
 
 function mount-hubify(){
   export APP_MOUNT=/hubify
@@ -59,6 +65,16 @@ function logs-service(){
   fi
 
   $APP_NAME logs -f $1
+}
+
+function padrion-service(){
+  if [ -z "$APP_MOUNT" ]; then
+    echo "APP_MOUNT not defined"
+    return
+  fi
+
+  cd $APP_MOUNT/services/padrino
+
 }
 
 function client-service(){
