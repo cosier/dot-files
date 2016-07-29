@@ -1,4 +1,4 @@
-// Crowdist Functions
+# Crowdist Functions
 
 crowd_go = function(){
   cd ~/Developer/work/crowdist/barge;
