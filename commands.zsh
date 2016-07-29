@@ -141,7 +141,7 @@ else
     alias desktop-on='gsettings set org.gnome.desktop.background show-desktop-icons true'
 fi
 
-alias yt='youtube-dl'
+alias yt='noglob youtube-dl'
 alias kng='sudo killall aircrack-ng'
 
 
