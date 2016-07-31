@@ -22,6 +22,12 @@ function mount-hubify(){
   mount-save
 }
 
+function mount-crowdist(){
+  export APP_MOUNT=~/Developer/work/crowdist/barge
+  export APP_NAME=crowdist
+  mount-save
+}
+
 function mount-zune(){
   export APP_MOUNT=/zune
   export APP_NAME=zune

@@ -7,7 +7,7 @@ function crowdist_bash(){
   source /home/bailey/Developer/work/crowdist/barge/lib/bash/src/base.sh;
 }
 
-crowd_go = function(){
+crowd_barge = function() {
   cd ~/Developer/work/crowdist/barge;
   if [ -n "$1" ]; then
     $@
@@ -16,15 +16,38 @@ crowd_go = function(){
   fi
 }
 
-alias cs='crowd_go'
+crowd_compose = function() {
+  vim ~/Developer/work/crowdist/barge/vault/compose/docker-compose.yml;
+}
 
-alias csb='crowdist_bash'
+crowd_env = function(){
+  vim ~/Developer/work/crowdist/barge/vault/env;
+}
 
-alias cs_reducer='crowd_go; cd services/reducer'
-alias cs_reduce='cs_reducer'
-alias cs_red='cs_reducer'
-alias cs_r='cs_reducer'
-alias cs_rr='cs_reducer'
-alias cs_rr='cs_reducer'
+alias crowd='crowdist'
+alias cr='crowdist'
+alias crb='crowdist_bash'
+
+
+alias cb='crowd_barge'
+
+alias cs_reducer='crowd_barge; cd services/reducer'
 
 alias cs_os='crowd_go; cd systems/os'
+alias csl='crowd_go; cd lib'
+alias css='crowd_go; cd services'
+
+function test_crowdist_expand_includes(){
+  crowdist_bash
+  cat $BARGE_ROOT/vault/compose/docker-compose.yml | expand_includes
+}
+
+function test_crowdist_compile_config(){
+  crowdist_bash
+  cat $BARGE_ROOT/vault/compose/docker-compose.yml | compile_config
+}
+
+function test_crowdist(){
+  crowdist_bash
+  cat $BARGE_ROOT/vault/compose/docker-compose.yml | expand_includes | compile_config
+}
