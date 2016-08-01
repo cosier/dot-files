@@ -94,13 +94,17 @@ function client-service(){
 }
 
 function build-service(){
+  if [ -f ~/.app_name ]; then
+    export APP_NAME=$(cat ~/.app_name)
+  fi
+
   if [ -z "$APP_NAME" ]; then
     echo "APP_NAME not defined"
     return
   fi
 
   service=$1
-  echo "$APP_NAME: building"
+
   $APP_NAME build $service
 }
 
