@@ -1,23 +1,91 @@
 # Crowdist Functions
 
-CROWDIST_ROOT=~/Developer/work/crowdist/barge
+CROWDIST_ROOT=~/barge
 
 function crowdist_bash(){
   export BARGE_ROOT=$CROWDIST_ROOT;
-  source /home/bailey/Developer/work/crowdist/barge/lib/bash/src/base.sh;
+  source /barge/systems/os/lib/bash/src/base.sh;
 }
 
 crowd_barge = function() {
-  cd ~/Developer/work/crowdist/barge;
+  cd /barge;
   $@
 }
 
-crowd_compose = function() {
-  vim ~/Developer/work/crowdist/barge/vault/compose/docker-compose.yml;
+crowd_env = function(){
+  s=$1
+  env=$2
+
+  if [ -z "$env" ]]; then
+    env="development"
+  fi
+
+  if [[ "$s" != "" ]]; then
+    vim /barge/vault/env/$s/$env.env;
+  fi
+
 }
 
-crowd_env = function(){
-  vim ~/Developer/work/crowdist/barge/vault/env;
+crowd_services = function(){
+  sv=$1
+  sr=/barge/services
+  p=$sr/$sv
+  if [ -d $p ]; then
+    cd $p
+
+  else
+    result=$(ls $sr | grep -i $sv | head -n1)
+
+    if [ -z "$result" ]; then
+      ls $sr | grep $sv
+      echo "$p -> no result $result" 1>&2
+      return
+    fi
+
+    if [ -d $sr/$result ]; then
+      cd $sr/$result;
+    else
+      echo -e "Could not find: $p at $sr"
+      cd $sr
+      return
+    fi
+  fi
+}
+
+crowd_libs = function(){
+  lib=$1
+  cd /barge/systems/os/lib/${lib}*
+}
+
+crowd_compose = function(){
+  lib=$1
+
+  if [[ "$lib" == "door" ]] || \
+     [[ "$lib" == "dm" ]] || \
+     [[ "$lib" == "d" ]];
+  then
+    sv='doorman'
+  fi
+
+  if [[ "$lib" == "reduce" ]] || \
+     [[ "$lib" == "red" ]] || \
+     [[ "$lib" == "r" ]];
+  then
+    sv='reducer'
+  fi
+
+  main_file=/barge/vault/compose/docker-compose.yml;
+
+  if [ -z "$lib" ]; then
+    vim $main_file
+  else
+    lib_file="/barge/vault/compose/includes/_${lib}*.yml";
+    if [ -f $lib_file ]; then
+      vim $lib_file
+    else
+      vim $main_file
+    fi
+  fi
 }
 
 alias crowd_src_build='vim /barge/lib/bash/src/build.sh'
@@ -25,7 +93,6 @@ alias crowd_src_build_interface='vim /barge/bin/build_interface.sh'
 alias crowd_src_app='vim /barge/lib/bash/src/app.sh'
 
 alias crowd='crowdist'
-alias cr='crowdist'
 alias c='crowdist'
 
 alias cstat='crowdist status'
@@ -37,12 +104,17 @@ alias cb='crowd_barge'
 
 alias cs_reducer='crowd_barge; cd services/reducer'
 
-alias cs_os='crowd_barge; cd systems/os'
+alias os='crowd_barge; cd systems/os'
 
-alias csl='crowd_barge;   cd lib; ls'
-alias css='crowd_barge;   cd services; ls'
-alias csss='css'
-alias cssss='css'
+alias cl='crowd_barge;   cd systems/os/lib; ls'
+alias clb='crowd_barge; cd systems/os/lib/bash; ls'
+alias cll='crowd_barge; cd systems/os/lib/lua; ls'
+
+alias cs='source ~/.dot/functions/func.crowdist.zsh; crowd_services'
+
+alias csd='crowd_services doorman; ls'
+alias csr='crowd_services reducer; ls'
+
 
 function test_crowdist_expand_includes(){
   crowdist_bash

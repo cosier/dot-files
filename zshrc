@@ -19,27 +19,29 @@ hostname=$(hostname)
 
 # Logic for selective themes
 # across various different devices
-case "$hostname" in
-    *vagrant*)
-        echo -e "Vagrant Box Detected: $hostname"
-        ZSH_THEME="blinks"
-        ;;
+# case "$hostname" in
+    # *vagrant*)
+        # echo -e "Vagrant Box Detected: $hostname"
+        # ZSH_THEME="blinks"
+        # ;;
 
-    *virtual*)
-        echo -e "Virtual Machine Detected: $hostname"
-        ZSH_THEME="blinks"
-        ;;
+    # *virtual*)
+        # echo -e "Virtual Machine Detected: $hostname"
+        # ZSH_THEME="blinks"
+        # ;;
 
-    *)
-      #echo -e "Vanilla Box Detected: $hostname"
-      ZSH_THEME="bira"
-      ;;
-esac
+    # *)
+      # #echo -e "Vanilla Box Detected: $hostname"
+      # ZSH_THEME="bira"
+      # ;;
+# esac
 
 
 ZSH_THEME="bira"
-HISTSIZE=5000 # session history size
-SAVEHIST=1000 # saved history
+
+HISTFILE=~/.zsh_history
+HISTSIZE=999999999
+SAVEHIST=$HISTSIZE
 
 # CASE_SENSITIVE="true"
 # DISABLE_AUTO_UPDATE="true"
@@ -50,7 +52,7 @@ DISABLE_AUTO_TITLE="true"
 
 # COMPLETION_WAITING_DOTS="true"
 
-plugins=(git ruby)
+plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
 source ~/.dot/envs.zsh
@@ -64,13 +66,13 @@ source ~/.dot/services.zsh
 source ~/.dot/projects.zsh
 source ~/.dot/colors
 
-if [[ -a /usr/local/rvm/scripts/rvm ]]; then
-    source /usr/local/rvm/scripts/rvm
-fi
+# if [[ -a /usr/local/rvm/scripts/rvm ]]; then
+    # source /usr/local/rvm/scripts/rvm
+# fi
 
-if [[ -a ~/.rvm/scripts/rvm ]]; then
-    source ~/.rvm/scripts/rvm
-fi
+# if [[ -a ~/.rvm/scripts/rvm ]]; then
+    # source ~/.rvm/scripts/rvm
+# fi
 
 if [[ -a ~/.Xmodmap ]]; then
     xmodmap ~/.Xmodmap
