@@ -77,9 +77,13 @@ crowd_compose = function(){
   main_file=/barge/vault/compose/docker-compose.yml;
 
   if [ -z "$lib" ]; then
+    echo "lib:$lib not found"
     vim $main_file
+
   else
-    lib_file="/barge/vault/compose/includes/_${lib}*.yml";
+    lib_file="/barge/vault/compose/includes/_${lib}.yml";
+    echo "lib:$lib_file"
+
     if [ -f $lib_file ]; then
       vim $lib_file
     else
@@ -101,6 +105,7 @@ alias crb='crowdist_bash'
 
 
 alias cb='crowd_barge'
+alias cv='crowd_barge; cd vault'
 
 alias cs_reducer='crowd_barge; cd services/reducer'
 
