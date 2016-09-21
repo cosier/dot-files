@@ -6,7 +6,7 @@ alias hs='hub; cd services'
 alias hmrc='hs; cd mercury'
 alias hdoor='hs; cd doorman'
 alias hrails='hs; cd rails'
-alias rails='hs; cd rails'
+# alias rails='hs; cd rails'
 alias hos='hub; cd os'
 alias hcd='hub; cd'
 

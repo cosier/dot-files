@@ -51,4 +51,9 @@ if [ -f ~/.env ]; then
   source ~/.env;
 fi
 
+
+export PATH=$PATH:/usr/local/bundle/ruby/1.9.1/bin
+export PATH=$PATH:~/.cargo/bin
+
+
 alias envsup='source ~/.env'
