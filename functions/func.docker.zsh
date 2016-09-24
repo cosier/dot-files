@@ -1,3 +1,12 @@
+function docker-logs(){
+  if [ -z "$1" ]; then
+    echo "No service name provided"
+    return
+  fi
+
+  docker logs --follow $1
+}
+
 function docker-env(){
   if [ -z "$1" ]; then
     echo 'Docker Machine for Fusion'
@@ -69,5 +78,5 @@ alias dup='docker-compose up'
 alias run='docker-compose run'
 alias rst='docker-restart'
 alias dm='docker-machine'
-
 alias web='docker run -t tutum.co/hubify/web'
+alias dl='docker-logs'

@@ -1,15 +1,23 @@
 # Crowdist Functions
 
-CROWDIST_ROOT=~/barge
+CROWDIST_ROOT=~/Developer/work/crowdist/barge;
 
 function crowdist_bash(){
   export BARGE_ROOT=$CROWDIST_ROOT;
-  source /barge/systems/os/lib/bash/src/base.sh;
+  source $CROWDIST_ROOT/systems/os/lib/bash/src/base.sh;
 }
 
 crowd_barge = function() {
-  cd /barge;
-  $@
+  if [[ "$CROWDIST_ROOT" != "" ]]; then
+    echo -e "CROWDIST_ROOT: $CROWDIST_ROOT"
+    cd $CROWDIST_ROOT;
+    $@
+  else
+
+    echo -e "Using fake /barge due to missing CROWDIST_ROOT"
+    cd /barge
+    $@
+  fi
 }
 
 crowd_env = function(){
@@ -21,14 +29,13 @@ crowd_env = function(){
   fi
 
   if [[ "$s" != "" ]]; then
-    vim /barge/vault/env/$s/$env.env;
+    vim $CROWDIST_ROOT/vault/env/$s/$env.env;
   fi
-
 }
 
 crowd_services = function(){
   sv=$1
-  sr=/barge/services
+  sr=$CROWDIST_ROOT/services
   p=$sr/$sv
   if [ -d $p ]; then
     cd $p
@@ -54,7 +61,7 @@ crowd_services = function(){
 
 crowd_libs = function(){
   lib=$1
-  cd /barge/systems/os/lib/${lib}*
+  cd $CROWDIST_ROOT/systems/os/lib/${lib}*
 }
 
 crowd_compose = function(){
@@ -74,14 +81,14 @@ crowd_compose = function(){
     sv='reducer'
   fi
 
-  main_file=/barge/vault/compose/docker-compose.yml;
+  main_file=$CROWDIST_ROOT/vault/compose/docker-compose.yml;
 
   if [ -z "$lib" ]; then
     echo "lib:$lib not found"
     vim $main_file
 
   else
-    lib_file="/barge/vault/compose/includes/_${lib}.yml";
+    lib_file="$CROWDIST_ROOT/vault/compose/includes/_${lib}.yml";
     echo "lib:$lib_file"
 
     if [ -f $lib_file ]; then
@@ -92,9 +99,9 @@ crowd_compose = function(){
   fi
 }
 
-alias crowd_src_build='vim /barge/lib/bash/src/build.sh'
-alias crowd_src_build_interface='vim /barge/bin/build_interface.sh'
-alias crowd_src_app='vim /barge/lib/bash/src/app.sh'
+alias crowd_src_build='vim $CROWDIST_ROOT/lib/bash/src/build.sh'
+alias crowd_src_build_interface='vim $CROWDIST_ROOT/bin/build_interface.sh'
+alias crowd_src_app='vim $CROWDIST_ROOT/lib/bash/src/app.sh'
 
 alias crowd='crowdist'
 alias c='crowdist'
