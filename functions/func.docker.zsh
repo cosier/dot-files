@@ -80,3 +80,16 @@ alias rst='docker-restart'
 alias dm='docker-machine'
 alias web='docker run -t tutum.co/hubify/web'
 alias dl='docker-logs'
+
+####################################
+function docker-tuloko(){
+  docker run \
+    -v ~/Developer/work/bundles/tuloko:/usr/local/bundle \
+    -v ~/Developer/work/tuloko:/app \
+    -e MONGO_HOST='192.168.1.3' \
+    -e MONGO_DATABASE=tuloku-dev \
+    -t cosier/ruby-1.9.3 $@
+}
+
+alias tulo='source ~/.dot/functions/func.docker.zsh; docker-tuloko'
+alias tulu='tulo'
