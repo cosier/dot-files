@@ -105,6 +105,7 @@ alias crowd_src_app='vim $CROWDIST_ROOT/lib/bash/src/app.sh'
 
 alias crowd='crowdist'
 alias c='crowdist'
+alias cf='COMPOSE_FRESH=true crowdist'
 
 alias cstat='crowdist status'
 
