@@ -7,6 +7,7 @@ export GIT_EDITOR=vim
 export PGDATA="/usr/local/var/postgres"
 
 export HOMEBREW_GITHUB_API_TOKEN=15aaa9625f002474d5fbfe9bcaa9f83fe09ee3b7
+export TEST_API=true
 
 TERM=screen-256color
 
