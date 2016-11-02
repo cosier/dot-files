@@ -69,6 +69,7 @@ alias tmkf='cd ~/Developer/work/tmkf'
 alias skej='cd ~/Developer/work/skejio/core'
 alias sp='skej'
 
+alias lamule='cd ~/Developer/work/lamule'
 alias market='cd ~/Developer/work/marketstraddle'
 
 alias hub='cd /hubify'
