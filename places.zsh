@@ -103,4 +103,5 @@ alias playground='cd ~/Developer/playground'
 alias pg='playground'
 alias tm='cd ~/.tmux'
 
-
+alias tfdash='cd ~/Developer/work/tfdash'
+alias tf='tfdash'

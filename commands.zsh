@@ -1,4 +1,5 @@
 #!/bin/zsh
+
 alias google='links2 http://google.com/'
 alias lg='app logs -f'
 alias svim='sudo vim'
@@ -112,7 +113,7 @@ alias gcom="git add . -A; git commit -a -m"
 alias rs='git reset --hard'
 
 
-#Rails
+# Rails
 alias rake_db_clean='rake db:drop db:create db:schema:load'
 
 # Tmux

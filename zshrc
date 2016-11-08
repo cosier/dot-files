@@ -130,3 +130,8 @@ setopt hist_verify
 setopt inc_append_history
 setopt share_history # share command history data
 
+# Allow nested tmux
+export TMUX=false
+export TERM=screen-16color
+
+export ROOT_PORT=1000
