@@ -11,7 +11,7 @@ alias got='git'
 alias g='git'
 
 alias p='~/Developer/work/crowdist/barge/services/core/bin/padrino.sh'
-alias rspec='gr; bin/rspec'
+# alias rspec='gr; bin/rspec'
 
 alias fgo='forego'
 alias fm='foreman'

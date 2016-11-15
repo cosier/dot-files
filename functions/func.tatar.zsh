@@ -1,1 +1,1 @@
-alias capt='bundle exec cap tatar'
+alias capt='bundle exec cap do_staging'

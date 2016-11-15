@@ -1,6 +1,7 @@
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
 function virtualenv_prompt_info(){}
+
 skip_global_compinit=1
 export LANG=en_US.UTF-8
 export GIT_EDITOR=vim
@@ -11,12 +12,12 @@ export TEST_API=true
 
 TERM=screen-256color
 
-ulimit -n 9999
+# ulimit -n 9999
 
-bindkey "\e[1~" beginning-of-line
-bindkey "\e[4~" end-of-line
+# bindkey "\e[1~" beginning-of-line
+# bindkey "\e[4~" end-of-line
 
-hostname=$(hostname)
+# hostname=$(hostname)
 
 # Logic for selective themes
 # across various different devices
@@ -53,7 +54,7 @@ DISABLE_AUTO_TITLE="true"
 
 # COMPLETION_WAITING_DOTS="true"
 
-plugins=(git)
+plugins=(git git-flow-completion )
 
 source $ZSH/oh-my-zsh.sh
 source ~/.dot/envs.zsh
@@ -93,17 +94,10 @@ if [[ -a ~/.dot_hook ]]; then
    source ~/.dot_hook
 fi
 
-
-
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
-export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"
 
-case $OSTYPE in darwin*)
-  # docker-env fusion silent
-  ;;
-esac
+export PATH="$HOME/.rbenv/bin:$PATH"
+export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"
 
 ## Command history configuration
 if [ -z "$HISTFILE" ]; then
@@ -131,7 +125,9 @@ setopt inc_append_history
 setopt share_history # share command history data
 
 # Allow nested tmux
-export TMUX=false
+export TMUX=~/.tmux.sock
 export TERM=screen-16color
 
 export ROOT_PORT=1000
+
+eval "$(rbenv init -)"
