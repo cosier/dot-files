@@ -14,17 +14,18 @@ tastemykungfu.com
 beetflo.com)
 
 for domain in ${SITES[@]}; do
-  echo "Cloudflare -> Updating: $domain"
+  echo "Cloudflare -> Updating: $domain @$(date)" > ~/.cloudflare.log
   file=~/.dot/dyn/$domain.yml
-
   CLOUDFLARE_REFRESH='true' \
-    ~/.dot/bin/cloudflare-dns-update --configuration $file.new
+    ~/.dot/bin/cloudflare-dns-update --configuration $file.new >> ~/.cloudflare.log 2>&1
 
   if [[ $? != 0 ]]; then
     echo
-    echo "Cloudflare update error."
+    echo "Cloudflare update error." >> ~/.cloudflare.log
     echo
     exit 3
+  else
+    echo "$domain -> Success @ $(date)" >> ~/.cloudflare.log
   fi
 
   echo
