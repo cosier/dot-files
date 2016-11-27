@@ -20,6 +20,8 @@ alias ig='cd ~/Developer/sdk/ignifuga'
 alias apps='cd /apps';
 alias sites='cd /usr/local/etc/openresty/sites-enabled';
 
+alias tender='cd ~/Developer/work/tfdash'
+
 alias dev='cd ~/Developer/'
 alias ext='cd ~/Developer/ext'
 alias ext-gruber='cd ~/Developer/ext/gruber'
