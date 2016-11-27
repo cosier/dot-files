@@ -6,8 +6,31 @@ if [ -z "$(which cloudflare-dns-update)" ] ; then
   exit 3
 fi
 
-cloudflare-dns-update --configuration ~/.dot/dyn/cosier.ca.yml
-cloudflare-dns-update --configuration ~/.dot/dyn/dojopad.com.yml
-cloudflare-dns-update --configuration ~/.dot/dyn/askzune.com.yml
-cloudflare-dns-update --configuration ~/.dot/dyn/tastemykungfu.com.yml
-cloudflare-dns-update --configuration ~/.dot/dyn/beetflo.com.yml
+SITES=(
+askzune.com
+cosier.ca
+dojopad.com
+tastemykungfu.com
+beetflo.com)
+
+for domain in ${SITES[@]}; do
+  echo "Cloudflare -> Updating: $domain"
+  file=~/.dot/dyn/$domain.yml
+
+  CLOUDFLARE_REFRESH='true' \
+    ~/.dot/bin/cloudflare-dns-update --configuration $file.new
+
+  if [[ $? != 0 ]]; then
+    echo
+    echo "Cloudflare update error."
+    echo
+    exit 3
+  fi
+
+  echo
+done
+
+# cloudflare-dns-update --configuration ~/.dot/dyn/askzune.com.yml
+# cloudflare-dns-update --configuration ~/.dot/dyn/dojopad.com.yml
+# cloudflare-dns-update --configuration ~/.dot/dyn/tastemykungfu.com.yml
+# cloudflare-dns-update --configuration ~/.dot/dyn/beetflo.com.yml
