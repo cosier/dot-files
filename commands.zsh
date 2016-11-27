@@ -1,5 +1,5 @@
 #!/bin/zsh
-
+alias be='bundle exec'
 alias google='links2 http://google.com/'
 alias lg='app logs -f'
 alias svim='sudo vim'

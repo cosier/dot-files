@@ -1,6 +1,27 @@
 alias emrc='em ~/.emacs.d/spacemacs.conf'
+alias ec='eclient'
 
-function emacs() {
+function eclient(){
+  NAME=$2
+  if [ -z "$2" ]; then
+    NAME='work'
+  fi
+
+  if [ -z "$1" ]; then
+    FILE="./"
+  else
+    FILE=$1
+  fi
+
+  if [ -n "$3" ]; then
+    echo "Unsupported third argument: $3"
+    exit 1
+  fi
+
+  emacsclient --socket-name=$NAME $FILE
+}
+
+function emacsx() {
   if [[ "$(which emacs-26.0.50)" != "" ]]; then
     cmd="emacs-26.0.50"
   else

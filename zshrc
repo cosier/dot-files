@@ -129,5 +129,6 @@ export TMUX=~/.tmux.sock
 export TERM=screen-16color
 
 export ROOT_PORT=1000
+export ROOT_SSL_PORT=1443
 
 eval "$(rbenv init -)"

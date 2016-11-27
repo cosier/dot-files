@@ -1,0 +1,13 @@
+#!/bin/bash
+
+if [ -z "$(which cloudflare-dns-update)" ] ; then
+  echo "Unable to find :cloudflare-dns-update binary"
+  echo "gem install cloudflare-dns-update"
+  exit 3
+fi
+
+cloudflare-dns-update --configuration ~/.dot/dyn/cosier.ca.yml
+cloudflare-dns-update --configuration ~/.dot/dyn/dojopad.com.yml
+cloudflare-dns-update --configuration ~/.dot/dyn/askzune.com.yml
+cloudflare-dns-update --configuration ~/.dot/dyn/tastemykungfu.com.yml
+cloudflare-dns-update --configuration ~/.dot/dyn/beetflo.com.yml

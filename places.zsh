@@ -105,3 +105,8 @@ alias tm='cd ~/.tmux'
 
 alias tfdash='cd ~/Developer/work/tfdash'
 alias tf='tfdash'
+alias tuloko='cd ~/Developer/work/tuloko-rails'
+alias tk='tuloko'
+
+alias earbook='cd ~/Developer/work/earbook'
+alias eb='earbook'
