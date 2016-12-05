@@ -1,6 +1,6 @@
 # Crowdist Functions
 
-CROWDIST_ROOT=~/Developer/work/crowdist/barge;
+CROWDIST_ROOT=/barge;
 
 function crowdist_bash(){
   export BARGE_ROOT=$CROWDIST_ROOT;
