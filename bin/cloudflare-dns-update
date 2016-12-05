@@ -122,7 +122,8 @@ configuration_store.transaction do |configuration|
         domain['rec_id'],
         domain['name'],
         content,
-        domain['ttl']
+        domain['ttl'],
+        true
       ]
 
       puts "arguments: \n#{arguments.to_yaml}"
