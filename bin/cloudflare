@@ -1,0 +1,34 @@
+#!/bin/bash
+
+SITES=(
+askzune.com
+cosier.ca
+dojopad.com
+tastemykungfu.com
+beetflo.com)
+
+cd ~/.dot
+
+for domain in ${SITES[@]}; do
+  echo "Cloudflare -> Updating: $domain @$(date)" > ~/.cloudflare.log
+  file=~/.dot/dyn/$domain.yml
+
+  if [ -z "$DEBUG" ]; then
+    CLOUDFLARE_REFRESH='true' \
+      ~/.dot/bin/cloudflare-dns-update --configuration $file.new >> ~/.cloudflare.log 2>&1
+  else
+    CLOUDFLARE_REFRESH='true' \
+      ~/.dot/bin/cloudflare-dns-update --configuration $file.new
+  fi
+
+  if [[ $? != 0 ]]; then
+    echo
+    echo "Cloudflare update error: $domain" >> ~/.cloudflare.log
+    echo
+    exit 3
+  else
+    echo "$domain -> Success @ $(date)" >> ~/.cloudflare.log
+  fi
+
+  echo
+done

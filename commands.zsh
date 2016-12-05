@@ -1,4 +1,5 @@
 #!/bin/zsh
+alias be='bundle exec'
 alias google='links2 http://google.com/'
 alias lg='app logs -f'
 alias svim='sudo vim'
@@ -9,8 +10,8 @@ alias gr='git-root'
 alias got='git'
 alias g='git'
 
-
-alias rspec='gr; bin/rspec'
+alias p='~/Developer/work/crowdist/barge/services/core/bin/padrino.sh'
+# alias rspec='gr; bin/rspec'
 
 alias fgo='forego'
 alias fm='foreman'
@@ -112,7 +113,7 @@ alias gcom="git add . -A; git commit -a -m"
 alias rs='git reset --hard'
 
 
-#Rails
+# Rails
 alias rake_db_clean='rake db:drop db:create db:schema:load'
 
 # Tmux

@@ -119,14 +119,16 @@ alias cs_reducer='crowd_barge; cd services/reducer'
 
 alias os='crowd_barge; cd systems/os'
 
-alias cl='crowd_barge;   cd systems/os/lib; ls'
-alias clb='crowd_barge; cd systems/os/lib/bash; ls'
-alias cll='crowd_barge; cd systems/os/lib/lua; ls'
+alias cl='crowd_barge;   cd lib; ls'
+alias clb='crowd_barge; cd lib/bash; ls'
+alias cll='crowd_barge; cd lib/lua; ls'
 
 alias cs='source ~/.dot/functions/func.crowdist.zsh; crowd_services'
 
 alias csd='crowd_services doorman; ls'
 alias csr='crowd_services reducer; ls'
+
+alias crowdist_apx='ssh crow@apx.crowdist.com crowdist -C'
 
 
 function test_crowdist_expand_includes(){

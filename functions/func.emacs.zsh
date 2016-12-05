@@ -1,4 +1,34 @@
 alias emrc='em ~/.emacs.d/spacemacs.conf'
+alias ec='eclient'
+
+function eclient(){
+  NAME=$2
+  if [ -z "$2" ]; then
+    NAME='work'
+  fi
+
+  if [ -z "$1" ]; then
+    FILE="./"
+  else
+    FILE=$1
+  fi
+
+  if [ -n "$3" ]; then
+    echo "Unsupported third argument: $3"
+    exit 1
+  fi
+
+  emacsclient --socket-name=$NAME $FILE
+}
+
+function emacsx() {
+  if [[ "$(which emacs-26.0.50)" != "" ]]; then
+    cmd="emacs-26.0.50"
+  else
+    cmd="$(which emacs)"
+  fi
+  $cmd $@
+}
 
 function em(){
   if [ -z "$1" ]; then
@@ -27,14 +57,14 @@ function emi(){
   fi
   # echo "Starting emacs: $EMS at $DIR"
   # emacsclient --server-file=$EMS $DIR
-  emacs -nw $DIR
+  emacs --insecure -nw $DIR
 }
 
 function emacs-server(){
 
-  NAME='work'
-  if [ -n "$1" ]; then
-    NAME=$1
+  NAME=$1
+  if [ -z "$1" ]; then
+    NAME='work'
   fi
 
   echo "Starting Emacs server($NAME)"
