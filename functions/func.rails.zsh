@@ -35,3 +35,9 @@ function console(){
   cd $cur
 }
 
+
+alias rails-core='rails   s -p9010'
+alias rails-tuloko='rails s -p2424'
+alias rails-tender='rails s -p3030'
+alias rails-market='rails s -p2020'
+
