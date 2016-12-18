@@ -1,6 +1,7 @@
 # Crowdist Functions
 
 CROWDIST_ROOT=/barge;
+CROWDIST_CLOUDFLARE=e75d804edeabd92faf051daa438fff77e6985
 
 function crowdist_bash(){
   export BARGE_ROOT=$CROWDIST_ROOT;

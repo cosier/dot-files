@@ -1,6 +1,7 @@
 #!/bin/bash
 
 SITES=(
+timbrelog.com
 askzune.com
 cosier.ca
 dojopad.com
