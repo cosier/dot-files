@@ -50,6 +50,7 @@ alias zune='cd /zune'
 
 # General Work
 alias work='cd ~/Developer/work'
+alias tm='cd ~/Developer/work/timbre'
 
 alias tfdash='cd ~/Developer/work/tfdash'
 alias tfcms='cd ~/Developer/work/tfcms'
