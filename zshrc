@@ -89,9 +89,9 @@ PATH=$HOME/.rvm/bin:$PATH # Add RVM to PATH for scripting
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
 
-if [[ -a ~/.dot_hook ]]; then
+if [[ -a ~/.env.sh ]]; then
   clr_escape "Platform Hook Detected" $CLR_GREEN
-   source ~/.dot_hook
+   source ~/.env.sh
 fi
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -127,8 +127,5 @@ setopt share_history # share command history data
 # Allow nested tmux
 export TMUX=~/.tmux.sock
 export TERM=screen-16color
-
-export ROOT_PORT=1000
-export ROOT_SSL_PORT=1443
 
 eval "$(rbenv init -)"
