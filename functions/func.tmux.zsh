@@ -1,6 +1,7 @@
 #!/bin/zsh
 
 alias ts='tsession'
+alias trr='t-rename'
 
 alias t-rename='tmux rename-window'
 alias t-rs-l='tmux resize-pane -L'

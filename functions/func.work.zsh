@@ -22,6 +22,12 @@ function mount-hubify(){
   mount-save
 }
 
+function mount-timbre(){
+  export APP_MOUNT=~/Developer/work/timbre
+  export APP_NAME=timbre
+  mount-save
+}
+
 function mount-crowdist(){
   export APP_MOUNT=~/Developer/work/crowdist/barge
   export APP_NAME=crowdist

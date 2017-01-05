@@ -1,7 +1,7 @@
 # function t(){
   # tmux rename-window $@
 # }
-# alias t='tmux rename-window'
+
 function up-ngx(){
   cd /vopsy/nginx;
   tmux rename-window NGX
