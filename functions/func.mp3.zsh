@@ -34,6 +34,12 @@ function flac-to-mp3(){
   done
 }
 
+function aac-to-mp3(){
+  for f in *aac; do
+    ffmpeg -i "$f" -c:a libfdk_aac -q:a 330 "$f.mp3"
+  done
+}
+
 function combine-mp3 () {
   if [ -z "$1" ]; then echo "provide an output filename"; return; fi
   find . -maxdepth 1 -iname '*.mp3' -print0 | sort -z | xargs -0 mp3wrap $1
