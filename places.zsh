@@ -52,6 +52,8 @@ alias zune='cd /zune'
 alias work='cd ~/Developer/work'
 alias tm='cd ~/Developer/work/timbre'
 
+alias bf='cd ~/Developer/work/beetflo/app'
+
 alias tfdash='cd ~/Developer/work/tfdash'
 alias tfcms='cd ~/Developer/work/tfcms'
 alias tf='tfdash'
