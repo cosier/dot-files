@@ -90,8 +90,13 @@ PATH=$HOME/.rvm/bin:$PATH # Add RVM to PATH for scripting
 export PATH="/usr/local/heroku/bin:$PATH"
 
 if [[ -a ~/.env.sh ]]; then
-  clr_escape "Platform Hook Detected" $CLR_GREEN
+  # clr_escape "Platform Hook Detected" $CLR_GREEN
    source ~/.env.sh
+fi
+
+if [[ -a ~/.env ]]; then
+  # clr_escape "Platform Hook Detected" $CLR_GREEN
+   source ~/.env
 fi
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
