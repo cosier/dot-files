@@ -1,11 +1,11 @@
 # Crowdist Functions
 
-CROWDIST_ROOT=/barge;
+CROWDIST_ROOT=~/Developer/work/crowdist;
 CROWDIST_CLOUDFLARE=e75d804edeabd92faf051daa438fff77e6985
 
 function crowdist_bash(){
   export BARGE_ROOT=$CROWDIST_ROOT;
-  source $CROWDIST_ROOT/systems/os/lib/bash/src/base.sh;
+  source ~/.crowdist/cli/src/base.sh;
 }
 
 crowd_barge = function() {

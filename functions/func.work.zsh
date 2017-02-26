@@ -15,6 +15,11 @@ function app-mount(){
   mount-reload
   cd $APP_MOUNT
 }
+function mount-forestspider(){
+  export APP_MOUNT=~/Developer/work/forestspider
+  export APP_NAME=forestspider
+  mount-save
+}
 
 function mount-hubify(){
   export APP_MOUNT=/hubify
