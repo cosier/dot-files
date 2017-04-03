@@ -2,11 +2,12 @@
 
 SITES=(
 timbrelog.com
-askzune.com
+# askzune.com
 cosier.ca
-dojopad.com
-tastemykungfu.com
-beetflo.com)
+# dojopad.com
+# tastemykungfu.com
+# beetflo.com
+)
 
 cd ~/.dot
 

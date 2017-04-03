@@ -32,6 +32,8 @@ alias dojo='cd ~/Developer/work/dojo'
 alias tata='cd ~/Developer/work/dojo/tatami'
 alias ori='cd ~/Developer/work/dojo/origami'
 
+# Beetflo
+alias nova='cd ~/Developer/work/beetflo/nova'
 
 alias toshokan='cd ~/Developer/work/toshokan'
 

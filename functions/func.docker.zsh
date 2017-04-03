@@ -7,6 +7,10 @@ function docker-logs(){
   docker logs --follow $1
 }
 
+function docker-host-local(){
+  export DOCKER_HOST=unix:///var/run/docker.sock
+}
+
 function docker-env(){
   if [ -z "$1" ]; then
     echo 'Docker Machine for Fusion'
