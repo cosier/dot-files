@@ -12,6 +12,7 @@ alias g='git'
 
 alias k='kubectl'
 alias kt='kubectl'
+alias k8='kubectl'
 
 alias p='~/Developer/work/crowdist/barge/services/core/bin/padrino.sh'
 # alias rspec='gr; bin/rspec'
