@@ -10,7 +10,6 @@ alias gr='git-root'
 alias got='git'
 alias g='git'
 
-alias k='kubectl'
 alias kt='kubectl'
 
 alias p='~/Developer/work/crowdist/barge/services/core/bin/padrino.sh'
