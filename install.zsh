@@ -17,13 +17,14 @@ if [ ! -f ~/.netrc ]; then
   ln -sf ~/.dot/netrc ~/.netrc
 fi
 
+
 #ln -sf ~/.dot/pgpass ~/.pgpass
 
 if [ ! -f ~/.irssi ]; then
   ln -sf ~/.dot/irssi ~/.irssi
 fi
 
-#ln -sf ~/.dot/spacemacs/config ~/.spacemacs
+ln -sf ~/.dot/spacemacs.emacs ~/.spacemacs
 ln -sf ~/.dot/hosts ~/.etchosts
 
 #ln -sf ~/.dot/xmodmap.rc ~/.Xmodmap
