@@ -14,6 +14,9 @@ alias kt='kubectl'
 alias k8='kubectl'
 alias kk='kubectl'
 
+alias ngx_start='sudo nginx -c conf/nginx.conf'
+alias ngx_stop='sudo nginx -c conf/nginx.conf -s stop'
+
 alias p='~/Developer/work/crowdist/barge/services/core/bin/padrino.sh'
 # alias rspec='gr; bin/rspec'
 
