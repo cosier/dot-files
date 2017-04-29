@@ -52,7 +52,8 @@ alias zune='cd /zune'
 
 # General Work
 alias work='cd ~/Developer/work'
-alias tm='cd ~/Developer/work/timbre'
+alias tm='cd ~/Developer/work/timbrelog'
+alias mvp='cd ~/Developer/work/timbrelog/mvp'
 
 alias bf='cd ~/Developer/work/beetflo/app'
 
