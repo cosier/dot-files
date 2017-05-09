@@ -26,6 +26,7 @@ alias servo='ext-rust; cd servo;'
 alias duk='ext; cd duktape-rs'
 
 alias coach='work; cd coachbase;'
+alias flare='work; cd flare'
 
 alias nginx-conf='cd /usr/local/opt/openresty/nginx/conf'
 alias vim-nginx-conf='vim /usr/local/opt/openresty/nginx/conf/nginx.conf'

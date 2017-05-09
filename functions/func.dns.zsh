@@ -12,3 +12,8 @@ function dns-connect(){
 function dns-server(){
   sudo iodined -c -P nemrymvi -f 10.0.0.1 iodine.cosier.ca
 }
+
+function dns-flush() {
+  sudo killall -HUP mDNSResponder
+}
+
