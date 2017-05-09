@@ -27,6 +27,9 @@ alias duk='ext; cd duktape-rs'
 
 alias coach='work; cd coachbase;'
 
+alias nginx-conf='cd /usr/local/opt/openresty/nginx/conf'
+alias vim-nginx-conf='vim /usr/local/opt/openresty/nginx/conf/nginx.conf'
+
 # Dojo
 alias dojo='cd ~/Developer/work/dojo'
 alias tata='cd ~/Developer/work/dojo/tatami'

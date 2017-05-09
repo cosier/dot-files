@@ -115,6 +115,7 @@ configuration_store.transaction do |configuration|
     if domain['content'] != content || ENV['CLOUDFLARE_REFRESH'] == 'true'
       puts "Content changed #{content.dump}, updating record..."
       # zone, type, zoneid, name, content, ttl, service_mode = nil, prio = nil, service = nil, srvname = nil, protocol = nil, weight = nil, port = nil, target = nil
+      domain['prio'] ||= 0
 
       arguments = [
         configuration[:zone],
@@ -123,7 +124,8 @@ configuration_store.transaction do |configuration|
         domain['name'],
         content,
         domain['ttl'],
-        true
+        0,
+        1
       ]
 
       puts "arguments: \n#{arguments.to_yaml}"
