@@ -41,6 +41,9 @@ alias nova='cd ~/Developer/work/beetflo/nova'
 
 alias toshokan='cd ~/Developer/work/toshokan'
 
+# Crowdist
+alias comm='cd ~/Developer/work/crowdist/barge/systems/commando'
+
 # Prime zone
 alias tmkf='cd ~/Developer/work/tmkf'
 
@@ -58,6 +61,8 @@ alias zune='cd /zune'
 alias work='cd ~/Developer/work'
 alias tm='cd ~/Developer/work/timbrelog'
 alias mvp='cd ~/Developer/work/timbrelog/mvp'
+alias nt='cd ~/Developer/work/timbrelog/native'
+alias native='cd ~/Developer/work/timbrelog/native'
 
 alias bf='cd ~/Developer/work/beetflo/app'
 
