@@ -135,6 +135,8 @@ export TERM=screen-16color
 
 eval "$(rbenv init -)"
 export RUST_BACKTRACE=1
+export RUST_LOG=error
+
 export GOOGLE_APPLICATION_CREDENTIALS=~/.google_app_creds
 source <(kubectl completion zsh)
 
