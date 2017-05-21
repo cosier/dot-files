@@ -42,7 +42,8 @@ alias nova='cd ~/Developer/work/beetflo/nova'
 alias toshokan='cd ~/Developer/work/toshokan'
 
 # Crowdist
-alias comm='cd ~/Developer/work/crowdist/barge/systems/commando'
+alias comm='cd ~/Developer/work/commando'
+alias cm='cd ~/Developer/work/commando'
 
 # Prime zone
 alias tmkf='cd ~/Developer/work/tmkf'
