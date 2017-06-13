@@ -43,6 +43,7 @@ alias toshokan='cd ~/Developer/work/toshokan'
 
 # Crowdist
 alias comm='cd ~/Developer/work/commando'
+alias com='cd ~/Developer/work/commando'
 alias cm='cd ~/Developer/work/commando'
 
 # Prime zone
