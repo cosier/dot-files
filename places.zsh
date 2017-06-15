@@ -68,6 +68,7 @@ alias native='cd ~/Developer/work/timbrelog/native'
 
 alias bf='cd ~/Developer/work/beetflo/app'
 alias bt='cd ~/Developer/work/bidontask'
+alias co='cd ~/Developer/work/cosier'
 
 alias tfdash='cd ~/Developer/work/tfdash'
 alias tfcms='cd ~/Developer/work/tfcms'
