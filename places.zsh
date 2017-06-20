@@ -45,6 +45,7 @@ alias toshokan='cd ~/Developer/work/toshokan'
 alias comm='cd ~/Developer/work/commando'
 alias com='cd ~/Developer/work/commando'
 alias cm='cd ~/Developer/work/commando'
+alias op='cd ~/Developer/work/crowdopen'
 
 # Prime zone
 alias tmkf='cd ~/Developer/work/tmkf'
