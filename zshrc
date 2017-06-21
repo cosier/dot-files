@@ -1,5 +1,5 @@
 # Path to your oh-my-zsh configuration.
-ZSH=$HOME/.oh-my-zsh
+zsH=$HOME/.oh-my-zsh
 function virtualenv_prompt_info(){}
 
 skip_global_compinit=1
@@ -10,7 +10,6 @@ export PGDATA="/usr/local/var/postgres"
 export HOMEBREW_GITHUB_API_TOKEN=15aaa9625f002474d5fbfe9bcaa9f83fe09ee3b7
 export TEST_API=true
 
-TERM=screen-256color
 
 # ulimit -n 9999
 
@@ -131,12 +130,12 @@ setopt share_history # share command history data
 
 # Allow nested tmux
 export TMUX=~/.tmux.sock
-export TERM=screen-16color
+export TERM=screen-256color
 
 eval "$(rbenv init -)"
 export RUST_BACKTRACE=1
 export RUST_LOG=error
 
 export GOOGLE_APPLICATION_CREDENTIALS=~/.google_app_creds
-source <(kubectl completion zsh)
+# source <(kubectl completion zsh)
 
