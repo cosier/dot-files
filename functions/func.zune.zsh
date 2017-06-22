@@ -193,7 +193,6 @@ alias js-serv='WEBPACK_FORCE=true /zunesy/puma/bin/webpack.sh'
 alias redis-serv='/zunesy/redis/bin/start.sh'
 
 # alias bv='build-zune'
-alias v='vmp'
 alias zenv='zune; zen'
 alias zenvp='zen /zunesy; cd puma'
 
