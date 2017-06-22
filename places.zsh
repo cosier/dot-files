@@ -47,6 +47,10 @@ alias com='cd ~/Developer/work/commando'
 alias cm='cd ~/Developer/work/commando'
 alias op='cd ~/Developer/work/crowdopen'
 
+alias bot='cd ~/Developer/work/bidontask'
+alias bota='cd ~/Developer/work/bidontask/api'
+alias botc='cd ~/Developer/work/bidontask/client'
+
 # Prime zone
 alias tmkf='cd ~/Developer/work/tmkf'
 
