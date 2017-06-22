@@ -1,5 +1,5 @@
 # Path to your oh-my-zsh configuration.
-zsH=$HOME/.oh-my-zsh
+ZSH=$HOME/.oh-my-zsh
 function virtualenv_prompt_info(){}
 
 skip_global_compinit=1
