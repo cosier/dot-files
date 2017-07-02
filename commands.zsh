@@ -10,6 +10,13 @@ alias gr='git-root'
 alias got='git'
 alias g='git'
 
+alias emu='~/Android/Sdk/emulator/emulator'
+
+alias exot='exit'
+alias exlt='exit'
+alias eit='exit'
+alias ex='exit'
+
 alias kt='kubectl'
 alias k8='kubectl'
 alias kk='kubectl'
@@ -121,6 +128,7 @@ alias update='git pull origin'
 alias gitgo='git add . -A; git commit -m "working changes"; pos'
 alias gcom="git add . -A; git commit -a -m"
 alias rs='git reset --hard'
+
 
 
 # Rails
