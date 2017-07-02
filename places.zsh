@@ -39,6 +39,7 @@ alias ori='cd ~/Developer/work/dojo/origami'
 # Beetflo
 alias bf='cd ~/Developer/work/beetflo'
 alias flo='cd ~/Developer/work/beetflo/app'
+alias flod='cd ~/Developer/work/beetflo/design'
 
 alias toshokan='cd ~/Developer/work/toshokan'
 
