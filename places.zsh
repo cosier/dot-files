@@ -41,6 +41,9 @@ alias bf='cd ~/Developer/work/beetflo'
 alias flo='cd ~/Developer/work/beetflo/app'
 alias flod='cd ~/Developer/work/beetflo/design'
 
+# Narratia
+alias na='cd ~/Developer/work/narratia/app'
+
 alias toshokan='cd ~/Developer/work/toshokan'
 
 # Crowdist
