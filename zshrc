@@ -139,10 +139,10 @@ export RUST_LOG="beetflo=debug"
 export GOOGLE_APPLICATION_CREDENTIALS=~/.google_app_creds
 # source <(kubectl completion zsh)
 
-export NDK_HOME=~/Android/android-ndk-r15
+export NDK_HOME=~/Android/android-ndk-r15b
 export ANDROID_HOME=~/Android/Sdk
 
-export ANDROID_NDK=~/Android/android-ndk-r15
+export ANDROID_NDK=~/Android/android-ndk-r15b
 export ANDROID_SDK=~/Android/Sdk
 export NDK_STANDALONE=~/Android/android-ndk-r15-arm
 
