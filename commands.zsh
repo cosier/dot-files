@@ -10,6 +10,7 @@ alias gr='git-root'
 alias got='git'
 alias g='git'
 
+alias ns='nslookup'
 alias emu='~/Android/Sdk/emulator/emulator'
 
 alias exot='exit'
