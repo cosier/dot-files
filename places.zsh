@@ -16,6 +16,8 @@ alias deks='desk'
 alias dks='desk'
 alias dk='desk'
 
+alias beats='cd ~/Desktop/beats'
+
 alias apps='cd /apps';
 
 alias dev='cd ~/Developer/'
