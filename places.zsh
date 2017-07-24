@@ -10,6 +10,12 @@ alias up-places='source ~/.dot/places.zsh'
 alias palaces='places'
 alias placels='places'
 
+alias desk='cd ~/Desktop'
+alias dek='desk'
+alias deks='desk'
+alias dks='desk'
+alias dk='desk'
+
 alias apps='cd /apps';
 
 alias dev='cd ~/Developer/'
