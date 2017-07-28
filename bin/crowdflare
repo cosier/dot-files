@@ -1,0 +1,24 @@
+#!/bin/bash
+
+AUTH="e75d804edeabd92faf051daa438fff77e6985"
+ZONE="d8eaabf17da5ff4fb126d91c1e11aa62"
+EM="houston@crowdist.com"
+IP="128.199.138.114"
+MAIL_ID="95a8acd99321d953731d559c9c392019"
+
+curl -X GET "https://api.cloudflare.com/client/v4/zones" \
+  -H "X-Auth-Email: $EM" \
+  -H "X-Auth-Key: $AUTH" \
+  -H "Content-Type: application/json" | jsonpp
+
+# curl -X DELETE "https://api.cloudflare.com/client/v4/zones/$ZONE/dns_records/$MAIL_ID" \
+  # -d "{ \"name\": \"mail.crowdist.com\"}" \
+  # -H "X-Auth-Email: $EM" \
+  # -H "X-Auth-Key: $AUTH" \
+  # -H "Content-Type: application/json" | jsonpp
+
+# curl -X POST "https://api.cloudflare.com/client/v4/zones/$ZONE/dns_records" \
+  # -d "{ \"name\": \"mail.crowdist.com\", \"content\": \"$IP\", \"type\": \"A\"}" \
+  # -H "X-Auth-Email: $EM" \
+  # -H "X-Auth-Key: $AUTH" \
+  # -H "Content-Type: application/json" | jsonpp
