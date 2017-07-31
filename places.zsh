@@ -6,7 +6,7 @@
 alias emd='cd ~/.emacs.d'
 alias emv='emd'
 
-alias droid='cd ~/Developer/work/droid'
+alias drd='cd ~/Developer/work/droid'
 
 alias up-places='source ~/.dot/places.zsh'
 alias palaces='places'

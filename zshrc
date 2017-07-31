@@ -145,3 +145,7 @@ export ANDROID_SDK=~/Android/Sdk
 export NDK_STANDALONE=~/Android/android-ndk-r15-arm
 export NDK_HOME=~/Android/android-ndk-r15b
 
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="/home/bailey/.sdkman"
+[[ -s "/home/bailey/.sdkman/bin/sdkman-init.sh" ]] && source "/home/bailey/.sdkman/bin/sdkman-init.sh"

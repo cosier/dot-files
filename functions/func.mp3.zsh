@@ -4,6 +4,12 @@ function opus-to-mp3(){
   done
 }
 
+function wav-to-mp3(){
+  for f in *wav; do
+    ffmpeg -i "$f" "$f.mp3"
+  done
+}
+
 function mkv-to-mp4(){
   for f in *mkv; do
     ffmpeg -i "$f" "$f.mp4"
