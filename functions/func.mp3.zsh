@@ -4,6 +4,13 @@ function opus-to-mp3(){
   done
 }
 
+function opus-to-mp3-clean(){
+  for f in *opus; do
+    ffmpeg -i "$f" "$f.mp3
+    rm "$f.opus"
+  done
+}
+
 function wav-to-mp3(){
   for f in *wav; do
     ffmpeg -i "$f" "$f.mp3"
