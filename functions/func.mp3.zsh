@@ -1,42 +1,48 @@
 function opus-to-mp3(){
   for f in *opus; do
-    ffmpeg -i "$f" "$f.mp3"
+    f=$(echo $f | sed 's/\.opus//')
+    ffmpeg -i "$f.opus" "$f.mp3"
   done
 }
 
 function wav-to-mp3(){
   for f in *wav; do
-    ffmpeg -i "$f" "$f.mp3"
+    f=$(echo $f | sed 's/\.wav//')
+    ffmpeg -i "$f.wav" "$f.mp3"
   done
 }
 
 function mkv-to-mp4(){
   for f in *mkv; do
-    ffmpeg -i "$f" "$f.mp4"
+    f=$(echo $f | sed 's/\.mk4//')
+    ffmpeg -i "$f.mkv" "$f.mp4"
   done
 }
 
 function ogg-to-mp3(){
   for f in *ogg; do
-    ffmpeg -i "$f" "$f.mp3"
+    f=$(echo $f | sed 's/\.ogg//')
+    ffmpeg -i "$f.ogg" "$f.mp3"
   done
 }
 
 function m4a-to-mp3(){
   for f in *m4a; do
-    ffmpeg -i "$f" "$f.mp3"
+    ffmpeg -i "$f.m4a" "$f.mp3"
   done
 }
 
 function webm-to-mp4(){
   for f in *webm; do
-    ffmpeg -i "$f" "$f.mp4"
+    f=$(echo $f | sed 's/\.webm//')
+    ffmpeg -i "$f.webm" "$f.mp4"
   done
 }
 
 function flac-to-mp3(){
   for f in *flac; do
-    ffmpeg -i "$f" "$f.mp3"
+    f=$(echo $f | sed 's/\.flac//')
+    ffmpeg -i "$f.flac" "$f.mp3"
   done
 }
 
