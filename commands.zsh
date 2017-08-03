@@ -10,6 +10,8 @@ alias gr='git-root'
 alias got='git'
 alias g='git'
 
+alias gw='./gradlew'
+
 alias s='ls'
 
 alias ns='nslookup'

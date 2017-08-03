@@ -7,7 +7,8 @@ function opus-to-mp3(){
 
 function opus-to-mp3-clean(){
   for f in *opus; do
-    ffmpeg -i "$f" "$f.mp3
+    f=$(echo $f | sed 's/\.opus//')
+    ffmpeg -i "$f.opus" "$f.mp3"
     rm "$f.opus"
   done
 }

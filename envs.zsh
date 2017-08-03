@@ -1,4 +1,5 @@
 platform=$(uname)
+
 if [[ "$platform" == 'Linux' ]]; then
   GYP_GENERATORS="ninja"
   export HOME_DIR=/home/ubuntu
@@ -26,26 +27,16 @@ if [[ "$platform" == 'Linux' ]]; then
   export JDK_HOME=/usr/lib/jvm/default-java
   export JAVA_HOME=/usr/lib/jvm/default-java
 elif [[ "$platform" == 'Darwin' ]]; then
-  export JAVA_HOME=/Library/Internet\ Plug-Ins/JavaAppletPlugin.plugin/Contents/Home
-  export JDK_HOME=/Library/Internet\ Plug-Ins/JavaAppletPlugin.plugin/Contents/Home
-  export PATH=$PATH:/Library/Internet\ Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/bin
+  CASK_JDK="/Library/Java/JavaVirtualMachines/jdk1.8.0_141.jdk/Contents/Home"
+  export JAVA_HOME=$CASK_JDK
+  export JDK_HOME=$CASK_JDK
+  export PATH=$PATH:$CASK_JDK/bin
 fi
 
 export CLOJURESCRIPT_HOME=$DEVELOPER_HOME/sdk/clojurescript-vanilla
 
 export LA=/Users/bailey/Library/LaunchAgents
 # export EMACS_SERVER_FILE=/var/run/emacs.sock
-
-# export DATABASE_URL=postgres://docker:michigan\!\$007@localhost:5432/postgres
-
-platform=`uname`
-if [[ $platform == "Darwin" ]]; then
-    osx='yes'
-else
-    linux='yes'
-fi
-
-# export RAILS_ENV=development
 
 if [ -f ~/.env ]; then
   source ~/.env;
@@ -54,6 +45,8 @@ fi
 
 export PATH=$PATH:/usr/local/bundle/ruby/1.9.1/bin
 export PATH=$PATH:~/.cargo/bin
+export PATH=$PATH:$ANDROID_HOME/tools/bin
+export PATH=$PATH:$ANDROID_HOME/platform-tools
 
 
 alias envsup='source ~/.env'

@@ -141,8 +141,9 @@ export GOOGLE_APPLICATION_CREDENTIALS=~/.google_app_creds
 
 export ANDROID_NDK=~/Android/android-ndk-r15b
 export ANDROID_SDK=~/Android/Sdk
+export ANDROID_HOME=~/Android/Sdk
 
-export NDK_STANDALONE=~/Android/android-ndk-r15-arm
+export ANDROID_NDK_HOME=~/Android/android-ndk-r15b
 export NDK_HOME=~/Android/android-ndk-r15b
 
 
