@@ -23,7 +23,7 @@ function wav-to-mp3(){
 function mkv-to-mp4(){
   for f in *mkv; do
     f=$(echo $f | sed 's/\.mk4//')
-    ffmpeg -i "$f.mkv" "$f.mp4"
+    ffmpeg -i "$f" "$f.mp4"
   done
 }
 
