@@ -75,18 +75,15 @@ source ~/.dot/colors
     # source ~/.rvm/scripts/rvm
 # fi
 
-if [[ -a ~/.Xmodmap ]]; then
-    xmodmap ~/.Xmodmap
-fi
+# if [[ -a ~/.Xmodmap ]]; then
+    # xmodmap ~/.Xmodmap
+# fi
 
 
 PATH=/opt/local/bin:$PATH
 PATH=/usr/local/sbin:$PATH
 PATH=/usr/local/bin:$PATH
 PATH=$HOME/.rvm/bin:$PATH # Add RVM to PATH for scripting
-
-### Added by the Heroku Toolbelt
-export PATH="/usr/local/heroku/bin:$PATH"
 
 if [[ -a ~/.env.sh ]]; then
   # clr_escape "Platform Hook Detected" $CLR_GREEN
