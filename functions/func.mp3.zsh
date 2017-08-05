@@ -13,6 +13,25 @@ function opus-to-mp3-clean(){
   done
 }
 
+function m4a-to-mp3-clean(){
+  for f in *m4a; do
+    f=$(echo $f | sed 's/\.m4a//' | sed "s/'//g")
+    if [ -f "$f.m4a" ]; then
+      ffmpeg -i "$f.m4a" "$f.mp3"
+      rm "$f.m4a"
+    else
+      echo "File not found: $f.m4a"
+    fi
+  done
+}
+
+function ogg-to-mp3-clean(){
+  for f in *ogg; do
+    f=$(echo $f | sed 's/\.ogg//')
+    ffmpeg -i "$f.ogg" "$f.mp3"
+    rm "$f.ogg"
+  done
+}
 function wav-to-mp3(){
   for f in *wav; do
     f=$(echo $f | sed 's/\.wav//')
