@@ -31,6 +31,10 @@ elif [[ "$platform" == 'Darwin' ]]; then
   export JAVA_HOME=$CASK_JDK
   export JDK_HOME=$CASK_JDK
   export PATH=$PATH:$CASK_JDK/bin
+
+  function xclip() {
+    pbcopy $@
+  }
 fi
 
 export CLOJURESCRIPT_HOME=$DEVELOPER_HOME/sdk/clojurescript-vanilla
