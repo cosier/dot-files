@@ -10,6 +10,9 @@ export PGDATA="/usr/local/var/postgres"
 export HOMEBREW_GITHUB_API_TOKEN=15aaa9625f002474d5fbfe9bcaa9f83fe09ee3b7
 export TEST_API=true
 
+export PROMPT_COMMAND="echo -ne '\033]0;${USER}@${HOSTNAME}\007';$PROMPT_COMMAND"
+
+
 
 # ulimit -n 9999
 
@@ -137,11 +140,13 @@ export GOOGLE_APPLICATION_CREDENTIALS=~/.google_app_creds
 # source <(kubectl completion zsh)
 
 export ANDROID_NDK=~/Android/android-ndk-r15b
+export ANDROID_SDK_HOME=~/Android/Sdk
 export ANDROID_SDK=~/Android/Sdk
 export ANDROID_HOME=~/Android/Sdk
 
 export ANDROID_NDK_HOME=~/Android/android-ndk-r15b
 export NDK_HOME=~/Android/android-ndk-r15b
+export NDK_STANDALONE=~/Android/standalone-x86
 
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!

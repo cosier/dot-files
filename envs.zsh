@@ -26,6 +26,7 @@ export DEVELOPER_HOME=$HOME_DIR/Developer
 if [[ "$platform" == 'Linux' ]]; then
   export JDK_HOME=/usr/lib/jvm/default-java
   export JAVA_HOME=/usr/lib/jvm/default-java
+
 elif [[ "$platform" == 'Darwin' ]]; then
   CASK_JDK="/Library/Java/JavaVirtualMachines/jdk1.8.0_141.jdk/Contents/Home"
   export JAVA_HOME=$CASK_JDK
@@ -41,6 +42,8 @@ export CLOJURESCRIPT_HOME=$DEVELOPER_HOME/sdk/clojurescript-vanilla
 
 export LA=/Users/bailey/Library/LaunchAgents
 # export EMACS_SERVER_FILE=/var/run/emacs.sock
+
+export DISPLAY=:0
 
 if [ -f ~/.env ]; then
   source ~/.env;
