@@ -1,4 +1,7 @@
 #!/bin/zsh
+
+alias ey='eyeD3'
+
 alias be='bundle exec'
 alias google='links2 http://google.com/'
 alias lg='app logs -f'
