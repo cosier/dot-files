@@ -1,8 +1,10 @@
 function shell-build() {
-  /home/bailey/Developer/work/kinito/shell/bin/build.sh $@
+  /home/bailey/Developer/work/kinito/shell/bin/build $@
 }
 
-alias build-shell='shell-build'
+function shell-install() {
+  /home/bailey/Developer/work/kinito/shell/bin/install $@
+}
 
 function shell-apk() {
   cd /home/bailey/Developer/work/kinito/shell/app/build/outputs/apk/
