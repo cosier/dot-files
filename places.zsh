@@ -6,9 +6,9 @@
 alias emd='cd ~/.emacs.d'
 alias emv='emd'
 
-alias bdr='cd ~/Developer/work/mobile-builder'
-alias builder='bdr'
-alias demo='cd ~/Developer/work/mobile-builder/examples/demo'
+alias kinito='cd ~/Developer/work/kinito'
+alias kn='kinito'
+alias demo='cd ~/Developer/work/kinito/examples/demo'
 
 alias up-places='source ~/.dot/places.zsh'
 alias palaces='places'
