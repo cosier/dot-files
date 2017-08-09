@@ -26,7 +26,7 @@ values."
      ;; ----------------------------------------------------------------
      auto-completion
      better-defaults
-     emacs-lisp
+     ;;emacs-lisp
      git
      ;; markdown
      ;; org
@@ -36,12 +36,12 @@ values."
      ;; spell-checking
      syntax-checking
      version-control
-     react
-     ruby-on-rails
+     ;;react
+     ;;ruby-on-rails
      rust
-     ruby
+     ;;ruby
      lua
-     markdown
+     ;;markdown
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these

@@ -57,7 +57,7 @@ function emi(){
   fi
   # echo "Starting emacs: $EMS at $DIR"
   # emacsclient --server-file=$EMS $DIR
-  emacs --insecure -nw $DIR
+  /usr/local/bin/emacs -nw $DIR
 }
 
 function emacs-server(){
