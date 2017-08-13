@@ -9,6 +9,3 @@ function rumo-build() {
   echo
   return $success
 }
-
-alias dr='rumo-debug'
-alias br='rumo-build'
