@@ -9,3 +9,5 @@ function rumo-build() {
   echo
   return $success
 }
+
+alias rum='rumo-build && rumo-debug'

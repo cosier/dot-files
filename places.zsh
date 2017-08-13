@@ -6,9 +6,8 @@
 alias emd='cd ~/.emacs.d'
 alias emv='emd'
 
-alias kinito='cd ~/Developer/work/kinito'
-alias kn='kinito'
-alias demo='cd ~/Developer/work/kinito/examples/demo'
+alias go-demo='cd ~/Developer/work/rumo/examples/demo'
+alias go-rumo='cd ~/Developer/work/rumo'
 
 alias up-places='source ~/.dot/places.zsh'
 alias palaces='places'
