@@ -1,3 +1,3 @@
 function hello() {
-  cd ~/Developer/work/kinito/examples/hello
+  cd ~/Developer/work/rumo/examples/hello
 }
