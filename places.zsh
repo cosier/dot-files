@@ -49,6 +49,8 @@ alias ori='cd ~/Developer/work/dojo/origami'
 
 # Beetflo
 alias bf='cd ~/Developer/work/beetflo'
+alias bfa='cd ~/Developer/work/beetflo/api'
+alias bfw='cd ~/Developer/work/beetflo/web'
 alias flo='cd ~/Developer/work/beetflo/app'
 alias flod='cd ~/Developer/work/beetflo/design'
 
