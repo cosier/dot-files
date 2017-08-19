@@ -12,34 +12,7 @@ export TEST_API=true
 
 export PROMPT_COMMAND="echo -ne '\033]0;${USER}@${HOSTNAME}\007';$PROMPT_COMMAND"
 
-
-
-# ulimit -n 9999
-
-# bindkey "\e[1~" beginning-of-line
-# bindkey "\e[4~" end-of-line
-
-# hostname=$(hostname)
-
-# Logic for selective themes
-# across various different devices
-# case "$hostname" in
-    # *vagrant*)
-        # echo -e "Vagrant Box Detected: $hostname"
-        # ZSH_THEME="blinks"
-        # ;;
-
-    # *virtual*)
-        # echo -e "Virtual Machine Detected: $hostname"
-        # ZSH_THEME="blinks"
-        # ;;
-
-    # *)
-      # #echo -e "Vanilla Box Detected: $hostname"
-      # ZSH_THEME="bira"
-      # ;;
-# esac
-
+export HOMEBREW_NO_AUTO_UPDATE=1
 
 ZSH_THEME="bira"
 
@@ -150,5 +123,5 @@ export NDK_STANDALONE=~/Android/standalone-x86
 
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="/home/bailey/.sdkman"
-[[ -s "/home/bailey/.sdkman/bin/sdkman-init.sh" ]] && source "/home/bailey/.sdkman/bin/sdkman-init.sh"
+# export SDKMAN_DIR="/home/bailey/.sdkman"
+# [[ -s "/home/bailey/.sdkman/bin/sdkman-init.sh" ]] && source "/home/bailey/.sdkman/bin/sdkman-init.sh"

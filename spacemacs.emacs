@@ -245,6 +245,22 @@ values."
    ))
 
 (defun dotspacemacs/user-init ()
+ (indent-guide-global-mode)
+ (setq-default
+  c-default-style "bsd"
+  c-basic-offset 4)
+ (setq-default tab-width 4)
+ (setq-default indent-tabs-mode nil)
+ (setq-default dotspacemacs-configuration-layers
+   '((c-c++ :variables c-c++-enable-clang-support t)))
+ ;; Bind clang-format-region to C-M-tab in all modes:
+ (global-set-key [C-M-tab] 'clang-format-region)
+ ;; Bind clang-format-buffer to tab on the c++-mode only:
+ (add-hook 'c++-mode-hook 'clang-format-bindings)
+ (defun clang-format-bindings ()
+  (define-key c++-mode-map [tab] 'clang-format-buffer))
+
+
   "Initialization function for user code.
 It is called immediately after `dotspacemacs/init', before layer configuration
 executes.
