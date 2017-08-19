@@ -7,7 +7,8 @@ alias emd='cd ~/.emacs.d'
 alias emv='emd'
 
 alias go-demo='cd ~/Developer/work/rumo/examples/demo'
-alias go-rumo='cd ~/Developer/work/rumo'
+alias go-rum='cd ~/Developer/work/rumo'
+alias go-rume='cd ~/Developer/ext/rumo-example'
 
 alias up-places='source ~/.dot/places.zsh'
 alias palaces='places'
