@@ -78,12 +78,7 @@ alias size='du -hs '
 alias sz='size'
 
 # System Like I Like it
-alias irc='irssi --config=~/.dot/irssi/config --home=~/.dot/irssi --password=nemrymvi --connect=irc.freenode.net'
-alias sch='$HOME_DIR/Developer/sdk/ignifuga/tools/schafer'
-
-# Mining
-alias miner-gpu='cgminer -o stratum+tcp://stratum.ozco.in:3333 -u 27482 -p qdhMxb'
-alias miner-cpu='bfgminer -o stratum+tcp://stratum.ozco.in:3333 -u bywda.bfg -p nemrymvi'
+alias irc='irssi --config=~/.dot/irssi/config --home=~/.dot/irssi --connect=irc.freenode.net'
 
 # Mountpoints
 alias vps_mount='cd ~/tmp; mkdir -p vps_mount; sshfs bailey@str.shogun.ca:/home/bailey ~/tmp/vps_mount; cd vps_mount'
