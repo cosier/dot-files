@@ -20,30 +20,30 @@ values."
    '(
      html
      markdown
-       yaml
-     ;; ----------------------------------------------------------------
-     ;; Example of useful layers you may want to use right away.
-     ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
-     ;; <M-m f e R> (Emacs style) to install them.
-     ;; ----------------------------------------------------------------
+     yaml
      auto-completion
      better-defaults
-     ;;emacs-lisp
      git
+
+     ;;emacs-lisp
      ;; markdown
      ;; org
      ;; (shell :variables
      ;;        shell-default-height 30
      ;;        shell-default-position 'bottom)
      ;; spell-checking
+
      syntax-checking
      version-control
+
      ;;react
      ;;ruby-on-rails
+
      rust
      c-c++
-     ;;ruby
      lua
+
+     ;;ruby
      ;;markdown
      )
    ;; List of additional packages that will be installed without being
@@ -117,7 +117,7 @@ values."
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
    ;; size to make separators look not too crappy.
    dotspacemacs-default-font '("Operator Mono"
-                               :size 14
+                               :size 10
                                :weight light
                                :width normal
                                :slant italic
@@ -282,6 +282,17 @@ before packages are loaded. If you are unsure, you should try in setting them in
  (spacemacs/load-theme 'solarized)
  (setq-local global-hl-line-mode 0)
  (global-linum-mode t)
+
+ (setq-default helm-make-build-dir "build")
+ (defun my-c-mode-common-hook ()
+   (setq flycheck-clang-include-path (list "..")))
+ (add-hook 'c-mode-common-hook 'my-c-mode-common-hook)
+
+ (add-hook 'c++-mode-hook
+           (lambda () (setq flycheck-clang-include-path
+                            (list (expand-file-name "~/Developer/work/midi-mapper/src/")))))
+
+
  )
 
 ;; Do not write anything past this comment. This is where Emacs will
