@@ -2,6 +2,8 @@
 ;; This file is loaded by Spacemacs at startup.
 ;; It must be stored in your home directory.
 
+(setq exec-path-from-shell-check-startup-files nil)
+
 (defun dotspacemacs/layers ()
   "Configuration Layers declaration.
 You should not put any user code in this function besides modifying the variable
@@ -18,6 +20,8 @@ values."
    ;; of a list then all discovered layers will be installed.
    dotspacemacs-configuration-layers
    '(
+     baileys
+
      html
      markdown
      yaml
@@ -104,14 +108,10 @@ values."
    dotspacemacs-scratch-mode 'text-mode
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
-   ;; with 2 themes variants, one dark and one light)
-   ;; dotspacemacs-themes '(spacemacs-dark
-   ;;                       spacemacs-light
-   ;;                       solarized-light
-   ;;                       solarized-dark
-   ;;                       leuven
-   ;;                       monokai
-   ;;                       zenburn)
+   ;; with 1 themes variants, one dark and one light)
+
+   dotspacemacs-themes '(spacemacs-light)
+
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
@@ -244,30 +244,7 @@ values."
    dotspacemacs-whitespace-cleanup nil
    ))
 
-(defun dotspacemacs/user-init ()
- (indent-guide-global-mode)
- (setq-default
-  c-default-style "bsd"
-  c-basic-offset 4)
- (setq-default tab-width 4)
- (setq-default indent-tabs-mode nil)
- (setq-default dotspacemacs-configuration-layers
-   '((c-c++ :variables c-c++-enable-clang-support t)))
- ;; Bind clang-format-region to C-M-tab in all modes:
- (global-set-key [C-M-tab] 'clang-format-region)
- ;; Bind clang-format-buffer to tab on the c++-mode only:
- (add-hook 'c++-mode-hook 'clang-format-bindings)
- (defun clang-format-bindings ()
-  (define-key c++-mode-map [tab] 'clang-format-buffer))
-
-
-  "Initialization function for user code.
-It is called immediately after `dotspacemacs/init', before layer configuration
-executes.
- This function is mostly useful for variables that need to be set
-before packages are loaded. If you are unsure, you should try in setting them in
-`dotspacemacs/user-config' first."
-  )
+(defun dotspacemacs/user-init ())
 
 (defun dotspacemacs/user-config ()
  "Configuration function for user code.
@@ -276,23 +253,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
  This is the place where most of your configurations should be done. Unless it is
  explicitly specified that a variable should be set before a package is loaded,
  you should place your code here."
- (global-linum-mode)
- (set-terminal-parameter nil 'background-mode 'dark)
- (set-frame-parameter nil 'background-mode 'dark)
- (spacemacs/load-theme 'solarized)
- (setq-local global-hl-line-mode 0)
- (global-linum-mode t)
-
- (setq-default helm-make-build-dir "build")
- (defun my-c-mode-common-hook ()
-   (setq flycheck-clang-include-path (list "..")))
- (add-hook 'c-mode-common-hook 'my-c-mode-common-hook)
-
- (add-hook 'c++-mode-hook
-           (lambda () (setq flycheck-clang-include-path
-                            (list (expand-file-name "~/Developer/work/midi-mapper/src/")))))
-
-
+;; user-configuration end
  )
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -302,20 +263,12 @@ before packages are loaded. If you are unsure, you should try in setting them in
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(ansi-color-names-vector
-   ["#080808" "#d70000" "#67b11d" "#875f00" "#268bd2" "#af00df" "#00ffff" "#b2b2b2"])
- '(custom-enabled-themes nil)
- '(custom-safe-themes
-   (quote
-    ("8db4b03b9ae654d4a57804286eb3e332725c84d7cdab38463cb6b97d5762ad26" "bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" default)))
- '(evil-want-Y-yank-to-eol t)
  '(package-selected-packages
    (quote
-    (disaster company-c-headers cmake-mode clang-format color-theme color-theme-solarized seq yaml-mode toml-mode racer mmm-mode markdown-toc markdown-mode lua-mode gh-md flycheck-rust cargo rust-mode web-mode web-beautify tagedit slim-mode scss-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe rbenv pug-mode projectile-rails rake inflections minitest livid-mode skewer-mode simple-httpd less-css-mode json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc helm-css-scss haml-mode feature-mode emmet-mode company-web web-completion-data company-tern dash-functional tern coffee-mode chruby bundler inf-ruby unfill smeargle orgit mwim magit-gitflow helm-gitignore helm-company helm-c-yasnippet gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter fuzzy flycheck-pos-tip pos-tip flycheck evil-magit magit magit-popup git-commit with-editor diff-hl company-statistics company auto-yasnippet yasnippet ac-ispell auto-complete winum uuidgen toc-org request org-plus-contrib org-bullets link-hint hide-comnt eyebrowse evil-visual-mark-mode evil-unimpaired evil-ediff goto-chg undo-tree dumb-jump f diminish column-enforce-mode ws-butler window-numbering volatile-highlights vi-tilde-fringe spaceline s powerline smooth-scrolling restart-emacs rainbow-delimiters popwin persp-mode pcre2el paradox hydra spinner page-break-lines open-junk-file neotree move-text macrostep lorem-ipsum linum-relative leuven-theme info+ indent-guide ido-vertical-mode hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery expand-region exec-path-from-shell evil-visualstar evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-args evil-anzu anzu eval-sexp-fu highlight elisp-slime-nav define-word clean-aindent-mode buffer-move bracketed-paste auto-highlight-symbol auto-compile packed dash aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async quelpa package-build use-package which-key bind-key bind-map evil spacemacs-theme))))
+    (color-theme-sanityinc-solarized yaml-mode ws-butler winum which-key web-mode volatile-highlights vi-tilde-fringe uuidgen use-package unfill toml-mode toc-org tagedit spaceline smeargle slim-mode scss-mode sass-mode restart-emacs rainbow-delimiters racer pug-mode popwin persp-mode pcre2el paradox orgit org-bullets open-junk-file neotree mwim move-text mmm-mode markdown-toc magit-gitflow lua-mode lorem-ipsum linum-relative link-hint less-css-mode info+ indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gh-md fuzzy flycheck-rust flycheck-pos-tip flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu emmet-mode dumb-jump disaster diff-hl define-word company-web company-statistics company-c-headers column-enforce-mode color-theme-solarized cmake-mode clean-aindent-mode clang-format cargo auto-yasnippet auto-highlight-symbol aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(company-tooltip-common ((t (:inherit company-tooltip :weight bold :underline nil))))
- '(company-tooltip-common-selection ((t (:inherit company-tooltip-selection :weight bold :underline nil)))))
+ )

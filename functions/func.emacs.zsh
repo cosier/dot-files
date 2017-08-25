@@ -55,9 +55,10 @@ function emi(){
   if [ -z "$EMS" ]; then
     EMS=vop
   fi
+
   # echo "Starting emacs: $EMS at $DIR"
   # emacsclient --server-file=$EMS $DIR
-  /usr/local/bin/emacs -nw $DIR
+  /usr/local/bin/emacs --debug-init -nw $DIR
 }
 
 function emacs-server(){
