@@ -1,4 +1,6 @@
 #!/bin/zsh
+# safety precaution
+alias rm='trash'
 
 alias ey='eyeD3'
 alias hosts='sudo vim /etc/hosts'
@@ -13,6 +15,8 @@ alias git-root='ROOT="$(git rev-parse --show-toplevel)"; cd "$ROOT"'
 alias gr='git-root'
 alias got='git'
 alias g='git'
+
+alias rsync='rsync --progress --partial'
 
 alias gw='./gradlew'
 
