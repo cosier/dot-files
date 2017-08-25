@@ -13,10 +13,16 @@ git update-index -q --refresh
 CHANGED=$(git diff-index --name-only HEAD --)
 GITROOT=~/.dot
 
+if [[ $1 != "" ]]; then
+  msg=$1
+else
+  msg="[up] auto update"
+fi
+
 if [ -n "$CHANGED" ]; then
   echo -e "Committing changes..."
   git add  --all .;
-  git commit -m "Auto update...";
+  git commit -m $msg;
   git pull origin master
   git push origin master
 else
