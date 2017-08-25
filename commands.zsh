@@ -1,4 +1,5 @@
 #!/bin/zsh
+
 # safety precaution
 alias rm='trash'
 
