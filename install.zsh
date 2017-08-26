@@ -16,5 +16,6 @@ fi
 ln -sf ~/.dot/spacemacs.emacs ~/.spacemacs
 ln -sf ~/.dot/hosts ~/.etchosts
 
-#ln -sf ~/.dot/xmodmap.rc ~/.Xmodmap
+# Link up zsh shell
+ln -sf ~/.dot/zshrc ~/.zshrc
 
