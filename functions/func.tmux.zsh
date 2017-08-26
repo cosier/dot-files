@@ -33,7 +33,7 @@ function tsession(){
     return
   fi
 
-  tmux attach-session -t $@ -d || tmux new-session -s $@
+  tmux attach-session -t $@ || tmux new-session -s $@
 }
 
 alias tvbo='tmux-env vbo ~/Developer/work/vivo'
