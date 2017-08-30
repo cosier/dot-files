@@ -1,6 +1,8 @@
 alias emrc='em ~/.emacs.d/spacemacs.conf'
 alias ec='eclient'
 
+alias baileys-edit='vim ~/.emacs.d/private/baileys/packages.el'
+
 function eclient(){
   NAME=$2
   if [ -z "$2" ]; then
