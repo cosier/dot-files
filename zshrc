@@ -9,11 +9,11 @@ export PGDATA="/usr/local/var/postgres"
 
 export TEST_API=true
 
-export PROMPT_COMMAND="echo -ne '\033]0;${USER}@${HOSTNAME}\007';$PROMPT_COMMAND"
+export PROMPT_COMMAND="echo -ne '\033]0;${USER}@${HOSTNAME}\007';"
 
 export HOMEBREW_NO_AUTO_UPDATE=1
 
-ZSH_THEME="bira"
+ZSH_THEME="af-magic"
 
 HISTFILE=~/.zsh_history
 HISTSIZE=999999999
@@ -28,7 +28,7 @@ DISABLE_AUTO_TITLE="true"
 
 # COMPLETION_WAITING_DOTS="true"
 
-plugins=(git git-flow-completion )
+plugins=(git-flow-completion )
 
 source $ZSH/oh-my-zsh.sh
 source ~/.dot/envs.zsh
@@ -73,7 +73,7 @@ fi
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 export PATH="$HOME/.rbenv/bin:$PATH"
-export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"
+# export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"
 
 ## Command history configuration
 if [ -z "$HISTFILE" ]; then
@@ -104,7 +104,7 @@ setopt share_history # share command history data
 export TMUX=~/.tmux.sock
 export TERM=screen-256color
 
-eval "$(rbenv init -)"
+# eval "$(rbenv init -)"
 export RUST_BACKTRACE=1
 export RUST_LOG="beetflo=debug"
 
