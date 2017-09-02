@@ -12,6 +12,9 @@ alias go-demo='cd ~/Developer/work/rumo/examples/demo'
 alias go-rum='cd ~/Developer/work/rumo'
 alias go-rume='cd ~/Developer/ext/rumo-example'
 
+alias go-dm='cd ~/Developer/work/dimappio'
+alias dm='go-dm'
+
 alias up-places='source ~/.dot/places.zsh'
 alias palaces='places'
 alias placels='places'

@@ -81,7 +81,7 @@ alias dc='docker-compose'
 alias dup='docker-compose up'
 alias run='docker-compose run'
 alias rst='docker-restart'
-alias dm='docker-machine'
+# alias dm='docker-machine'
 alias web='docker run -t tutum.co/hubify/web'
 alias dl='docker-logs'
 
