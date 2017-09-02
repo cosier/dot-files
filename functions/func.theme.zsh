@@ -1,4 +1,18 @@
 
+function install-zsh-themes {
+  ln -sf ~/.dot/baileys-magic.zsh-theme ~/.oh-my-zsh/themes/baileys-magic.zsh-theme
+}
+
+function edit-zsh-theme() {
+  THEME=~/.oh-my-zsh/themes/$ZSH_THEME.zsh-theme
+  if [ -f $THEME ]; then
+    vim $THEME
+  else
+    echo "$ZSH_THEME not found at: $THEME"
+    return 1
+  fi
+}
+
 function reload-zsh-theme() {
   source ~/.zshrc
 }
