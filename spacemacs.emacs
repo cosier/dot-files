@@ -55,7 +55,7 @@
      lua
 
      )
-   dotspacemacs-excluded-packages '()
+   dotspacemacs-excluded-packages '(smartparens)
    dotspacemacs-delete-orphan-packages t))
 
 (defun dotspacemacs/init ()

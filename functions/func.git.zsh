@@ -3,6 +3,8 @@ alias gh='git diff HEAD'
 
 alias git-reset-last-commit='GIT_COMMITTER_DATE="$DATE" git commit --amend --date "$DATE"'
 
+alias gitp='git push --set-upstream origin master'
+
 function git-reset-to(){
   DATE=$1
 
