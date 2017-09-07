@@ -17,7 +17,7 @@ alias go-rume='cd ~/Developer/ext/rumo-example'
 alias go-dm='cd ~/Developer/work/dimappio'
 alias dm='go-dm'
 
-alias go-dm='cd ~/Developer/work/dr3030'
+alias go-dr='cd ~/Developer/work/dr3030'
 alias dr='go-dr'
 
 alias up-places='source ~/.dot/places.zsh'
