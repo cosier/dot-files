@@ -74,7 +74,7 @@ fi
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 export PATH="$HOME/.rbenv/bin:$PATH"
-# export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"
+export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"
 
 ## Command history configuration
 if [ -z "$HISTFILE" ]; then
@@ -105,21 +105,21 @@ setopt share_history # share command history data
 export TMUX=~/.tmux.sock
 export TERM=screen-256color
 
-# eval "$(rbenv init -)"
+eval "$(rbenv init -)"
 export RUST_BACKTRACE=1
 export RUST_LOG="beetflo=debug"
 
 export GOOGLE_APPLICATION_CREDENTIALS=~/.google_app_creds
 # source <(kubectl completion zsh)
 
-export ANDROID_NDK=~/Android/android-ndk-r15b
+export ANDROID_NDK=~/Android/Sdk/ndk-bundle
 export ANDROID_SDK_HOME=~/Android/Sdk
 export ANDROID_SDK=~/Android/Sdk
 export ANDROID_HOME=~/Android/Sdk
 
-export ANDROID_NDK_HOME=~/Android/android-ndk-r15b
-export NDK_HOME=~/Android/android-ndk-r15b
-export NDK_STANDALONE=~/Android/standalone-x86
+export ANDROID_NDK_HOME=$ANDROID_NDK
+export NDK_HOME=$ANDROID_NDK
+# export NDK_STANDALONE=~/Android/standalone-x86
 
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!

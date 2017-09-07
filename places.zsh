@@ -6,6 +6,8 @@
 alias emd='cd ~/.emacs.d'
 alias emv='emd'
 
+alias docs='cd ~/Documents'
+
 alias baileys='cd ~/.emacs.d/private/baileys'
 
 alias go-demo='cd ~/Developer/work/rumo/examples/demo'
