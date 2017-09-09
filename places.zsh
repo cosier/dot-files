@@ -20,6 +20,9 @@ alias dm='go-dm'
 alias go-dr='cd ~/Developer/work/dr3030'
 alias dr='go-dr'
 
+alias go-fii='cd ~/Developer/work/factorii'
+alias gfii='go-fii'
+
 alias up-places='source ~/.dot/places.zsh'
 alias palaces='places'
 alias placels='places'
