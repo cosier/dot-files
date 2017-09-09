@@ -45,7 +45,7 @@ function buildt() {
   fi
 
   if [ -f bin/tests.sh ]; then
-    bin/run.sh $@
+    bin/tests.sh $@
   fi
 
   cd $cur
