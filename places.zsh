@@ -23,6 +23,9 @@ alias dr='go-dr'
 alias go-fii='cd ~/Developer/work/factorii'
 alias gfii='go-fii'
 
+alias go-ubelt='cd ~/Developer/work/ubelt'
+alias gub='go-ubelt'
+
 alias up-places='source ~/.dot/places.zsh'
 alias palaces='places'
 alias placels='places'
