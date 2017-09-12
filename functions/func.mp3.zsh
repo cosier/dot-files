@@ -32,6 +32,14 @@ function ogg-to-mp3-clean(){
     rm "$f.ogg"
   done
 }
+
+function mp4-to-mp3-clean(){
+  for f in *mp4; do
+    f=$(echo $f | sed 's/\.mp4//')
+    ffmpeg -i "$f.mp4" "$f.mp3"
+    rm "$f.mp4"
+  done
+}
 function wav-to-mp3(){
   for f in *wav; do
     f=$(echo $f | sed 's/\.wav//')

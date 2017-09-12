@@ -9,11 +9,12 @@ export PGDATA="/usr/local/var/postgres"
 
 export TEST_API=true
 
-export PROMPT_COMMAND="echo -ne '\033]0;${USER}@${HOSTNAME}\007';$PROMPT_COMMAND"
+export PROMPT_COMMAND="echo -ne '\033]0;${USER}@${HOSTNAME}\007';"
 
 export HOMEBREW_NO_AUTO_UPDATE=1
 
-ZSH_THEME="bira"
+# source ~/.dot/baileys-magic.zsh-theme
+ZSH_THEME="baileys-magic"
 
 HISTFILE=~/.zsh_history
 HISTSIZE=999999999
@@ -28,7 +29,7 @@ DISABLE_AUTO_TITLE="true"
 
 # COMPLETION_WAITING_DOTS="true"
 
-plugins=(git git-flow-completion )
+plugins=(git-flow-completion )
 
 source $ZSH/oh-my-zsh.sh
 source ~/.dot/envs.zsh
@@ -111,14 +112,14 @@ export RUST_LOG="beetflo=debug"
 export GOOGLE_APPLICATION_CREDENTIALS=~/.google_app_creds
 # source <(kubectl completion zsh)
 
-export ANDROID_NDK=~/Android/android-ndk-r15b
+export ANDROID_NDK=~/Android/Sdk/ndk-bundle
 export ANDROID_SDK_HOME=~/Android/Sdk
 export ANDROID_SDK=~/Android/Sdk
 export ANDROID_HOME=~/Android/Sdk
 
-export ANDROID_NDK_HOME=~/Android/android-ndk-r15b
-export NDK_HOME=~/Android/android-ndk-r15b
-export NDK_STANDALONE=~/Android/standalone-x86
+export ANDROID_NDK_HOME=$ANDROID_NDK
+export NDK_HOME=$ANDROID_NDK
+# export NDK_STANDALONE=~/Android/standalone-x86
 
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!

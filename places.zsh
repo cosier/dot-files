@@ -6,11 +6,25 @@
 alias emd='cd ~/.emacs.d'
 alias emv='emd'
 
+alias docs='cd ~/Documents'
+
 alias baileys='cd ~/.emacs.d/private/baileys'
 
 alias go-demo='cd ~/Developer/work/rumo/examples/demo'
 alias go-rum='cd ~/Developer/work/rumo'
 alias go-rume='cd ~/Developer/ext/rumo-example'
+
+alias go-dm='cd ~/Developer/work/dimappio'
+alias dm='go-dm'
+
+alias go-dr='cd ~/Developer/work/dr3030'
+alias dr='go-dr'
+
+alias go-fii='cd ~/Developer/work/factorii'
+alias gfii='go-fii'
+
+alias go-ubelt='cd ~/Developer/work/ubelt'
+alias gub='go-ubelt'
 
 alias up-places='source ~/.dot/places.zsh'
 alias palaces='places'
