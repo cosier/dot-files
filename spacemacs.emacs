@@ -1,16 +1,6 @@
 ;; -*- mode: emacs-lisp -*-
 ;; This file is loaded by Spacemacs at startup.
 ;; It must be stored in your home directory.
-(set-face-background 'default "unspecified-bg" (selected-frame))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(default ((t (:foreground "#000000" :background "#ffffff")) (((class color) (min-colors 256)) (:foreground "#eee" :background "black"))))
- '(hl-line ((t (:background nil)))))
-(set-face-attribute 'fringe nil :background nil)
-(set-background-color "#fdf6e3")
 
 (setq exec-path-from-shell-check-startup-files nil)
 
@@ -77,7 +67,7 @@
 
    dotspacemacs-colorize-cursor-according-to-state t
    dotspacemacs-default-font '("Operator Mono"
-                               :size 10
+                               :size 14
                                :weight light
                                :width normal
                                :slant italic
