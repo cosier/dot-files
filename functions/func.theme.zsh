@@ -49,6 +49,8 @@ function go-dark() {
   term_config=~/.config/terminator/config.dark
   terminator_config_switch $term_config
 
-  guake_config=~/.dot/guake/gconf.xml.dark
-  guake_config_switch $guake_config
+  if [[ $(uname) == "Linux" ]]; then
+    guake_config=~/.dot/guake/gconf.xml.dark
+    guake_config_switch $guake_config
+  fi
 }
