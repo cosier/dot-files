@@ -1,0 +1,22 @@
+#!/bin/bash
+
+DIR=/opt/baudline
+
+USE_ALSA=${$ALSA:-false}
+
+RUNNING=$(ps aux | grep qjack | grep -v grep)
+if [ $RUNNING -eq "" ]; then
+  echo "qjackctl not detected"
+  USE_ALSA=true
+else
+  echo "qjackctl detected"
+  USE_ALSA=false
+fi
+
+if [ $USE_ALSA -eq true ]; then
+  CMD=baudline
+else
+  CMD=baudline_jack
+fi
+
+$DIR/$CMD -record -waveform $@
