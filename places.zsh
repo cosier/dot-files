@@ -26,6 +26,9 @@ alias nk='go-nk'
 alias go-fii='cd ~/Developer/work/factorii'
 alias fii='go-fii'
 
+alias go-cast='cd ~/Developer/ext/cast'
+alias cast='go-cast'
+
 alias go-ubelt='cd ~/Developer/work/ubelt'
 alias gub='go-ubelt'
 
