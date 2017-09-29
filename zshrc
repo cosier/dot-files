@@ -43,19 +43,6 @@ source ~/.dot/services.zsh
 source ~/.dot/projects.zsh
 source ~/.dot/colors
 
-# if [[ -a /usr/local/rvm/scripts/rvm ]]; then
-    # source /usr/local/rvm/scripts/rvm
-# fi
-
-# if [[ -a ~/.rvm/scripts/rvm ]]; then
-    # source ~/.rvm/scripts/rvm
-# fi
-
-# if [[ -a ~/.Xmodmap ]]; then
-    # xmodmap ~/.Xmodmap
-# fi
-
-
 PATH=/opt/local/bin:$PATH
 PATH=/usr/local/sbin:$PATH
 PATH=/usr/local/bin:$PATH
@@ -71,7 +58,8 @@ if [[ -a ~/.env ]]; then
    source ~/.env
 fi
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -f ~/.ssh/keys.zsh ] && source ~/.ssh/keys.zsh
 
 export PATH="$HOME/.rbenv/bin:$PATH"
 export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"

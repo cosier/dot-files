@@ -20,8 +20,14 @@ alias dm='go-dm'
 alias go-dr='cd ~/Developer/work/dr3030'
 alias dr='go-dr'
 
+alias go-nk='cd ~/Developer/ext/nuklear'
+alias nk='go-nk'
+
 alias go-fii='cd ~/Developer/work/factorii'
-alias gfii='go-fii'
+alias fii='go-fii'
+
+alias go-cast='cd ~/Developer/ext/cast'
+alias cast='go-cast'
 
 alias go-ubelt='cd ~/Developer/work/ubelt'
 alias gub='go-ubelt'

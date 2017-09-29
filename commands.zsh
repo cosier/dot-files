@@ -1,8 +1,5 @@
 #!/bin/zsh
 
-# safety precaution
-# alias rm='trash'
-
 alias ey='eyeD3'
 alias hosts='sudo vim /etc/hosts'
 
