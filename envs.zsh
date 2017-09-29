@@ -43,7 +43,7 @@ export CLOJURESCRIPT_HOME=$DEVELOPER_HOME/sdk/clojurescript-vanilla
 export LA=/Users/bailey/Library/LaunchAgents
 # export EMACS_SERVER_FILE=/var/run/emacs.sock
 
-export DISPLAY=:0
+# export DISPLAY=:0
 
 if [ -f ~/.env ]; then
   source ~/.env;

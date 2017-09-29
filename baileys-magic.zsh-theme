@@ -4,9 +4,10 @@
 
 if [ $UID -eq 0 ]; then NCOLOR="red"; else NCOLOR="green"; fi
 local return_code="%(?..%{$fg[red]%}%? ↵%{$reset_color%})"
+local host_name=$(hostname | sed 's/\.local//g')
 
 # primary prompt
-PROMPT='$FG[237]%{$reset_color%}
+PROMPT='$FG[237]${host_name}: $FG[237]%{$reset_color%}\
 $FG[032]%~\
 $(git_prompt_info) \
 $FG[105]%(!.#.»)%{$reset_color%} '
