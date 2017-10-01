@@ -42,7 +42,7 @@ alias k='kp'
 alias kp-defined-in='echo "system.func.zsh"'
 alias k-defined-in='echo "system.func.zsh"'
 
-function code(){
+function retcode(){
   "$@"
   local status="$?"
   if [ $status -ne 0 ]; then
