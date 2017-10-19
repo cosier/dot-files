@@ -113,3 +113,5 @@ export NDK_HOME=$ANDROID_NDK
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 # export SDKMAN_DIR="/home/bailey/.sdkman"
 # [[ -s "/home/bailey/.sdkman/bin/sdkman-init.sh" ]] && source "/home/bailey/.sdkman/bin/sdkman-init.sh"
+
+export PATH="$HOME/.yarn/bin:$PATH"
