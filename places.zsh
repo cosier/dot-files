@@ -17,6 +17,9 @@ alias go-rume='cd ~/Developer/ext/rumo-example'
 alias go-studio='cd ~/Developer/work/openstudios'
 alias studio='go-studio'
 
+alias go-imoto='cd ~/Developer/work/imoto'
+alias imo='go-imoto'
+
 alias go-dm='cd ~/Developer/work/dimappio'
 alias dm='go-dm'
 
