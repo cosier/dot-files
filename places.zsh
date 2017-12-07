@@ -19,6 +19,8 @@ alias studio='go-studio'
 
 alias go-imoto='cd ~/Developer/work/imoto'
 alias imo='go-imoto'
+alias imob='go-imoto; cd imoto-backend'
+alias imof='go-imoto; cd imoto-frontend'
 
 alias go-dm='cd ~/Developer/work/dimappio'
 alias dm='go-dm'
