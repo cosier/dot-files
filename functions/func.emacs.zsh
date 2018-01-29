@@ -60,7 +60,7 @@ function emi(){
 
   # echo "Starting emacs: $EMS at $DIR"
   # emacsclient --server-file=$EMS $DIR
-  /usr/local/bin/emacs --debug-init -nw $DIR
+  emacs --debug-init -nw $DIR
 }
 
 function emacs-server(){
