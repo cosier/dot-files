@@ -10,6 +10,10 @@ alias t-rs-u='tmux resize-pane -U'
 alias t-rs-d='tmux resize-pane -D'
 alias tkill='tmux kill-session -t'
 
+function tcopy(){
+  xclip -o | tmux load-buffer -
+}
+
 function tswap(){
   curr=$(tmux display-message -p '#I')
   tmux swap-window -s $curr -t $1

@@ -17,6 +17,13 @@ alias go-rume='cd ~/Developer/ext/rumo-example'
 alias go-studio='cd ~/Developer/work/openstudios'
 alias studio='go-studio'
 
+alias b2b='cd ~/Developer/work/dwe/thesource'
+alias theso='b2b'
+
+alias daba='cd ~/Developer/work/dabadoc'
+alias divs='cd ~/Developer/work/diversewithease'
+alias dvs='divs'
+
 alias go-imoto='cd ~/Developer/work/imoto'
 alias imo='go-imoto'
 alias imob='go-imoto; cd imoto-backend'

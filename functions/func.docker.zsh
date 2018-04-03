@@ -7,6 +7,10 @@ function docker-logs(){
   docker logs --follow $1
 }
 
+function docker-mongo() {
+  docker run -p 27017:27017 --name mongo-server -t mongo:3.4-jessie $@
+}
+
 function docker-host-local(){
   export DOCKER_HOST=unix:///var/run/docker.sock
 }
