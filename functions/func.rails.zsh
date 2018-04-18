@@ -36,7 +36,10 @@ function console(){
 }
 
 
-alias rails-core='rails   s -p9010'
+alias rails-dabadoc='rails s -p 3030'
+alias rails-studio='rails s -p 5000'
+alias rails-imoto='rails s -p 4000'
+alias rails-core='rails s -p 9010'
 alias rails-tuloko='rails s -p2424'
 alias rails-tender='rails s -p3030'
 alias rails-market='rails s -p2020'
