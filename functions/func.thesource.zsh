@@ -1,5 +1,4 @@
 function source-rails() {
-  b2b
   rails s -p 7171
 }
 

@@ -20,6 +20,9 @@ alias studio='go-studio'
 alias b2b='cd ~/Developer/work/dwe/thesource'
 alias theso='b2b'
 
+alias mrbigboss='cd ~/Developer/work/mrbigboss'
+alias mbb='mrbigboss'
+
 alias daba='cd ~/Developer/work/dabadoc'
 alias divs='cd ~/Developer/work/diversewithease'
 alias dvs='divs'
