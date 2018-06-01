@@ -17,6 +17,9 @@ alias go-rume='cd ~/Developer/ext/rumo-example'
 alias go-studio='cd ~/Developer/work/openstudios'
 alias studio='go-studio'
 
+alias 50connect='cd ~/Developer/work/50connect'
+alias 50c='50connect'
+
 alias b2b='cd ~/Developer/work/dwe/thesource'
 alias theso='b2b'
 

@@ -36,6 +36,7 @@ function console(){
 }
 
 
+alias rails-50connect='cd ~/Developer/work/50connect; rails s -p 5050'
 alias rails-mrbigboss='rails s -p 8484'
 alias rails-dabadoc='rails s -p 3030'
 alias rails-studio='rails s -p 5000'
