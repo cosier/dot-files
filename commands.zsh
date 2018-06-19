@@ -166,6 +166,9 @@ else
     alias desktop-on='gsettings set org.gnome.desktop.background show-desktop-icons true'
 fi
 
+alias desktop-osx-on='defaults write com.apple.finder CreateDesktop -bool true; killall Finder'
+alias desktop-osx-off='defaults write com.apple.finder CreateDesktop -bool false; killall Finder'
+
 alias yt='noglob youtube-dl -x --output "%(title)s.%(ext)s"'
 alias kng='sudo killall aircrack-ng'
 
