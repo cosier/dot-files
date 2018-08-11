@@ -17,6 +17,8 @@ alias go-rume='cd ~/Developer/ext/rumo-example'
 alias go-studio='cd ~/Developer/work/openstudios'
 alias studio='go-studio'
 
+alias lens='cd ~/Developer/work/lens_culture'
+
 alias 50connect='cd ~/Developer/work/50connect'
 alias 50c='50connect'
 
