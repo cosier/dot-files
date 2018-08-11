@@ -158,13 +158,10 @@ alias timezone_ict='sudo systemsetup -settimezone Asia/Bangkok'
 alias timezone_mst='sudo systemsetup -settimezone America/Edmonton'
 alias timezone='sudo systemsetup -gettimezone'
 
-if [[ -n $osx ]]; then
-    alias desktop-on='defaults write com.apple.finder CreateDesktop -bool true; killall Finder'
-    alias desktop-off='defaults write com.apple.finder CreateDesktop -bool false; killall Finder'
-else
-    alias desktop-off='gsettings set org.gnome.desktop.background show-desktop-icons false'
-    alias desktop-on='gsettings set org.gnome.desktop.background show-desktop-icons true'
-fi
+alias desktop-osx-on='defaults write com.apple.finder CreateDesktop -bool true; killall Finder'
+alias desktop-osx-off='defaults write com.apple.finder CreateDesktop -bool false; killall Finder'
+alias desktop-off='gsettings set org.gnome.desktop.background show-desktop-icons false'
+alias desktop-on='gsettings set org.gnome.desktop.background show-desktop-icons true'
 
 alias desktop-osx-on='defaults write com.apple.finder CreateDesktop -bool true; killall Finder'
 alias desktop-osx-off='defaults write com.apple.finder CreateDesktop -bool false; killall Finder'
