@@ -6,6 +6,10 @@ export LANG=en_US.UTF-8
 export LANGUAGE=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 
+if [[ "$DISPLAY" == "" ]]; then
+  export DISPLAY=:0
+fi
+
 skip_global_compinit=1
 export LANG=en_US.UTF-8
 export GIT_EDITOR=vim
