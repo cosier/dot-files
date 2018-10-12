@@ -19,12 +19,7 @@ alias studio='go-studio'
 
 alias lens='cd ~/Developer/work/lens_culture'
 alias lci='cd ~/Developer/work/lc-imaging'
-
-alias 50connect='cd ~/Developer/work/50connect'
-alias 50c='50connect'
-
-alias b2b='cd ~/Developer/work/dwe/thesource'
-alias theso='b2b'
+alias lcg='cd ~/Developer/work/lc-instagram'
 
 alias mrbigboss='cd ~/Developer/work/mrbigboss'
 alias mbb='mrbigboss'
