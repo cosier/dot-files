@@ -6,6 +6,7 @@ PATH=$PATH:/Users/bailey/Developer/sdk/android/sdk/platform-tools
 PATH=$PATH:~/go/bin
 PATH=$PATH:~/bin
 PATH=$PATH:~/Developer/bin
+PATH=$PATH:~/.local/bin
 
 PATH=$PATH:~/.dot/bin
 

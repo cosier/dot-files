@@ -18,6 +18,7 @@ alias go-studio='cd ~/Developer/work/openstudios'
 alias studio='go-studio'
 
 alias lens='cd ~/Developer/work/lens_culture'
+alias lci='cd ~/Developer/work/lc-imaging'
 
 alias 50connect='cd ~/Developer/work/50connect'
 alias 50c='50connect'
