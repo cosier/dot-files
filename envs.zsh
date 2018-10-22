@@ -1,4 +1,5 @@
 platform=$(uname)
+export DOCKER_HOST=localhost:2375
 
 if [[ "$platform" == 'Linux' ]]; then
   GYP_GENERATORS="ninja"
