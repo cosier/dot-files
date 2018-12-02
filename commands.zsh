@@ -2,6 +2,7 @@
 
 alias ey='eyeD3'
 alias hosts='sudo vim /etc/hosts'
+alias xit='exit'
 
 alias be='bundle exec'
 alias google='links2 http://google.com/'
