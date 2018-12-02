@@ -19,7 +19,8 @@ alias studio='go-studio'
 
 alias lens='cd ~/Developer/work/lens_culture'
 alias lci='cd ~/Developer/work/lc-imaging'
-alias lcg='cd ~/Developer/work/lc-instagram'
+alias lcc='cd ~/Developer/work/lc-cloud'
+alias lcs='cd ~/Developer/work/lc-scraping'
 alias lcb='cd ~/Developer/work/lc-bouncer'
 
 alias mrbigboss='cd ~/Developer/work/mrbigboss'
