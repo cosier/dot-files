@@ -22,7 +22,7 @@ export PROMPT_COMMAND="echo -ne '\033]0;${USER}@${HOSTNAME}\007';"
 export HOMEBREW_NO_AUTO_UPDATE=1
 
 # source ~/.dot/baileys-magic.zsh-theme
-ZSH_THEME="baileys-magic"
+ZSH_THEME="ys"
 
 HISTFILE=~/.zsh_history
 HISTSIZE=999999999
