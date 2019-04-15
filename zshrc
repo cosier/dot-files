@@ -36,7 +36,7 @@ DISABLE_AUTO_TITLE="true"
 
 # COMPLETION_WAITING_DOTS="true"
 
-plugins=(git-flow-completion )
+# plugins=(git-flow-completion )
 
 source $ZSH/oh-my-zsh.sh
 source ~/.dot/envs.zsh
