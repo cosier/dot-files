@@ -24,6 +24,8 @@ alias lcs='cd ~/Developer/work/lc-worker'
 alias lcw='cd ~/Developer/work/lc-worker'
 alias lcb='cd ~/Developer/work/lc-bouncer'
 
+alias icg='cd ~/Developer/work/icg/wordpress/wp-content/themes/icg'
+
 alias mrbigboss='cd ~/Developer/work/mrbigboss'
 alias mbb='mrbigboss'
 

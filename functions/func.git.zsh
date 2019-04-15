@@ -6,6 +6,9 @@ alias git-reset-last-commit='GIT_COMMITTER_DATE="$DATE" git commit --amend --dat
 alias gitp='git push --set-upstream origin master'
 alias gp='git push'
 
+alias gc='git commit -m'
+alias gca='git commit -am'
+
 function git-reset-to(){
   DATE=$1
 
