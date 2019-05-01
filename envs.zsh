@@ -16,7 +16,7 @@ else
   export HOME_DIR=/home/ubuntu
 fi
 
-export LAPIS_OPENRESTY=$(which openresty)
+
 export GOPATH=~/go
 export EDITOR=vim
 
