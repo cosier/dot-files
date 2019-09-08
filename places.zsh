@@ -5,13 +5,17 @@
 # ################################
 
 function work_path(){ 
-	if [ -d "~/Developer/work/$1" ]; then
-		cd "~/Developer/work/$1"
-	elif [ -d "~/Developer/ext/$1" ]; then
-		cd "~/Developer/ext/$1"
-	elif [ -d "~/$1" ]; then
-		cd "~/$1"
+	local p=$@
+	if [ -d "~/Developer/work/$p" ]; then
+		p="~/Developer/work/$p"
+	elif [ -d "~/Developer/ext/$p" ]; then
+		p="~/Developer/ext/$p"
+	elif [ -d "~/$p" ]; then
+		p="~/$p"
 	fi
+
+	echo "Going to work at: $p"
+	cd $p
 }
 
 alias wp='work_path'
