@@ -16,6 +16,11 @@ function git-reset-to(){
   git-reset-last-commit
 }
 
+function git-config-me() {
+  git config --global user.name "Bailey Cosier"
+  git config --global user.email "bailey.cosier@gmail.com"
+}
+
 function git-reset-by(){
   DELTA=$1
   if [[ "$(uname)" == "Darwin" ]]; then
