@@ -4,14 +4,15 @@
 # Filesystem "Places" Shortcut Directory
 # ################################
 
-function work_path(){ 
+function work_path(){
+  echo "[work_path] looking up $@"
   if [ -d "~/Developer/work/$@" ]; then
-  cd ~/Developer/work/$@
-elif [ -d "~/Developer/ext/$@" ]; then
-  cd ~/Developer/ext/$@
-elif [ -d "~/$@" ]; then
-  cd ~/$@
-fi
+    cd ~/Developer/work/$@
+  elif [ -d "~/Developer/ext/$@" ]; then
+    cd ~/Developer/ext/$@
+  elif [ -d "${HOME}/$@" ]; then
+    cd $HOME/$@
+  fi
 }
 
 alias wp='work_path'
