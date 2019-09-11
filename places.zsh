@@ -5,11 +5,11 @@
 # ################################
 
 function work_path(){
-  echo "[work_path] looking up $@"
-  if [ -d "~/Developer/work/$@" ]; then
-    cd ~/Developer/work/$@
-  elif [ -d "~/Developer/ext/$@" ]; then
-    cd ~/Developer/ext/$@
+  #echo "[work_path] looking up $@"
+  if [ -d "${HOME}/Developer/work/$@" ]; then
+    cd ${HOME}/Developer/work/$@
+  elif [ -d "${HOME}/Developer/ext/$@" ]; then
+    cd ${HOME}/Developer/ext/$@
   elif [ -d "${HOME}/$@" ]; then
     cd $HOME/$@
   fi
