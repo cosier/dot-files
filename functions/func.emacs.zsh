@@ -1,6 +1,6 @@
 alias emrc='em ~/.emacs.d/spacemacs.conf'
 alias ec='eclient'
-
+alias emacs-gpg-key='gpg --homedir ~/.emacs.d/elpa/gnupg --receive-keys 066DAFCB81E42C40'
 alias baileys-edit='vim ~/.emacs.d/private/baileys/packages.el'
 
 function eclient(){
