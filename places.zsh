@@ -3,57 +3,56 @@
 # ################################
 # Filesystem "Places" Shortcut Directory
 # ################################
+
+function work_path(){
+  #echo "[work_path] looking up $@"
+  if [ -d "${HOME}/Developer/work/$@" ]; then
+    cd ${HOME}/Developer/work/$@
+  elif [ -d "${HOME}/Developer/ext/$@" ]; then
+    cd ${HOME}/Developer/ext/$@
+  elif [ -d "${HOME}/$@" ]; then
+    cd $HOME/$@
+  fi
+}
+
+alias wp='work_path'
+
 alias emd='cd ~/.emacs.d'
 alias emv='emd'
 
 alias docs='cd ~/Documents'
 
-alias baileys='cd ~/.emacs.d/private/baileys'
 
-alias go-demo='cd ~/Developer/work/rumo/examples/demo'
-alias go-rum='cd ~/Developer/work/rumo'
+alias go-rum='work_path rumo'
 alias go-rume='cd ~/Developer/ext/rumo-example'
+alias go-demo='work_path rumo/examples/demo'
 
-alias go-studio='cd ~/Developer/work/openstudios'
+alias go-studio='work_path openstudios'
 alias studio='go-studio'
 
-alias lens='cd ~/Developer/work/lens_culture'
-alias lci='cd ~/Developer/work/lc-imaging'
-alias lcc='cd ~/Developer/work/lc-cloud'
-alias lcs='cd ~/Developer/work/lc-worker'
-alias lcw='cd ~/Developer/work/lc-worker'
-alias lcb='cd ~/Developer/work/lc-bouncer'
+alias lens='work_path lens_culture'
+alias lci='work_path lc-imaging'
+alias lcc='work_path lc-cloud'
+alias lcw='work_path lc-worker'
 
-alias icg='cd ~/Developer/work/icg/wordpress/wp-content/themes/icg'
 
-alias mrbigboss='cd ~/Developer/work/mrbigboss'
+alias mrbigboss='work_path mrbigboss'
 alias mbb='mrbigboss'
 
-alias daba='cd ~/Developer/work/dabadoc'
-alias divs='cd ~/Developer/work/diversewithease'
-alias dvs='divs'
 
-alias go-imoto='cd ~/Developer/work/imoto'
-alias imo='go-imoto'
-alias imob='go-imoto; cd imoto-backend'
-alias imof='go-imoto; cd imoto-frontend'
-
-alias go-dm='cd ~/Developer/work/dimappio'
+alias go-dm='work_path dimappio'
 alias dm='go-dm'
 
-alias go-dr='cd ~/Developer/work/dr3030'
+alias go-dr='work_path dr3030'
 alias dr='go-dr'
 
-alias go-nk='cd ~/Developer/ext/nuklear'
-alias nk='go-nk'
-
-alias go-fii='cd ~/Developer/work/factorii'
+alias go-fii='work_path factorii'
 alias fii='go-fii'
 
 alias go-cast='cd ~/Developer/ext/cast'
 alias cast='go-cast'
 
-alias go-ubelt='cd ~/Developer/work/ubelt'
+alias go-ubelt='work_path ubelt'
 alias gub='go-ubelt'
 
 alias up-places='source ~/.dot/places.zsh'
@@ -75,81 +74,63 @@ alias ext='cd ~/Developer/ext'
 
 alias music='cd ~/Music'
 
-alias key='cd ~/Developer/work/keyport'
+alias key='work_path keyport'
 
-alias study='cd ~/Developer/work/studybloc/demo'
+alias study='work_path studybloc/demo'
 
-alias t1='cd ~/Developer/work/t1'
+alias t1='work_path t1'
 alias servo='ext-rust; cd servo;'
-alias duk='ext; cd duktape-rs'
+alias duk='work_path duktape-rs'
 
 alias coach='work; cd coachbase;'
 alias flare='work; cd flare'
 
-alias nginx-conf='cd /usr/local/opt/openresty/nginx/conf'
-alias vim-nginx-conf='vim /usr/local/opt/openresty/nginx/conf/nginx.conf'
-
 # Dojo
-alias dojo='cd ~/Developer/work/dojo'
-alias tata='cd ~/Developer/work/dojo/tatami'
-alias ori='cd ~/Developer/work/dojo/origami'
+alias dojo='work_path dojo'
+alias tata='work_path dojo/tatami'
+alias ori='work_path dojo/origami'
 
 # Beetflo
-alias bf='cd ~/Developer/work/beetflo'
-alias bfa='cd ~/Developer/work/beetflo/api'
-alias bfw='cd ~/Developer/work/beetflo/web'
-alias flo='cd ~/Developer/work/beetflo/app'
-alias flod='cd ~/Developer/work/beetflo/design'
+alias bf='work_path beetflo'
+alias bfa='work_path beetflo/api'
+alias bfw='work_path beetflo/web'
+alias flo='work_path beetflo/app'
+alias flod='work_path beetflo/design'
 
 # Narratia
-alias na='cd ~/Developer/work/narratia/app'
+alias na='work_path narratia/app'
 
-alias toshokan='cd ~/Developer/work/toshokan'
+alias toshokan='work_path toshokan'
 
 # Crowdist
-alias comm='cd ~/Developer/work/commando'
-alias com='cd ~/Developer/work/commando'
-alias cm='cd ~/Developer/work/commando'
-alias op='cd ~/Developer/work/crowdopen'
-
-alias bot='cd ~/Developer/work/bidontask'
-alias bota='cd ~/Developer/work/bidontask/api'
-alias botc='cd ~/Developer/work/bidontask/client'
+alias comm='work_path commando'
+alias com='work_path commando'
+alias cm='work_path commando'
 
 # Prime zone
-alias tmkf='cd ~/Developer/work/tmkf'
-
-# Tatar Work
-alias skej='cd ~/Developer/work/skejio/core'
-alias sp='skej'
-
-alias lamule='cd ~/Developer/work/lamule'
-alias market='cd ~/Developer/work/marketstraddle'
-
-alias hub='cd /hubify'
-alias zune='cd /zune'
+alias tmkf='work_path tmkf'
 
 # General Work
 alias work='cd ~/Developer/work'
-alias tm='cd ~/Developer/work/timbrelog'
-alias mvp='cd ~/Developer/work/timbrelog/mvp'
-alias nt='cd ~/Developer/work/timbrelog/native'
-alias native='cd ~/Developer/work/timbrelog/native'
+alias tm='work_path timbrelog'
+alias mvp='work_path timbrelog/mvp'
+alias nt='work_path timbrelog/native'
+alias native='work_path timbrelog/native'
 
-alias bf='cd ~/Developer/work/beetflo/app'
-alias bt='cd ~/Developer/work/bidontask'
-alias co='cd ~/Developer/work/cosier'
-alias coc='cd ~/Developer/work/cosier/client'
+alias bf='work_path beetflo/app'
+alias bt='work_path bidontask'
+alias co='work_path cosier'
+alias coc='work_path cosier/client'
 
-alias tfdash='cd ~/Developer/work/tfdash'
-alias tfcms='cd ~/Developer/work/tfcms'
+alias tfdash='work_path tfdash'
+alias tfcms='work_path tfcms'
 alias tf='tfdash'
 
-alias tuloko='cd ~/Developer/work/tuloko-rails'
+alias tuloko='work_path tuloko-rails'
 alias tk='tuloko'
 
-alias market='cd ~/Developer/work/marketstraddle'
+alias market='work_path marketstraddle'
 alias mk='market'
 
-alias earbook='cd ~/Developer/work/earbook'
+alias earbook='work_path earbook'
 alias eb='earbook'
