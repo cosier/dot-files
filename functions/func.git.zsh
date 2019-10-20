@@ -9,6 +9,11 @@ alias gp='git push'
 alias gc='git commit -m'
 alias gca='git commit -am'
 
+function git-push() {
+  git commit -am $@
+  git push
+}
+
 function git-reset-to(){
   DATE=$1
 

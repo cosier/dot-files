@@ -16,6 +16,8 @@ else
   export HOME_DIR=/home/ubuntu
 fi
 
+export FLUTTER_SDK=${HOME_DIR}/Developer/sdk/flutter
+export PATH=$PATH:$FLUTTER_SDK/bin
 
 export GOPATH=~/go
 export EDITOR=vim
