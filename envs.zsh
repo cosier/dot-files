@@ -1,10 +1,13 @@
 platform=$(uname)
 export DOCKER_HOST=localhost:2375
 
+
+export PATH="$PATH:/usr/lib/dart/bin"
+export PATH="$PATH":"$HOME/.pub-cache/bin"
+
 if [[ "$platform" == 'Linux' ]]; then
   GYP_GENERATORS="ninja"
   export HOME_DIR=${HOME}
-  export PATH="$PATH:/usr/lib/dart/bin"
   # export GYP_DEFINES="skia_shared_lib=1"
 
 elif [[ "$platform" == 'Darwin' ]]; then
