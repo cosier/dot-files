@@ -3,17 +3,18 @@ export DOCKER_HOST=localhost:2375
 
 if [[ "$platform" == 'Linux' ]]; then
   GYP_GENERATORS="ninja"
-  export HOME_DIR=/home/ubuntu
-  export GYP_DEFINES="skia_shared_lib=1"
+  export HOME_DIR=${HOME}
+  export PATH="$PATH:/usr/lib/dart/bin"
+  # export GYP_DEFINES="skia_shared_lib=1"
 
 elif [[ "$platform" == 'Darwin' ]]; then
-  export HOME_DIR=/Users/bailey
-  GYP_GENERATORS="ninja,xcode"
-  GYP_DEFINES="skia_os=mac skia_arch_width=64 skia_shared_lib=1"
+  export HOME_DIR=${HOME}
+  # GYP_GENERATORS="ninja,xcode"
+  # GYP_DEFINES="skia_os=mac skia_arch_width=64 skia_shared_lib=1"
 
   export PATH=$PATH:/Applications/VMware\ Fusion.app/Contents/Library
 else
-  export HOME_DIR=/home/ubuntu
+  export HOME_DIR=${HOME}
 fi
 
 export FLUTTER_SDK=${HOME_DIR}/Developer/sdk/flutter

@@ -22,6 +22,10 @@ alias emv='emd'
 
 alias docs='cd ~/Documents'
 
+alias logga='work_path logga'
+alias lga='logga; cd app;'
+alias lgw='logga; cd web;'
+
 
 alias go-rum='work_path rumo'
 alias go-rume='cd ~/Developer/ext/rumo-example'
