@@ -1,7 +1,6 @@
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
 function virtualenv_prompt_info(){}
-
 export LANG=en_US.UTF-8
 export LANGUAGE=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
@@ -22,7 +21,7 @@ export PROMPT_COMMAND="echo -ne '\033]0;${USER}@${HOSTNAME}\007';"
 export HOMEBREW_NO_AUTO_UPDATE=1
 
 # source ~/.dot/baileys-magic.zsh-theme
-ZSH_THEME="baileys-magic"
+ZSH_THEME="ys"
 
 HISTFILE=~/.zsh_history
 HISTSIZE=999999999
@@ -134,3 +133,19 @@ export PATH="$HOME/.yarn/bin:$PATH"
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/home/bailey/Developer/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/home/bailey/Developer/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/bailey/Developer/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/home/bailey/Developer/miniconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+

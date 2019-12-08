@@ -1,22 +1,28 @@
 platform=$(uname)
 export DOCKER_HOST=localhost:2375
 
+
+export PATH="$PATH:/usr/lib/dart/bin"
+export PATH="$PATH":"$HOME/.pub-cache/bin"
+
 if [[ "$platform" == 'Linux' ]]; then
   GYP_GENERATORS="ninja"
-  export HOME_DIR=/home/ubuntu
-  export GYP_DEFINES="skia_shared_lib=1"
+  export HOME_DIR=${HOME}
+  # export GYP_DEFINES="skia_shared_lib=1"
 
 elif [[ "$platform" == 'Darwin' ]]; then
-  export HOME_DIR=/Users/bailey
-  GYP_GENERATORS="ninja,xcode"
-  GYP_DEFINES="skia_os=mac skia_arch_width=64 skia_shared_lib=1"
+  export HOME_DIR=${HOME}
+  # GYP_GENERATORS="ninja,xcode"
+  # GYP_DEFINES="skia_os=mac skia_arch_width=64 skia_shared_lib=1"
 
   export PATH=$PATH:/Applications/VMware\ Fusion.app/Contents/Library
 else
-  export HOME_DIR=/home/ubuntu
+  export HOME_DIR=${HOME}
 fi
 
-export LAPIS_OPENRESTY=$(which openresty)
+export FLUTTER_SDK=${HOME_DIR}/Developer/sdk/flutter
+export PATH=$PATH:$FLUTTER_SDK/bin
+
 export GOPATH=~/go
 export EDITOR=vim
 

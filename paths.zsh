@@ -9,6 +9,7 @@ PATH=$PATH:~/Developer/bin
 PATH=$PATH:~/.local/bin
 
 PATH=$PATH:~/.dot/bin
+PATH=$PATH:${HOME}/Developer/miniconda3/bin
 
 # PATH=$PATH:/usr/local/src/clojurescript/bin
 # PATH="/Applications/Postgres93.app/Contents/MacOS/bin:$PATH"

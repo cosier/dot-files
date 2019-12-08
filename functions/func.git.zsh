@@ -6,11 +6,24 @@ alias git-reset-last-commit='GIT_COMMITTER_DATE="$DATE" git commit --amend --dat
 alias gitp='git push --set-upstream origin master'
 alias gp='git push'
 
+alias gc='git commit -m'
+alias gca='git commit -am'
+
+function git-push() {
+  git commit -am $@
+  git push
+}
+
 function git-reset-to(){
   DATE=$1
 
   echo "Target Date: $DATE"
   git-reset-last-commit
+}
+
+function git-config-me() {
+  git config --global user.name "Bailey Cosier"
+  git config --global user.email "bailey.cosier@gmail.com"
 }
 
 function git-reset-by(){

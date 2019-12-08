@@ -2,9 +2,11 @@
 
 alias ey='eyeD3'
 alias hosts='sudo vim /etc/hosts'
+alias py='python'
+alias xit='exit'
 
 alias be='bundle exec'
-alias google='links2 http://google.com/'
+alias google='links http://google.com/'
 alias lg='app logs -f'
 alias svim='sudo vim'
 alias gs='git status'
@@ -28,9 +30,6 @@ alias exlt='exit'
 alias eit='exit'
 alias ex='exit'
 
-alias kt='kubectl'
-alias k8='kubectl'
-alias kk='kubectl'
 
 alias v='vim'
 alias m='mpv --loop-file=1'
@@ -38,8 +37,6 @@ alias m='mpv --loop-file=1'
 alias ngx_start='sudo nginx -c conf/nginx.conf'
 alias ngx_stop='sudo nginx -c conf/nginx.conf -s stop'
 
-alias p='~/Developer/work/crowdist/barge/services/core/bin/padrino.sh'
-# alias rspec='gr; bin/rspec'
 
 alias fgo='forego'
 alias fm='foreman'
