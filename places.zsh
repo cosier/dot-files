@@ -26,6 +26,10 @@ alias logga='work_path logga'
 alias lga='logga; cd app;'
 alias lgw='logga; cd web;'
 
+alias alli='work; cd alliance;'
+
+alias tflo='work; cd trackflo;'
+alias tflod='work; cd trackflo/desktop;'
 
 alias go-rum='work_path rumo'
 alias go-rume='cd ~/Developer/ext/rumo-example'
