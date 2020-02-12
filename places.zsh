@@ -38,6 +38,9 @@ alias go-demo='work_path rumo/examples/demo'
 alias go-studio='work_path openstudios'
 alias studio='go-studio'
 
+alias trai='work_path timbre; cd timbre-rails'
+alias tde='work_path timbre; cd timbre-desktop'
+
 alias lens='work_path lens_culture'
 alias lci='work_path lc-imaging'
 alias lcc='work_path lc-cloud'
