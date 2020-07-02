@@ -41,11 +41,14 @@ alias studio='go-studio'
 alias trai='work_path timbre; cd timbre-rails'
 alias tde='work_path timbre; cd timbre-desktop'
 
+alias wind='work_path windward'
+alias ww='work_path windward'
 alias lens='work_path lens_culture'
 alias lci='work_path lc-imaging'
 alias lcc='work_path lc-cloud'
 alias lcw='work_path lc-worker'
-
+alias lcg='work_path lc-ghost'
+alias gg='work_path lc-ghost'
 
 alias mrbigboss='work_path mrbigboss'
 alias mbb='mrbigboss'
