@@ -6,8 +6,8 @@ function edit-bailey-macs(){
   vim ~/.dot/spacemacs/bailey/packages.el
 }
 
-function space(){
-  cd ~/.dot/spacemacs
+function spacemacs-custom(){
+  HOME=~/Developer/ext/spacemacs emacs -nw $@
 }
 
-alias spe='edit-spacemacs'
+alias space='spacemacs-custom'

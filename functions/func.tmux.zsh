@@ -3,8 +3,10 @@
 alias ts='tsession'
 alias trr='t-rename'
 alias tmm='t-move'
+alias tsp='t-swap'
 
 alias t-rename='tmux rename-window'
+alias t-swap='tmux swap-window -t'
 alias t-move='tmux move-window -t'
 alias t-rs-l='tmux resize-pane -L'
 alias t-rs-r='tmux resize-pane -R'
