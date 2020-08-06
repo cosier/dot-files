@@ -100,6 +100,7 @@ alias iwant='sudo apt-get install -y'
 alias up='sudo apt-get update'
 alias upgrade='sudo apt-get upgrade'
 alias icanhas='sudo apt-cache search'
+alias aptpo='sudo apt-cache policy'
 alias apt='sudo apt-add-repository'
 
 alias lock='/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend'
