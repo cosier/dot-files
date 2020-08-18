@@ -1,4 +1,8 @@
 #!/bin/zsh
+#
+function places-reload() {
+  source ~/.dot/places.zsh
+}
 
 # ################################
 # Filesystem "Places" Shortcut Directory
