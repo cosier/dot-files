@@ -1,5 +1,9 @@
 #!/bin/zsh
 
+alias restart='sudo systemctl restart'
+alias stop='sudo systemctl stop'
+alias start='sudo systemctl start'
+
 alias ey='eyeD3'
 alias hosts='sudo vim /etc/hosts'
 alias py='python'
