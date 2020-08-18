@@ -5,6 +5,8 @@ alias hosts='sudo vim /etc/hosts'
 alias py='python'
 alias xit='exit'
 
+alias jj='sudo journalctl -f'
+
 alias be='bundle exec'
 alias google='links http://google.com/'
 alias lg='app logs -f'
