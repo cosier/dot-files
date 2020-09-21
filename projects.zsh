@@ -1,5 +1,7 @@
 #!/bin/zsh
 
+alias pro='projects'
+alias beets='projects beetflo'
 
 function projects_edit(){
     if [[ -z "$1" ]]; then
@@ -20,7 +22,7 @@ function projects_update(){
 function projects(){
     local name=$1;
     local editor="/usr/local/bin/subl"
-      
+
 
     if [[ -z $name ]]; then
         clr_escape "You need to specify a project name.." $CLR_RED
@@ -28,24 +30,12 @@ function projects(){
     fi
 
     case $name in
-        "bk")
-            $editor /apps/balaklava
+        "beetflo")
+            cd /linx/projects/beetflo
         ;;
 
-        "bkdir")
-            cd /apps/balaklava
-        ;;
-
-        "bot")
-            $editor /apps/bidontask
-        ;;
-
-        "botdir")
-            cd /apps/bidontask;
-        ;;
-        
         *) clr_escape "Project not found.." $CLR_RED;;
-    
+
     esac;
 
 }

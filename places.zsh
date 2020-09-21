@@ -39,9 +39,6 @@ alias go-rum='work_path rumo'
 alias go-rume='cd ~/Developer/ext/rumo-example'
 alias go-demo='work_path rumo/examples/demo'
 
-alias go-studio='work_path openstudios'
-alias studio='go-studio'
-
 alias trai='work_path timbre; cd timbre-rails'
 alias tde='work_path timbre; cd timbre-desktop'
 
@@ -51,6 +48,7 @@ alias lens='work_path lens_culture'
 alias fsm='cd /srv/fsm2'
 alias lci='work_path lc-imaging'
 alias lcs='work_path lc-subreview'
+alias lcr='work_path lc-subreview'
 alias lcc='work_path lc-cloud'
 alias lch='work_path lc-chrome'
 alias lcw='work_path lc-worker'
