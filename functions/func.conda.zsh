@@ -1,7 +1,7 @@
 #!/bin/zsh
 
 function conda-setup(){
-  MINICONDA="/linx/conda"
+  MINICONDA="${HOME}/.miniconda"
   # >>> conda initialize >>>
   # !! Contents within this block are managed by 'conda init' !!
   __conda_setup="$(\"${MINICONDA}/bin/conda\" 'shell.zsh' 'hook' 2> /dev/null)"
