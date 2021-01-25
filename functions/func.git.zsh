@@ -5,6 +5,11 @@ alias git-reset-last-commit='GIT_COMMITTER_DATE="$DATE" git commit --amend --dat
 
 alias gitp='git push --set-upstream origin master'
 alias gp='git push'
+alias giit='git'
+alias gitt='git'
+alias giitt='git'
+alias gti='git'
+alias giti='git'
 
 alias gc='git commit -m'
 alias gca='git commit -am'
