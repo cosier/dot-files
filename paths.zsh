@@ -8,6 +8,8 @@ PATH=$PATH:~/bin
 PATH=$PATH:~/Developer/bin
 PATH=$PATH:~/.local/bin
 PATH=$PATH:/linx/flutter/bin
+PATH=$PATH:/${HOME}/Developer/ext/flutter/bin
+PATH=$PATH:/usr/local/go/bin
 
 PATH=$PATH:~/.dot/bin
 PATH=$PATH:${HOME}/Developer/miniconda3/bin

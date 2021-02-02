@@ -4,6 +4,8 @@ alias restart='sudo systemctl restart'
 alias stop='sudo systemctl stop'
 alias start='sudo systemctl start'
 
+alias rbe='vim .rbenv-vars'
+
 alias em='emacs -nw'
 
 alias ey='eyeD3'
