@@ -2,7 +2,8 @@ alias push='git remote | xargs -P10 -l git push --all'
 alias gh='git diff HEAD'
 
 alias git-reset-last-commit='GIT_COMMITTER_DATE="$DATE" git commit --amend --date "$DATE"'
-
+alias gco='git checkout'
+alias gm='git merge'
 alias gitp='git push --set-upstream origin master'
 alias gp='git push'
 alias giit='git'

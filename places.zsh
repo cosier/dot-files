@@ -26,7 +26,7 @@ alias emv='emd'
 
 alias docs='cd ~/Documents'
 
-alias wm='work_path wavemachine'
+alias ws='work_path wavestudio'
 alias logga='work_path logga'
 alias lga='logga; cd app;'
 alias lgw='logga; cd web;'
