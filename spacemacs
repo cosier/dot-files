@@ -10,15 +10,16 @@
    dotspacemacs-configuration-layer-path '()
    dotspacemacs-configuration-layers
    '(
-     go
-     php
-     python
-     dart
-     flutter
-     rust
+     ;;go
+     ;;php
+     ;;python
+     ;;dart
+     ;;flutter
+     ;;rust
      sql
      javascript
-     react
+     coffee-mode
+     ;;react
      baileys
      ;;baileys-rust
      solarized-theme
@@ -33,25 +34,25 @@
      html
      markdown
      yaml
-     auto-completion
+     ;;auto-completion
      better-defaults
      git
      github
 
-     scheme
-     emacs-lisp
-     markdown
-     org
+     ;;scheme
+     ;;emacs-lisp
+     ;;markdown
+     ;;org
      ;; spell-checking
 
-     syntax-checking
-     version-control
+     ;;syntax-checking
+     ;;version-control
 
      ruby-on-rails
      ruby
 
-     c-c++
-     lua
+     ;;c-c++
+     ;;lua
 
      )
    dotspacemacs-excluded-packages '(smartparens)
