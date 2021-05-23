@@ -1,7 +1,7 @@
 #!/bin/zsh
 
 function conda-setup(){
-  MINICONDA="${HOME}/.miniconda"
+  MINICONDA="${HOME}/miniconda3"
   # >>> conda initialize >>>
   # !! Contents within this block are managed by 'conda init' !!
   __conda_setup="$(\"${MINICONDA}/bin/conda\" 'shell.zsh' 'hook' 2> /dev/null)"
@@ -11,7 +11,7 @@ function conda-setup(){
       if [ -f "${MINICONDA}/etc/profile.d/conda.sh" ]; then
           . "${MINICONDA}/etc/profile.d/conda.sh"
       else
-          export PATH="${MINICONDA}/miniconda3/bin:$PATH"
+          export PATH="${MINICONDA}/bin:$PATH"
       fi
   fi
   unset __conda_setup

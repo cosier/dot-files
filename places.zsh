@@ -25,6 +25,9 @@ alias emd='cd ~/.emacs.d'
 alias emv='emd'
 
 alias docs='cd ~/Documents'
+alias scangai='work_path scangai'
+alias scang='scangai'
+alias sg='scang'
 
 alias ws='work_path wavestudio'
 alias logga='work_path logga'
