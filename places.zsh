@@ -25,7 +25,8 @@ alias emd='cd ~/.emacs.d'
 alias emv='emd'
 
 alias docs='cd ~/Documents'
-alias scangai='work_path scangai'
+alias autogai='work_path autogai'
+alias scangai='autogai'
 alias scang='scangai'
 alias sg='scang'
 
