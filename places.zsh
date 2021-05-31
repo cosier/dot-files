@@ -26,22 +26,7 @@ alias emv='emd'
 
 alias docs='cd ~/Documents'
 
-alias ws='work_path wavestudio'
-alias logga='work_path logga'
-alias lga='logga; cd app;'
-alias lgw='logga; cd web;'
-
-alias alli='work; cd alliance;'
-
-alias tflo='work; cd trackflo;'
-alias tflod='work; cd trackflo/desktop;'
-
-alias go-rum='work_path rumo'
-alias go-rume='cd ~/Developer/ext/rumo-example'
-alias go-demo='work_path rumo/examples/demo'
-
-alias trai='work_path timbre; cd timbre-rails'
-alias tde='work_path timbre; cd timbre-desktop'
+alias tt='work_path tasktime'
 
 alias wind='work_path windward'
 alias ww='work_path windward'

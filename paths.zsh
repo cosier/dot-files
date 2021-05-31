@@ -7,6 +7,7 @@ PATH=$PATH:~/go/bin
 PATH=$PATH:~/bin
 PATH=$PATH:~/Developer/bin
 PATH=$PATH:~/.local/bin
+PATH=$PATH:~/.ssh/scripts
 PATH=$PATH:~/Developer/lib/flutter/bin
 PATH=$PATH:/usr/local/go/bin
 
