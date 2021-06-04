@@ -107,7 +107,6 @@ setopt share_history # share command history data
 export TMUX=~/.tmux.sock
 export TERM=screen-256color
 
-eval "$(rbenv init -)"
 export RUST_BACKTRACE=1
 export RUST_LOG="beetflo=debug"
 
