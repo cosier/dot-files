@@ -30,7 +30,9 @@ alias scangai='autogai'
 alias scang='scangai'
 alias sg='scang'
 
-alias tt='work_path tasktime'
+alias spaceship='work_path teamspaceship'
+alias ship='spaceship'
+alias team='spaceship'
 
 alias wind='work_path windward'
 alias ww='work_path windward'
