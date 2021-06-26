@@ -81,6 +81,10 @@ if [ -z "$HISTFILE" ]; then
   HISTFILE=$HOME/.zsh_history
 fi
 
+if [[ "${ENABLE_RBENV}" != "" ]]; then
+  eval "$(rbenv init -)"
+fi
+
 HISTSIZE=10000
 SAVEHIST=10000
 INC_APPEND_HISTORY=true
