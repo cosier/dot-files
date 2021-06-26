@@ -4,6 +4,7 @@ function virtualenv_prompt_info(){}
 export LANG=en_US.UTF-8
 export LANGUAGE=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
+export GDK_SCALE=1
 
 if [[ "$DISPLAY" == "" ]]; then
   export DISPLAY=:0
@@ -144,7 +145,9 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-
+if [[ "${DISABLE_RBENV}" == "" ]]; then
+  eval "$(rbenv init -)"
+fi
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
